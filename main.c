@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------*
 *    HEADER FILES                                                    *
 *--------------------------------------------------------------------*/
-#include <iostream>
-#include <cstdlib>
+#include <stdio.h>
+//#include <cstdlib>
 #include <curses.h>
 #include <time.h>
 #include <unistd.h>
@@ -27,14 +27,17 @@ const int COLUMNS = 100;
 //fill map with 1 or 0
 int random_value_filler ();
 //fill map with random number
-void map_filler (int (&map)[ROWS][COLUMNS]);
+void map_filler (int map[ROWS][COLUMNS]);
 //draw static stuff
 void draw_static ();
 //draw creatures with ncurses
-void draw_creatures (int (&map) [ROWS][COLUMNS]);
+void draw_creatures (int map [ROWS][COLUMNS]);
 
 //testing looping function, not in use atm
-void loop (int (&map)[ROWS][COLUMNS]);
+void loop (int map [ROWS][COLUMNS]);
+
+//testing sleep
+void Sleep (float s);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
@@ -47,7 +50,7 @@ int main(void) {
 	int map[ROWS][COLUMNS];
 	
 	//temp check for input, c == 27 == esc
-	char c;
+	//char c;
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	
@@ -57,22 +60,27 @@ int main(void) {
 	start_color();
 	
 	//map init
-	map_filler (map); //fill map with 1's and 0's
+	 
 	draw_static (); //draw static stuff */
 	
 	//testing update function
-	while(false)
+	
+	//miksei päivity automaattisesti ja paras tapa painottaa tiettyä arvoa
+	while(true)
     {
-		sleep(1);
-		std::cout << "toimii";
-		//time_t current = time(0);
-		//std::cout << ctime(&current);
-		//c=getch();
-        //if (c==27)
-		//	break;
+		
+		Sleep(1);
+		//fill map with 1's and 0's
+		map_filler (map);
+		//draw creatures
+		draw_creatures (map);
+
+		/*c=getch();
+        if (c==27)
+			break;*/
     }
 
-	draw_creatures (map); //draw creatures
+
 	endwin();			//End curses mode		  */
 	return 0;
 	
@@ -89,7 +97,7 @@ int random_value_filler (){
 	return random_value;
 }
 
-void map_filler (int (&map)[ROWS][COLUMNS]){
+void map_filler (int map [ROWS][COLUMNS]){
 	int i, j;
 	
 	for(i = 0; i < ROWS; i++){
@@ -102,7 +110,7 @@ void map_filler (int (&map)[ROWS][COLUMNS]){
 	}
 }
 
-void draw_creatures (int (&map)[ROWS][COLUMNS]){
+void draw_creatures (int map [ROWS][COLUMNS]){
 	int i, j;
 	
 	//declare color pairs
@@ -116,7 +124,10 @@ void draw_creatures (int (&map)[ROWS][COLUMNS]){
 		
 		for(j = 0; j < COLUMNS; j++){
 			if (map[i][j] == 1){
-			mvprintw(i+1, j+1, "@");
+				mvprintw(i+1, j+1, "@");
+			}
+			else{
+				mvprintw(i+1, j+1, " ");
 			}
 		}
 		j = 0;
@@ -124,7 +135,6 @@ void draw_creatures (int (&map)[ROWS][COLUMNS]){
 	attroff(COLOR_PAIR(2));	
 	
 	refresh();			/* Print it on to the real screen */
-	getch();
 }
 
 void draw_static (){
@@ -149,10 +159,16 @@ void draw_static (){
 	attroff(COLOR_PAIR(1));	
 }
 
-void loop (int (&map)[ROWS][COLUMNS]){
+void loop (int map [ROWS][COLUMNS]){
 	
 
 }
+
+void Sleep (float s){ 
+
+    int sec = s*1000000; 
+    usleep(sec); 
+} 
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
