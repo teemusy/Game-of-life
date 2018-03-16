@@ -41,6 +41,8 @@ void sleep_for_seconds (float s);
 void update_life (int map [ROWS][COLUMNS][LAYERS]);
 //print function for debugging
 void debug_print (int map [ROWS][COLUMNS][LAYERS]);
+//copy array layer
+void copy_map (int map [ROWS][COLUMNS][LAYERS]);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
@@ -122,9 +124,9 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 	for(i = 0; i < ROWS; i++){
 
 		for(j = 0; j < COLUMNS; j++){
-			map[i][j][1] = random_value_filler ();
+			map[i][j][0] = random_value_filler ();
 			//useless to copy first layer, should remove?
-			map[i][j][2] = map[i][j][1];
+			//map[i][j][2] = map[i][j][1];
 		}
 		j = 0;
 	}
@@ -152,7 +154,7 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	for(i = 0; i < ROWS; i++){
 		
 		for(j = 0; j < COLUMNS; j++){
-			if (map[i][j][1] == 1){
+			if (map[i][j][0] == 1){
 				mvprintw(i+1, j+1, "@");
 			}
 			else{
@@ -215,78 +217,138 @@ void sleep_for_seconds (float s){
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: update_life
-; DESCRIPTION:
-;	Input:
-;	Output:
+; DESCRIPTION: Determines if cells live, die or born again
+;	Input: Array
+;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
-	
-	int i, j, life_count, dead_count;
-	
+	//check why life_count int has to be declared as 0 for it to work
+	int i, j;
+	int life_count = 0;
+	int dead_count = 0;
+
 	
 	for (i = 0; i < ROWS; i++){
-		
 		for (j = 0; j < COLUMNS; j++){
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//check north
-			if (map [i][j][1] == 1 && i > 0){
-				if (map [i-1][j][1] == 1){
+			if (map [i][j][0] == 1 && i > 0){
+				if (map [i-1][j][0] == 1){
 					life_count++;
+				}
+			}
+			if (map [i][j][0] == 0 && i > 0){
+				if (map [i-1][j][0] == 1){
+					dead_count++;
 				}
 			}
 			//south
-			if (map [i][j][1] == 1 && i < ROWS){
-				if (map [i+1][j][1] == 1){
+			if (map [i][j][0] == 1 && i < ROWS){
+				if (map [i+1][j][0] == 1){
 					life_count++;
+				}	
+			}
+			if (map [i][j][0] == 0 && i < ROWS){
+				if (map [i+1][j][0] == 1){
+					dead_count++;
 				}	
 			}
 			//east
-			if (map [i][j][1] == 1 && j < COLUMNS){
-				if (map [i][j+1][1] == 1){
+			if (map [i][j][0] == 1 && j < COLUMNS){
+				if (map [i][j+1][0] == 1){
 					life_count++;
+				}
+			}
+			if (map [i][j][0] == 0 && j < COLUMNS){
+				if (map [i][j+1][0] == 1){
+					dead_count++;
 				}
 			}
 			//west
-			if (map [i][j][1] == 1 && j > 0){
-				if (map [i][j-1][1] == 1){
+			if (map [i][j][0] == 1 && j > 0){
+				if (map [i][j-1][0] == 1){
 					life_count++;
 				}
-			}			
+			}	
+			if (map [i][j][0] == 0 && j > 0){
+				if (map [i][j-1][0] == 1){
+					dead_count++;
+				}
+			}				
 			//northeast
-			if (map [i][j][1] == 1 && i > 0 && j < COLUMNS){
-				if (map [i-1][j+1][1] == 1){
+			if (map [i][j][0] == 1 && i > 0 && j < COLUMNS){
+				if (map [i-1][j+1][0] == 1){
 					life_count++;
+				}
+			}
+			if (map [i][j][0] == 0 && i > 0 && j < COLUMNS){
+				if (map [i-1][j+1][0] == 1){
+					dead_count++;
 				}
 			}
 			//southeast
-			if (map [i][j][1] == 1 && i < ROWS && j < COLUMNS){
-				if (map [i+1][j+1][1] == 1){
+			if (map [i][j][0] == 1 && i < ROWS && j < COLUMNS){
+				if (map [i+1][j+1][0] == 1){
 					life_count++;
 				}	
 			}
+			if (map [i][j][0] == 0 && i < ROWS && j < COLUMNS){
+				if (map [i+1][j+1][0] == 1){
+					dead_count++;
+				}	
+			}
 			//northwest
-			if (map [i][j][1] == 1 && i > 0 && j > 0){
-				if (map [i-1][j-1][1] == 1){
+			if (map [i][j][0] == 1 && i > 0 && j > 0){
+				if (map [i-1][j-1][0] == 1){
 					life_count++;
+				}
+			}
+			if (map [i][j][0] == 0 && i > 0 && j > 0){
+				if (map [i-1][j-1][0] == 1){
+					dead_count++;
 				}
 			}
 			//southwest
-			if (map [i][j][1] == 1 && i < ROWS && j > 0){
-				if (map [i+1][j-1][1] == 1){
+			if (map [i][j][0] == 1 && i < ROWS && j > 0){
+				if (map [i+1][j-1][0] == 1){
 					life_count++;
 				}
 			}
+			if (map [i][j][0] == 0 && i < ROWS && j > 0){
+				if (map [i+1][j-1][0] == 1){
+					dead_count++;
+				}
+			}
 			
-			//else if could be replaced with else
-		
+			//determine if cell lives, dies or a new one borns, update to second layer of map
+			if (life_count < 2){
+				map[i][j][1] = 0;
+			}
+			else if (life_count > 1 && life_count < 4){
+				map[i][j][1] = 1;
+			}
+			else if (life_count > 3){
+				map[i][j][1] = 0;	
+			}
+			
+			if (dead_count == 3){
+				map[i][j][1] = 1;
+			}
 		}
 		j = 0;
 		
 	}
+	
+	//only print when in debug mode
+	if (DEBUG_MODE == 1){
 	printf("life_count: %d \t dead_count: %d \n\n", life_count, dead_count);
+	}
+	//copies second, temporary layer of the map to the first one to be printed
+	copy_map(map);
+	//reset counters for next generation
 	life_count = 0;
 	dead_count = 0;
 }
@@ -306,12 +368,35 @@ void debug_print (int map [ROWS][COLUMNS][LAYERS]){
 	
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
-			printf ("%d", map[i][j][1]);
+			printf ("%d", map[i][j][0]);
 		}
 		j = 0;
 		printf("\n");
 	}
 	printf("\n");
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: copy_map
+; DESCRIPTION: Copies the second layer of the array to the first one, second layer acts as a temp
+;	Input: Array
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void copy_map (int map [ROWS][COLUMNS][LAYERS]){
+	int i, j, temp_value;
+	
+	for (i = 0; i < ROWS; i++){
+		for (j = 0; j < COLUMNS; j++){
+			temp_value = map [i][j][1];
+			map [i][j][0] = temp_value;
+			
+		}
+		
+	}
+	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
