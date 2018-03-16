@@ -13,9 +13,10 @@
 #define ROWS 10
 #define COLUMNS 10
 #define LAYERS 2
+#define TIME_BETWEEN_REBIRTH 1
 //for later use to determine initial seed, not in use atm
 #define FILL_PERCENTAGE 70
-//debug mode wont run ncurses for easier debugging
+//debug mode disables ncurses for easier debugging
 #define DEBUG_MODE 1
 
 /* Global variables */
@@ -58,9 +59,9 @@ int main(void) {
 	
 	if (DEBUG_MODE == 1){
 		while(true){
-			sleep_for_seconds(1);
+			
 			debug_print (map);
-			//map_filler (map);
+			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
 		}
 	}
@@ -69,17 +70,17 @@ int main(void) {
 		initscr();
 		curs_set(0);
 		start_color();
-		
+		//draws borders
 		draw_static (); 
 		
 		while(true){
-			sleep_for_seconds(1);
+			
 			draw_creatures (map);
-			//map_filler (map);
+			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
 
 		}
-		endwin();			//End curses mode		  */
+		endwin();			/*End curses mode */
 	}
 	
 	return 0;
@@ -89,14 +90,32 @@ int main(void) {
 /*********************************************************************
 *    FUNCTIONS                                                     *
 **********************************************************************/
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: random_value_filler
+; DESCRIPTION: Returns either 1 or 0
+;	Input: None
+;	Output: Randomly 1 or 0
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 int random_value_filler (){
 	int random_value;
 	
 	random_value = (rand() % 2);
 	return random_value;
 }
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: map_filler
+; DESCRIPTION: Fills map array with 1's or 0's
+;	Input: Array
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 	int i, j;
 	
@@ -110,7 +129,16 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 		j = 0;
 	}
 }
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: draw_creatures
+; DESCRIPTION: Draws creatures using array cells as locations, uses ncurses
+;	Input: Array
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	int i, j;
 	
@@ -137,7 +165,16 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	
 	refresh();			/* Print it on to the real screen */
 }
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: draw_static
+; DESCRIPTION: Draws borders for creatures, uses ncurses
+;	Input: None
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void draw_static (){
 	int i;
 	
@@ -159,13 +196,31 @@ void draw_static (){
 	}
 	attroff(COLOR_PAIR(1));	
 }
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: sleep_for_seconds
+; DESCRIPTION: Sleeps for wanted amount of time
+;	Input: Seconds as float number
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void sleep_for_seconds (float s){ 
 
     int sec = s*1000000; 
     usleep(sec); 
 } 
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: update_life
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 	
 	int i, j, life_count, dead_count;
@@ -174,19 +229,77 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 	for (i = 0; i < ROWS; i++){
 		
 		for (j = 0; j < COLUMNS; j++){
-			//check north
 			//check if it's legal array value, eg. not -1
-			if (i > 0){
-				
-				
+			//check if cell has life and if it's inside the array
+			//check north
+			if (map [i][j][1] == 1 && i > 0){
+				if (map [i-1][j][1] == 1){
+					life_count++;
+				}
+			}
+			//south
+			if (map [i][j][1] == 1 && i < ROWS){
+				if (map [i+1][j][1] == 1){
+					life_count++;
+				}	
+			}
+			//east
+			if (map [i][j][1] == 1 && j < COLUMNS){
+				if (map [i][j+1][1] == 1){
+					life_count++;
+				}
+			}
+			//west
+			if (map [i][j][1] == 1 && j > 0){
+				if (map [i][j-1][1] == 1){
+					life_count++;
+				}
+			}			
+			//northeast
+			if (map [i][j][1] == 1 && i > 0 && j < COLUMNS){
+				if (map [i-1][j+1][1] == 1){
+					life_count++;
+				}
+			}
+			//southeast
+			if (map [i][j][1] == 1 && i < ROWS && j < COLUMNS){
+				if (map [i+1][j+1][1] == 1){
+					life_count++;
+				}	
+			}
+			//northwest
+			if (map [i][j][1] == 1 && i > 0 && j > 0){
+				if (map [i-1][j-1][1] == 1){
+					life_count++;
+				}
+			}
+			//southwest
+			if (map [i][j][1] == 1 && i < ROWS && j > 0){
+				if (map [i+1][j-1][1] == 1){
+					life_count++;
+				}
 			}
 			
+			//else if could be replaced with else
+		
 		}
 		j = 0;
 		
 	}
+	printf("life_count: %d \t dead_count: %d \n\n", life_count, dead_count);
+	life_count = 0;
+	dead_count = 0;
 }
-
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: debug_print
+; DESCRIPTION: Allows easier debugging by disabling ncurses and printing map to console
+;	Input: Array
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 void debug_print (int map [ROWS][COLUMNS][LAYERS]){
 	
 	int i, j;
