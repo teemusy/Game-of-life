@@ -1,3 +1,5 @@
+/*compile with -lncurses option*/
+
 /*-------------------------------------------------------------------*
 *    HEADER FILES                                                    *
 *--------------------------------------------------------------------*/
@@ -10,14 +12,15 @@
 /* Control flags */
 
 /* Global constants */
-#define ROWS 10
-#define COLUMNS 10
+//determines the size of the map
+#define ROWS 50
+#define COLUMNS 100
 #define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 1
 //for later use to determine initial seed, not in use atm
 #define FILL_PERCENTAGE 70
-//debug mode disables ncurses for easier debugging
-#define DEBUG_MODE 1
+//debug mode disables ncurses for easier debugging, recommend to decrease map size
+#define DEBUG_MODE 0
 
 /* Global variables */
 
@@ -49,7 +52,9 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]);
 **********************************************************************/
 
 //TODO
-
+//iteration count
+//pause function
+//reverse function??
 
 int main(void) {
 	
@@ -225,9 +230,7 @@ void sleep_for_seconds (float s){
 ;*********************************************************************/
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 	//check why life_count int has to be declared as 0 for it to work
-	int i, j;
-	int life_count = 0;
-	int dead_count = 0;
+	int i, j, life_count, dead_count;
 
 	
 	for (i = 0; i < ROWS; i++){
@@ -337,20 +340,21 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			if (dead_count == 3){
 				map[i][j][1] = 1;
 			}
+			//reset counters for next cell
+			life_count = 0;
+			dead_count = 0;
 		}
 		j = 0;
 		
 	}
 	
-	//only print when in debug mode
+	//only print when in debug mode, should remove in future?
 	if (DEBUG_MODE == 1){
 	printf("life_count: %d \t dead_count: %d \n\n", life_count, dead_count);
 	}
 	//copies second, temporary layer of the map to the first one to be printed
 	copy_map(map);
-	//reset counters for next generation
-	life_count = 0;
-	dead_count = 0;
+
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
