@@ -15,6 +15,8 @@
 #define LAYERS 2
 //for later use to determine initial seed, not in use atm
 #define FILL_PERCENTAGE 70
+//debug mode wont run ncurses for easier debugging
+#define DEBUG_MODE 1
 
 /* Global variables */
 
@@ -44,50 +46,42 @@ void debug_print (int map [ROWS][COLUMNS][LAYERS]);
 **********************************************************************/
 
 //TODO
-//-add second layer to map for temp use or use second array for it
+
 
 int main(void) {
 	
-	//declare variables
 	int random_value;
 	int map [ROWS][COLUMNS][LAYERS];
 	
-	//temp check for input, c == 27 == esc
-	//char c;
-	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
+	map_filler (map); //fill map with random booleans
 	
-	//ncurses init
-	/*initscr();
-	curs_set(0);
-	start_color();
-	
-	draw_static (); 
-	*/
-	
-	/*draw static stuff */
-	//fill map with random booleans
-	map_filler (map);
-	
-	
-	
-	while(true)
-    {
+	if (DEBUG_MODE == 1){
+		while(true){
+			sleep_for_seconds(1);
+			debug_print (map);
+			//map_filler (map);
+			update_life (map);
+		}
+	}
+	else {
+		//ncurses init
+		initscr();
+		curs_set(0);
+		start_color();
 		
-		sleep_for_seconds(1);
-		//fill map with 1's and 0's
-		debug_print (map);
-		//draw creatures
-		update_life (map);
-		//draw_creatures (map);
+		draw_static (); 
+		
+		while(true){
+			sleep_for_seconds(1);
+			draw_creatures (map);
+			//map_filler (map);
+			update_life (map);
 
-		//c=getch();
-        //if (c==27)
-		//	break;
-    }
-
-
-	endwin();			//End curses mode		  */
+		}
+		endwin();			//End curses mode		  */
+	}
+	
 	return 0;
 	
 }/* end of main */
@@ -191,8 +185,6 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 		j = 0;
 		
 	}
-	
-
 }
 
 void debug_print (int map [ROWS][COLUMNS][LAYERS]){
@@ -202,11 +194,9 @@ void debug_print (int map [ROWS][COLUMNS][LAYERS]){
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
 			printf ("%d", map[i][j][1]);
-			
 		}
 		j = 0;
 		printf("\n");
-		
 	}
 	printf("\n");
 }
