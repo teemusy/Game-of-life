@@ -2,10 +2,7 @@
 *    HEADER FILES                                                    *
 *--------------------------------------------------------------------*/
 #include <stdio.h>
-//#include <cstdlib>
 #include <curses.h>
-#include <time.h>
-#include <unistd.h>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
@@ -13,8 +10,13 @@
 /* Control flags */
 
 /* Global constants */
-const int ROWS = 40;
-const int COLUMNS = 100;
+#define ROWS 10
+#define COLUMNS 10
+#define LAYERS 2
+//for later use to determine initial seed, not in use atm
+#define FILL_PERCENTAGE 70
+//debug mode wont run ncurses for easier debugging
+#define DEBUG_MODE 1
 
 /* Global variables */
 
@@ -24,64 +26,62 @@ const int COLUMNS = 100;
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
 
-//fill map with 1 or 0
+//fills both layers of map with 1 or 0
 int random_value_filler ();
 //fill map with random number
-void map_filler (int map[ROWS][COLUMNS]);
+void map_filler (int map [ROWS][COLUMNS][LAYERS]);
 //draw static stuff
 void draw_static ();
 //draw creatures with ncurses
-void draw_creatures (int map [ROWS][COLUMNS]);
-
-//testing looping function, not in use atm
-void loop (int map [ROWS][COLUMNS]);
-
-//testing sleep
-void Sleep (float s);
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS]);
+//sleep function
+void sleep_for_seconds (float s);
+//check if creature lives, dies or regenerates, then update map
+void update_life (int map [ROWS][COLUMNS][LAYERS]);
+//print function for debugging
+void debug_print (int map [ROWS][COLUMNS][LAYERS]);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
 
+//TODO
+
+
 int main(void) {
 	
-	//declare variables
 	int random_value;
-	int map[ROWS][COLUMNS];
-	
-	//temp check for input, c == 27 == esc
-	//char c;
+	int map [ROWS][COLUMNS][LAYERS];
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
+	map_filler (map); //fill map with random booleans
 	
-	//ncurses init
-	initscr();
-	curs_set(0);
-	start_color();
-	
-	//map init
-	 
-	draw_static (); //draw static stuff */
-	
-	//testing update function
-	
-	//miksei päivity automaattisesti ja paras tapa painottaa tiettyä arvoa
-	while(true)
-    {
+	if (DEBUG_MODE == 1){
+		while(true){
+			sleep_for_seconds(1);
+			debug_print (map);
+			//map_filler (map);
+			update_life (map);
+		}
+	}
+	else {
+		//ncurses init
+		initscr();
+		curs_set(0);
+		start_color();
 		
-		Sleep(1);
-		//fill map with 1's and 0's
-		map_filler (map);
-		//draw creatures
-		draw_creatures (map);
+		draw_static (); 
+		
+		while(true){
+			sleep_for_seconds(1);
+			draw_creatures (map);
+			//map_filler (map);
+			update_life (map);
 
-		/*c=getch();
-        if (c==27)
-			break;*/
-    }
-
-
-	endwin();			//End curses mode		  */
+		}
+		endwin();			//End curses mode		  */
+	}
+	
 	return 0;
 	
 }/* end of main */
@@ -97,20 +97,21 @@ int random_value_filler (){
 	return random_value;
 }
 
-void map_filler (int map [ROWS][COLUMNS]){
+void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 	int i, j;
 	
 	for(i = 0; i < ROWS; i++){
-		map[i][j] = random_value_filler ();
-		
+
 		for(j = 0; j < COLUMNS; j++){
-			map[i][j] = random_value_filler ();
+			map[i][j][1] = random_value_filler ();
+			//useless to copy first layer, should remove?
+			map[i][j][2] = map[i][j][1];
 		}
 		j = 0;
 	}
 }
 
-void draw_creatures (int map [ROWS][COLUMNS]){
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	int i, j;
 	
 	//declare color pairs
@@ -123,7 +124,7 @@ void draw_creatures (int map [ROWS][COLUMNS]){
 	for(i = 0; i < ROWS; i++){
 		
 		for(j = 0; j < COLUMNS; j++){
-			if (map[i][j] == 1){
+			if (map[i][j][1] == 1){
 				mvprintw(i+1, j+1, "@");
 			}
 			else{
@@ -159,16 +160,46 @@ void draw_static (){
 	attroff(COLOR_PAIR(1));	
 }
 
-void loop (int map [ROWS][COLUMNS]){
-	
-
-}
-
-void Sleep (float s){ 
+void sleep_for_seconds (float s){ 
 
     int sec = s*1000000; 
     usleep(sec); 
 } 
+
+void update_life (int map [ROWS][COLUMNS][LAYERS]) {
+	
+	int i, j, life_count, dead_count;
+	
+	
+	for (i = 0; i < ROWS; i++){
+		
+		for (j = 0; j < COLUMNS; j++){
+			//check north
+			//check if it's legal array value, eg. not -1
+			if (i > 0){
+				
+				
+			}
+			
+		}
+		j = 0;
+		
+	}
+}
+
+void debug_print (int map [ROWS][COLUMNS][LAYERS]){
+	
+	int i, j;
+	
+	for (i = 0; i < ROWS; i++){
+		for (j = 0; j < COLUMNS; j++){
+			printf ("%d", map[i][j][1]);
+		}
+		j = 0;
+		printf("\n");
+	}
+	printf("\n");
+}
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
