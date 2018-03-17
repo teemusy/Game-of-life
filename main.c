@@ -18,7 +18,7 @@
 #define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 1
 //to determine initial seed
-#define FILL_PERCENTAGE 20
+#define FILL_PERCENTAGE 30
 
 /* Global variables */
 
@@ -272,11 +272,12 @@ void sleep_for_seconds (float s){
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 
 	int i, j, life_count, dead_count, creature_count;
-	
+	creature_count = 0;
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
 			
 			//keeps track on creature count, doesn't work correctly
+			
 			if (map [i][j][0] == 1){
 				creature_count++;
 			}
@@ -397,7 +398,6 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 		j = 0;
 	}
 	print_count (creature_count);
-	creature_count = 0;
 	//copies second, temporary layer of the map to the first one to be printed
 	copy_map(map);
 }
