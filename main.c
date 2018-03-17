@@ -18,12 +18,12 @@
 #define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 1
 //for later use to determine initial seed, not in use atm
-#define FILL_PERCENTAGE 70
-//debug mode disables ncurses for easier debugging, recommend to decrease map size
-#define DEBUG_MODE 0
+#define FILL_PERCENTAGE 20
+//debug mode disables ncurses for easier debugging, recommended to decrease map size
+//#define DEBUG_MODE 0
 
 /* Global variables */
-
+int DEBUG_MODE;
 /* Global structures */
 
 /*-------------------------------------------------------------------*
@@ -46,28 +46,58 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]);
 void debug_print (int map [ROWS][COLUMNS][LAYERS]);
 //copy array layer
 void copy_map (int map [ROWS][COLUMNS][LAYERS]);
+//print statistics
+void print_stats (int iteration);
+void print_count (int creature_count);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
 
 //TODO
-//iteration count
+//fix iteration count to refresh correctly
 //pause function
-//reverse function??
+//option to determine initial fill percentage
+//determine map size by console size
+//improve how command line arguments work
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	
-	int random_value;
+	int random_value, iteration;
 	int map [ROWS][COLUMNS][LAYERS];
+	
+	//command line option for debugging mode, maybe switch case is not the best way?
+	//https://www.codingunit.com/c-tutorial-command-line-parameter-parsing
+	while ((argc > 1) && (argv[1][0] == '-'))
+	{
+		switch (argv[1][1])
+		{
+			case 'D':
+				DEBUG_MODE = 1;
+				break;
+
+			default:
+				DEBUG_MODE = 0;
+				break;
+		}
+		++argv;
+		--argc;
+	}
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	map_filler (map); //fill map with random booleans
 	
+	iteration = 1;
 	if (DEBUG_MODE == 1){
 		while(true){
 			
 			debug_print (map);
+			
+			
+			//print iteration
+			print_stats(iteration);
+			
+			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
 		}
@@ -83,6 +113,11 @@ int main(void) {
 		while(true){
 			
 			draw_creatures (map);
+			
+			
+			//print iteration
+			print_stats(iteration);
+			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
 
@@ -110,9 +145,25 @@ int main(void) {
 int random_value_filler (){
 	int random_value;
 	
-	random_value = (rand() % 2);
+	random_value = (rand() % 100);
+	
+	if (random_value < FILL_PERCENTAGE){
+		random_value = 1;
+	}
+	else {
+		random_value = 0;
+	}
+	
 	return random_value;
 }
+
+/*int random_value_filler (){
+	int random_value;
+	
+	random_value = (rand() % 2);
+	return random_value;
+}*/
+
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -229,21 +280,28 @@ void sleep_for_seconds (float s){
 ; REMARKS when using this function:
 ;*********************************************************************/
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
-	//check why life_count int has to be declared as 0 for it to work
-	int i, j, life_count, dead_count;
 
+	int i, j, life_count, dead_count, creature_count;
 	
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
+			
+			//keeps track on creature count, doesn't work correctly
+			if (map [i][j][0] == 1){
+				creature_count++;
+			}
+
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
+			//if cell has no life it checks if there's life around it
+			
 			//check north
 			if (map [i][j][0] == 1 && i > 0){
 				if (map [i-1][j][0] == 1){
 					life_count++;
 				}
 			}
-			if (map [i][j][0] == 0 && i > 0){
+			else if (map [i][j][0] == 0 && i > 0){
 				if (map [i-1][j][0] == 1){
 					dead_count++;
 				}
@@ -254,7 +312,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}	
 			}
-			if (map [i][j][0] == 0 && i < ROWS){
+			else if (map [i][j][0] == 0 && i < ROWS){
 				if (map [i+1][j][0] == 1){
 					dead_count++;
 				}	
@@ -265,7 +323,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}
 			}
-			if (map [i][j][0] == 0 && j < COLUMNS){
+			else if (map [i][j][0] == 0 && j < COLUMNS){
 				if (map [i][j+1][0] == 1){
 					dead_count++;
 				}
@@ -276,7 +334,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}
 			}	
-			if (map [i][j][0] == 0 && j > 0){
+			else if (map [i][j][0] == 0 && j > 0){
 				if (map [i][j-1][0] == 1){
 					dead_count++;
 				}
@@ -287,7 +345,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}
 			}
-			if (map [i][j][0] == 0 && i > 0 && j < COLUMNS){
+			else if (map [i][j][0] == 0 && i > 0 && j < COLUMNS){
 				if (map [i-1][j+1][0] == 1){
 					dead_count++;
 				}
@@ -298,7 +356,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}	
 			}
-			if (map [i][j][0] == 0 && i < ROWS && j < COLUMNS){
+			else if (map [i][j][0] == 0 && i < ROWS && j < COLUMNS){
 				if (map [i+1][j+1][0] == 1){
 					dead_count++;
 				}	
@@ -309,7 +367,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}
 			}
-			if (map [i][j][0] == 0 && i > 0 && j > 0){
+			else if (map [i][j][0] == 0 && i > 0 && j > 0){
 				if (map [i-1][j-1][0] == 1){
 					dead_count++;
 				}
@@ -320,7 +378,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 					life_count++;
 				}
 			}
-			if (map [i][j][0] == 0 && i < ROWS && j > 0){
+			else if (map [i][j][0] == 0 && i < ROWS && j > 0){
 				if (map [i+1][j-1][0] == 1){
 					dead_count++;
 				}
@@ -340,18 +398,17 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			if (dead_count == 3){
 				map[i][j][1] = 1;
 			}
+			
 			//reset counters for next cell
 			life_count = 0;
 			dead_count = 0;
+
 		}
 		j = 0;
-		
 	}
 	
-	//only print when in debug mode, should remove in future?
-	if (DEBUG_MODE == 1){
-	printf("life_count: %d \t dead_count: %d \n\n", life_count, dead_count);
-	}
+	print_count (creature_count);
+	creature_count = 0;
 	//copies second, temporary layer of the map to the first one to be printed
 	copy_map(map);
 
@@ -401,6 +458,56 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]){
 		
 	}
 	
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: print_stats
+; DESCRIPTION: Updates statistics on screen
+;	Input: Integer
+;	Output: None
+;  Used global variables: DEBUG_MODE
+; REMARKS when using this function:
+;*********************************************************************/
+void print_stats (int iteration){
+	
+	if (DEBUG_MODE == 1){
+		printf("Current iteration: %d \n", iteration);
+	}
+	else {
+		init_pair(1, COLOR_RED, COLOR_BLACK);
+		init_pair(2, COLOR_RED, COLOR_BLUE);
+		init_pair(3, COLOR_RED, COLOR_GREEN);
+		
+		attron(COLOR_PAIR(1));
+		mvprintw(ROWS + 2, 0, "Current iteration: %d", iteration);
+		attroff(COLOR_PAIR(1));	
+	}
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: print_count
+; DESCRIPTION: Updates count on screen, should combine with print_stats function
+;	Input: Integer
+;	Output: None
+;  Used global variables: DEBUG_MODE
+; REMARKS when using this function:
+;*********************************************************************/
+void print_count (int creature_count){
+	
+	if (DEBUG_MODE == 1){
+		printf("Creature count: %d \n", creature_count);
+	}
+	else {
+		init_pair(1, COLOR_RED, COLOR_BLACK);
+		init_pair(2, COLOR_RED, COLOR_BLUE);
+		init_pair(3, COLOR_RED, COLOR_GREEN);
+		
+		attron(COLOR_PAIR(1));
+		mvprintw(ROWS + 3, 0, "Creature count: %d \n", creature_count);
+		attroff(COLOR_PAIR(1));	
+	}
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
