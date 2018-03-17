@@ -17,12 +17,12 @@
 #define COLUMNS 100
 #define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 1
-//for later use to determine initial seed, not in use atm
+//to determine initial seed
 #define FILL_PERCENTAGE 20
-//debug mode disables ncurses for easier debugging, recommended to decrease map size
-//#define DEBUG_MODE 0
 
 /* Global variables */
+
+//debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
 /* Global structures */
 
@@ -57,7 +57,6 @@ void print_count (int creature_count);
 //TODO
 //fix iteration count to refresh correctly
 //pause function
-//option to determine initial fill percentage
 //determine map size by console size
 //improve how command line arguments work
 
@@ -93,7 +92,6 @@ int main(int argc, char *argv[]) {
 			
 			debug_print (map);
 			
-			
 			//print iteration
 			print_stats(iteration);
 			
@@ -113,8 +111,7 @@ int main(int argc, char *argv[]) {
 		while(true){
 			
 			draw_creatures (map);
-			
-			
+
 			//print iteration
 			print_stats(iteration);
 			iteration++;
@@ -156,13 +153,6 @@ int random_value_filler (){
 	
 	return random_value;
 }
-
-/*int random_value_filler (){
-	int random_value;
-	
-	random_value = (rand() % 2);
-	return random_value;
-}*/
 
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -266,8 +256,8 @@ void draw_static (){
 ;*********************************************************************/
 void sleep_for_seconds (float s){ 
 
-    int sec = s*1000000; 
-    usleep(sec); 
+	int sec = s*1000000; 
+	usleep(sec); 
 } 
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -406,12 +396,10 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 		}
 		j = 0;
 	}
-	
 	print_count (creature_count);
 	creature_count = 0;
 	//copies second, temporary layer of the map to the first one to be printed
 	copy_map(map);
-
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
