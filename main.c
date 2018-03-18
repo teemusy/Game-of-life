@@ -17,12 +17,12 @@
 #define COLUMNS 100
 #define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 1
-//for later use to determine initial seed, not in use atm
-#define FILL_PERCENTAGE 20
-//debug mode disables ncurses for easier debugging, recommended to decrease map size
-//#define DEBUG_MODE 0
+//to determine initial seed
+#define FILL_PERCENTAGE 30
 
 /* Global variables */
+
+//debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
 /* Global structures */
 
@@ -55,44 +55,25 @@ void print_count (int creature_count);
 **********************************************************************/
 
 //TODO
-//fix iteration count to refresh correctly
 //pause function
-//option to determine initial fill percentage
 //determine map size by console size
 //improve how command line arguments work
+//replace cmd line arguments with menu
 
 int main(int argc, char *argv[]) {
 	
 	int random_value, iteration;
 	int map [ROWS][COLUMNS][LAYERS];
-	
-	//command line option for debugging mode, maybe switch case is not the best way?
-	//https://www.codingunit.com/c-tutorial-command-line-parameter-parsing
-	while ((argc > 1) && (argv[1][0] == '-'))
-	{
-		switch (argv[1][1])
-		{
-			case 'D':
-				DEBUG_MODE = 1;
-				break;
 
-			default:
-				DEBUG_MODE = 0;
-				break;
-		}
-		++argv;
-		--argc;
-	}
-	
+		
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	map_filler (map); //fill map with random booleans
 	
-	iteration = 1;
+	iteration = 0;
 	if (DEBUG_MODE == 1){
 		while(true){
 			
 			debug_print (map);
-			
 			
 			//print iteration
 			print_stats(iteration);
@@ -113,8 +94,7 @@ int main(int argc, char *argv[]) {
 		while(true){
 			
 			draw_creatures (map);
-			
-			
+
 			//print iteration
 			print_stats(iteration);
 			iteration++;
@@ -154,15 +134,9 @@ int random_value_filler (){
 		random_value = 0;
 	}
 	
+
 	return random_value;
 }
-
-/*int random_value_filler (){
-	int random_value;
-	
-	random_value = (rand() % 2);
-	return random_value;
-}*/
 
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -181,8 +155,6 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 
 		for(j = 0; j < COLUMNS; j++){
 			map[i][j][0] = random_value_filler ();
-			//useless to copy first layer, should remove?
-			//map[i][j][2] = map[i][j][1];
 		}
 		j = 0;
 	}
@@ -221,7 +193,7 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	}
 	attroff(COLOR_PAIR(2));	
 	
-	refresh();			/* Print it on to the real screen */
+	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -252,7 +224,8 @@ void draw_static (){
 		mvprintw(i, 0, "@");
 		mvprintw(i, COLUMNS + 1, "@");
 	}
-	attroff(COLOR_PAIR(1));	
+	attroff(COLOR_PAIR(1));
+	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -266,8 +239,8 @@ void draw_static (){
 ;*********************************************************************/
 void sleep_for_seconds (float s){ 
 
-    int sec = s*1000000; 
-    usleep(sec); 
+	int sec = s*1000000; 
+	usleep(sec); 
 } 
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -282,11 +255,12 @@ void sleep_for_seconds (float s){
 void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 
 	int i, j, life_count, dead_count, creature_count;
-	
+	creature_count = 0;
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
 			
 			//keeps track on creature count, doesn't work correctly
+			
 			if (map [i][j][0] == 1){
 				creature_count++;
 			}
@@ -406,12 +380,9 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 		}
 		j = 0;
 	}
-	
 	print_count (creature_count);
-	creature_count = 0;
 	//copies second, temporary layer of the map to the first one to be printed
 	copy_map(map);
-
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -455,9 +426,7 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]){
 			map [i][j][0] = temp_value;
 			
 		}
-		
 	}
-	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -483,6 +452,7 @@ void print_stats (int iteration){
 		mvprintw(ROWS + 2, 0, "Current iteration: %d", iteration);
 		attroff(COLOR_PAIR(1));	
 	}
+	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -508,6 +478,7 @@ void print_count (int creature_count){
 		mvprintw(ROWS + 3, 0, "Creature count: %d \n", creature_count);
 		attroff(COLOR_PAIR(1));	
 	}
+	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
