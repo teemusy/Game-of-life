@@ -97,6 +97,7 @@ int main(int argc, char *argv[]) {
 
 			//print iteration
 			print_stats(iteration);
+			refresh();
 			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
@@ -192,8 +193,6 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 		j = 0;
 	}
 	attroff(COLOR_PAIR(2));	
-	
-	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -225,7 +224,6 @@ void draw_static (){
 		mvprintw(i, COLUMNS + 1, "@");
 	}
 	attroff(COLOR_PAIR(1));
-	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -452,7 +450,6 @@ void print_stats (int iteration){
 		mvprintw(ROWS + 2, 0, "Current iteration: %d", iteration);
 		attroff(COLOR_PAIR(1));	
 	}
-	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -478,7 +475,6 @@ void print_count (int creature_count){
 		mvprintw(ROWS + 3, 0, "Creature count: %d \n", creature_count);
 		attroff(COLOR_PAIR(1));	
 	}
-	refresh();
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
