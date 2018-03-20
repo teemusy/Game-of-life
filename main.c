@@ -70,9 +70,9 @@ int main(int argc, char *argv[]) {
 	if (argc > 1){
 		sscanf(argv[1], "%s", &cmd_line_input[50]);
 		strcpy (cmd_line_input, argv[1]);
-			if (strcmp(cmd_line_input, "-d") == 0){
-				DEBUG_MODE = 1;
-			}
+		if (strcmp(cmd_line_input, "-d") == 0){
+			DEBUG_MODE = 1;
+		}
 	}
 	
 	
