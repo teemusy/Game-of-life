@@ -5,6 +5,7 @@
 *--------------------------------------------------------------------*/
 #include <stdio.h>
 #include <curses.h>
+#include <string.h>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
@@ -57,13 +58,24 @@ void print_count (int creature_count);
 //TODO
 //pause function
 //determine map size by console size
-//improve how command line arguments work
-//replace cmd line arguments with menu
+
 
 int main(int argc, char *argv[]) {
 	
 	int random_value, iteration;
 	int map [ROWS][COLUMNS][LAYERS];
+	char cmd_line_input[50] = "\0";
+	
+	//checks for debug_mode
+	if (argc > 1){
+		sscanf(argv[1], "%s", &cmd_line_input[50]);
+		strcpy (cmd_line_input, argv[1]);
+			if (strcmp(cmd_line_input, "-d") == 0){
+				DEBUG_MODE = 1;
+			}
+	}
+	
+	
 
 		
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
