@@ -20,7 +20,21 @@
 #define TIME_BETWEEN_REBIRTH 1
 //to determine initial seed
 #define FILL_PERCENTAGE 30
-
+//define directions
+#define NORTH map [i-1][j][0]
+#define SOUTH map [i+1][j][0]
+#define EAST map [i][j+1][0]
+#define WEST map [i][j-1][0]
+#define NORTHEAST map [i-1][j+1][0]
+#define SOUTHEAST map [i+1][j+1][0]
+#define NORTHWEST map [i-1][j-1][0]
+#define SOUTHWEST map [i+1][j-1][0]
+//define game rules
+#define UNDERPOPULATION_LIMIT 2
+#define LIVE_MIN 2
+#define LIVE_MAX 3
+#define OVERPOPULATION_LIMIT 3
+#define REBIRTH_LIMIT 3
 /* Global variables */
 
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
@@ -230,7 +244,8 @@ void draw_static (){
 		mvprintw(0, i, "@");
 		mvprintw(ROWS + 1, i, "@");
 	}
-	//draw vertical borders
+	//draw vertical bordersgit status
+
 	for(i = 0; i < ROWS + 2; i++){
 		mvprintw(i, 0, "@");
 		mvprintw(i, COLUMNS + 1, "@");
@@ -279,109 +294,112 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
 			
+			
 			//check north
 			if (map [i][j][0] == 1 && i > 0){
-				if (map [i-1][j][0] == 1){
+				if (NORTH == 1){
 					life_count++;
 				}
 			}
 			else if (map [i][j][0] == 0 && i > 0){
-				if (map [i-1][j][0] == 1){
+				if (NORTH == 1){
 					dead_count++;
 				}
 			}
 			//south
 			if (map [i][j][0] == 1 && i < ROWS){
-				if (map [i+1][j][0] == 1){
+				if (SOUTH == 1){
 					life_count++;
 				}	
 			}
 			else if (map [i][j][0] == 0 && i < ROWS){
-				if (map [i+1][j][0] == 1){
+				if (SOUTH == 1){
 					dead_count++;
 				}	
 			}
 			//east
 			if (map [i][j][0] == 1 && j < COLUMNS){
-				if (map [i][j+1][0] == 1){
+				if (EAST == 1){
 					life_count++;
 				}
 			}
 			else if (map [i][j][0] == 0 && j < COLUMNS){
-				if (map [i][j+1][0] == 1){
+				if (EAST == 1){
 					dead_count++;
 				}
 			}
 			//west
 			if (map [i][j][0] == 1 && j > 0){
-				if (map [i][j-1][0] == 1){
+				if (WEST == 1){
 					life_count++;
 				}
 			}	
 			else if (map [i][j][0] == 0 && j > 0){
-				if (map [i][j-1][0] == 1){
+				if (WEST == 1){
 					dead_count++;
 				}
 			}				
 			//northeast
 			if (map [i][j][0] == 1 && i > 0 && j < COLUMNS){
-				if (map [i-1][j+1][0] == 1){
+				if (NORTHEAST == 1){
 					life_count++;
 				}
 			}
 			else if (map [i][j][0] == 0 && i > 0 && j < COLUMNS){
-				if (map [i-1][j+1][0] == 1){
+				if (NORTHEAST == 1){
 					dead_count++;
 				}
 			}
 			//southeast
 			if (map [i][j][0] == 1 && i < ROWS && j < COLUMNS){
-				if (map [i+1][j+1][0] == 1){
+				if (SOUTHEAST == 1){
 					life_count++;
 				}	
 			}
 			else if (map [i][j][0] == 0 && i < ROWS && j < COLUMNS){
-				if (map [i+1][j+1][0] == 1){
+				if (SOUTHEAST == 1){
 					dead_count++;
 				}	
 			}
 			//northwest
 			if (map [i][j][0] == 1 && i > 0 && j > 0){
-				if (map [i-1][j-1][0] == 1){
+				if (NORTHWEST == 1){
 					life_count++;
 				}
 			}
 			else if (map [i][j][0] == 0 && i > 0 && j > 0){
-				if (map [i-1][j-1][0] == 1){
+				if (NORTHWEST == 1){
 					dead_count++;
 				}
 			}
 			//southwest
 			if (map [i][j][0] == 1 && i < ROWS && j > 0){
-				if (map [i+1][j-1][0] == 1){
+				if (SOUTHWEST == 1){
 					life_count++;
 				}
 			}
 			else if (map [i][j][0] == 0 && i < ROWS && j > 0){
-				if (map [i+1][j-1][0] == 1){
+				if (SOUTHWEST == 1){
 					dead_count++;
 				}
 			}
 			
 			//determine if cell lives, dies or a new one borns, update to second layer of map
-			if (life_count < 2){
+			if (life_count < UNDERPOPULATION_LIMIT){
 				map[i][j][1] = 0;
 			}
-			else if (life_count > 1 && life_count < 4){
+			else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX){
 				map[i][j][1] = 1;
 			}
-			else if (life_count > 3){
+			else if (life_count > OVERPOPULATION_LIMIT){
 				map[i][j][1] = 0;	
 			}
 			
-			if (dead_count == 3){
+			if (dead_count == REBIRTH_LIMIT){
 				map[i][j][1] = 1;
 			}
+			
+
 			
 			//reset counters for next cell
 			life_count = 0;
