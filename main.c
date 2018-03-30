@@ -50,9 +50,9 @@ int random_value_filler ();
 //fill map with random number
 void map_filler (int map [ROWS][COLUMNS][LAYERS]);
 //draw static stuff
-void draw_static ();
+void draw_static (WINDOW *local_win);
 //draw creatures with ncurses
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS]);
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win);
 //sleep function
 void sleep_for_seconds (float s);
 //check if creature lives, dies or regenerates, then update map
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 	
 	int random_value, iteration;
 	int map [ROWS][COLUMNS][LAYERS];
-	char cmd_line_input[50] = "\0";
+	char cmd_line_input[50];
 	
 	//checks for debug_mode
 	if (argc > 1){
@@ -114,16 +114,20 @@ int main(int argc, char *argv[]) {
 		initscr();
 		curs_set(0);
 		start_color();
+		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
+		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
 		//draws borders
-		draw_static (); 
-		
+		draw_static (map_window); 
+		box(text_window,0,0);
 		while(true){
 			
-			draw_creatures (map);
-
+			draw_creatures (map, map_window);
+			
 			//print iteration
 			print_stats(iteration);
 			refresh();
+			wrefresh(map_window);
+			wrefresh(text_window);
 			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
@@ -196,7 +200,7 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
 	int i, j;
 	
 	//declare color pairs
@@ -205,20 +209,20 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 	init_pair(3, COLOR_RED, COLOR_GREEN);
 		
 	//draw creatures
-	attron(COLOR_PAIR(2));
+	wattron(local_win, COLOR_PAIR(2));
 	for(i = 0; i < ROWS; i++){
 		
 		for(j = 0; j < COLUMNS; j++){
 			if (map[i][j][0] == 1){
-				mvprintw(i+1, j+1, "@");
+				mvwprintw(local_win, i+1, j+1, "@");
 			}
 			else{
-				mvprintw(i+1, j+1, " ");
+				mvwprintw(local_win, i+1, j+1, " ");
 			}
 		}
 		j = 0;
 	}
-	attroff(COLOR_PAIR(2));	
+	wattroff(local_win, COLOR_PAIR(2));	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -230,7 +234,7 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void draw_static (){
+void draw_static (WINDOW *local_win){
 	int i;
 	
 	//declare color pairs
@@ -239,18 +243,18 @@ void draw_static (){
 	init_pair(3, COLOR_RED, COLOR_GREEN);
 	
 	//draw horizontal borders
-	attron(COLOR_PAIR(1));
+	wattron(local_win, COLOR_PAIR(1));
 	for(i = 0; i < COLUMNS + 2; i++){
-		mvprintw(0, i, "@");
-		mvprintw(ROWS + 1, i, "@");
+		mvwprintw(local_win, 0, i, "@");
+		mvwprintw(local_win, ROWS + 1, i, "@");
 	}
 	//draw vertical bordersgit status
 
 	for(i = 0; i < ROWS + 2; i++){
-		mvprintw(i, 0, "@");
-		mvprintw(i, COLUMNS + 1, "@");
+		mvwprintw(local_win, i, 0, "@");
+		mvwprintw(local_win, i, COLUMNS + 1, "@");
 	}
-	attroff(COLOR_PAIR(1));
+	wattroff(local_win, COLOR_PAIR(1));
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -477,7 +481,7 @@ void print_stats (int iteration){
 		init_pair(3, COLOR_RED, COLOR_GREEN);
 		
 		attron(COLOR_PAIR(1));
-		mvprintw(ROWS + 2, 0, "Current iteration: %d", iteration);
+		mvprintw(ROWS + 3, 1, "Current iteration: %d", iteration);
 		attroff(COLOR_PAIR(1));	
 	}
 }
