@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <curses.h>
 #include <string.h>
+#include <menu.h>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
@@ -35,6 +36,10 @@
 #define LIVE_MAX 3
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
+//define different populations
+#define RED_POP 0
+#define GREEN_POP 1
+#define BLUE_POP 2
 /* Global variables */
 
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
@@ -72,21 +77,27 @@ void print_count (int creature_count);
 //TODO
 //pause function
 //determine map size by console size
+//
 
 
 int main(int argc, char *argv[]) {
 	
-	int random_value, iteration;
+	int random_value, iteration, size_x, size_y, i;
 	int map [ROWS][COLUMNS][LAYERS];
 	char cmd_line_input[50];
 	
-	//checks for debug_mode
-	if (argc > 1){
-		sscanf(argv[1], "%s", &cmd_line_input[50]);
-		strcpy (cmd_line_input, argv[1]);
-			if (strcmp(cmd_line_input, "-d") == 0){
-				DEBUG_MODE = 1;
-			}
+	
+		
+	
+	for (i = 0; i < argc; i++){
+		//checks for flags
+		if (argc > 1){
+			sscanf(argv[1], "%s", &cmd_line_input[50]);
+			strcpy (cmd_line_input, argv[1]);
+				if (strcmp(cmd_line_input, "-d") == 0){
+					DEBUG_MODE = 1;
+				}
+		}
 	}
 	
 	
@@ -94,6 +105,8 @@ int main(int argc, char *argv[]) {
 		
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	map_filler (map); //fill map with random booleans
+	
+	
 	
 	iteration = 0;
 	if (DEBUG_MODE == 1){
@@ -112,13 +125,19 @@ int main(int argc, char *argv[]) {
 	else {
 		//ncurses init
 		initscr();
+		
+		//get screen size for terminal
+		getmaxyx(stdscr, size_x, size_y);
+		printf("x: %d, y: %d\n", size_x, size_y);
 		curs_set(0);
 		start_color();
 		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
+		WINDOW* menu_window = newwin(ROWS+2, 20, 0, COLUMNS+2);
 		//draws borders
 		draw_static (map_window); 
 		box(text_window,0,0);
+		box(menu_window,0,0);
 		while(true){
 			
 			draw_creatures (map, map_window);
@@ -128,6 +147,7 @@ int main(int argc, char *argv[]) {
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
+			wrefresh(menu_window);
 			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
@@ -135,7 +155,7 @@ int main(int argc, char *argv[]) {
 		}
 		endwin();			/*End curses mode */
 	}
-	
+
 	return 0;
 	
 }/* end of main */
@@ -248,7 +268,7 @@ void draw_static (WINDOW *local_win){
 		mvwprintw(local_win, 0, i, "@");
 		mvwprintw(local_win, ROWS + 1, i, "@");
 	}
-	//draw vertical bordersgit status
+	//draw vertical borders
 
 	for(i = 0; i < ROWS + 2; i++){
 		mvwprintw(local_win, i, 0, "@");
