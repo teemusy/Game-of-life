@@ -36,14 +36,17 @@
 #define LIVE_MAX 3
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
-//define different populations
+//define different population layer in map
 #define RED_POP 0
 #define GREEN_POP 1
 #define BLUE_POP 2
+
 /* Global variables */
 
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
+//for testing map loading mode
+int MAP_READ = 1;
 /* Global structures */
 
 /*-------------------------------------------------------------------*
@@ -69,6 +72,7 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]);
 //print statistics
 void print_stats (int iteration);
 void print_count (int creature_count);
+void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
@@ -104,8 +108,14 @@ int main(int argc, char *argv[]) {
 
 		
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
-	map_filler (map); //fill map with random booleans
 	
+	if (MAP_READ == 1){
+		 map_reader(map);
+		
+	}
+	else {
+		map_filler (map); //fill map with random booleans
+	}
 	
 	
 	iteration = 0;
@@ -207,7 +217,6 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 		for(j = 0; j < COLUMNS; j++){
 			map[i][j][0] = random_value_filler ();
 		}
-		j = 0;
 	}
 }
 /*********************************************************************
@@ -529,6 +538,40 @@ void print_count (int creature_count){
 		mvprintw(ROWS + 3, 0, "Creature count: %d \n", creature_count);
 		attroff(COLOR_PAIR(1));	
 	}
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: map_reader
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void map_reader(int map [ROWS][COLUMNS][LAYERS]){
+	
+	FILE *myFile;
+    myFile = fopen("map.txt", "r");
+	//read file into array
+    int numberArray[ROWS][COLUMNS];
+    int i, j, temp_value;
+
+    for (i = 0; i < ROWS; i++)
+    {	for(j = 0; j < COLUMNS; j++){
+			fscanf(myFile, "%d", &numberArray[i][j]);
+		}
+    }
+
+    for (i = 0; i < ROWS; i++){
+		for(j = 0; j < COLUMNS; j++){
+			temp_value = numberArray[i][j];
+			map[i][j][0] = temp_value;
+		}
+	}
+
+	fclose(myFile);
+	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
