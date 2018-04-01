@@ -46,7 +46,7 @@
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
 //for testing map loading mode
-int MAP_READ = 1;
+int MAP_READ = 0;
 /* Global structures */
 
 /*-------------------------------------------------------------------*
@@ -58,9 +58,9 @@ int random_value_filler ();
 //fill map with random number
 void map_filler (int map [ROWS][COLUMNS][LAYERS]);
 //draw static stuff
-void draw_static (WINDOW *local_win);
+void draw_static (WINDOW *local_win, int terminal_x, int terminal_y);
 //draw creatures with ncurses
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win);
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win, int terminal_x, int terminal_y);
 //sleep function
 void sleep_for_seconds (float s);
 //check if creature lives, dies or regenerates, then update map
@@ -73,6 +73,8 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]);
 void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(int map [ROWS][COLUMNS][LAYERS]);
+void draw_text_box(WINDOW *local_win, int terminal_x, int terminal_y);
+void menu_draw(WINDOW *local_win, int terminal_x, int terminal_y);
 
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
@@ -137,21 +139,22 @@ int main(int argc, char *argv[]) {
 		initscr();
 		
 		//get screen size for terminal
-		getmaxyx(stdscr, size_x, size_y);
+		getmaxyx(stdscr, size_y, size_x);
 		printf("x: %d, y: %d\n", size_x, size_y);
+		
 		curs_set(0);
 		start_color();
-		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
-		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
-		WINDOW* menu_window = newwin(ROWS+2, 20, 0, COLUMNS+2);
+		WINDOW* map_window = newwin((size_y / 4) * 3 + 1, (size_x / 3) * 2 +1, 0, 0);
+		WINDOW* text_window = newwin(size_y / 4, (size_x / 3) * 2 +1, (size_y / 4) * 3 + 1, 0);
+		WINDOW* menu_window = newwin(size_y, (size_x / 3), 0, (size_x / 3) * 2 + 1);
 		//draws borders
-		draw_static (map_window); 
-		box(text_window,0,0);
-		box(menu_window,0,0);
+		//draw_static (map_window, size_x, size_y); 
+		//box(menu_window,0,0);
 		while(true){
 			
-			draw_creatures (map, map_window);
-			
+			draw_creatures (map, map_window, size_x, size_y);
+			draw_text_box(text_window, size_x, size_y);
+			menu_draw(menu_window, size_x, size_y);
 			//print iteration
 			print_stats(iteration);
 			refresh();
@@ -229,7 +232,7 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
+void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win, int terminal_x, int terminal_y){
 	int i, j;
 	
 	//declare color pairs
@@ -239,9 +242,9 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
 		
 	//draw creatures
 	wattron(local_win, COLOR_PAIR(2));
-	for(i = 0; i < ROWS; i++){
+	for(i = 0; i < (terminal_y / 4) * 3; i++){
 		
-		for(j = 0; j < COLUMNS; j++){
+		for(j = 0; j < (terminal_x / 3) * 2 - 1; j++){
 			if (map[i][j][0] == 1){
 				mvwprintw(local_win, i+1, j+1, "@");
 			}
@@ -251,7 +254,23 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
 		}
 		j = 0;
 	}
+	
 	wattroff(local_win, COLOR_PAIR(2));	
+	
+	//draw horizontal borders
+	wattron(local_win, COLOR_PAIR(1));
+	for(i = 0; i <= (terminal_x / 3) * 2; i++){
+		mvwprintw(local_win, 0, i, "#");
+		mvwprintw(local_win, (terminal_y/4)*3, i, "#");
+	}
+	//draw vertical borders
+
+	for(i = 0; i <= (terminal_y / 4) * 3; i++){
+		mvwprintw(local_win, i, 0, "#");
+		mvwprintw(local_win, i, (terminal_x / 3) * 2, "#");
+	}
+	wattroff(local_win, COLOR_PAIR(2));
+	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -263,7 +282,7 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void draw_static (WINDOW *local_win){
+void draw_static (WINDOW *local_win, int terminal_x, int terminal_y){
 	int i;
 	
 	//declare color pairs
@@ -273,15 +292,15 @@ void draw_static (WINDOW *local_win){
 	
 	//draw horizontal borders
 	wattron(local_win, COLOR_PAIR(1));
-	for(i = 0; i < COLUMNS + 2; i++){
-		mvwprintw(local_win, 0, i, "@");
-		mvwprintw(local_win, ROWS + 1, i, "@");
+	for(i = 0; i <= (terminal_x / 3) * 2; i++){
+		mvwprintw(local_win, 0, i, "#");
+		mvwprintw(local_win, (terminal_y/4)*3, i, "#");
 	}
 	//draw vertical borders
 
-	for(i = 0; i < ROWS + 2; i++){
-		mvwprintw(local_win, i, 0, "@");
-		mvwprintw(local_win, i, COLUMNS + 1, "@");
+	for(i = 0; i <= (terminal_y / 4) * 3; i++){
+		mvwprintw(local_win, i, 0, "#");
+		mvwprintw(local_win, i, (terminal_x / 3) * 2, "#");
 	}
 	wattroff(local_win, COLOR_PAIR(1));
 }
@@ -571,6 +590,76 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
 	}
 
 	fclose(myFile);
+	
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void draw_text_box(WINDOW *local_win, int terminal_x, int terminal_y){
+	
+	//WINDOW* text_window = newwin(size_y / 4, (size_x / 3) * 2 +1, (size_y / 4) * 3 + 1, 0);
+	
+	int i;
+	
+	//declare color pairs
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLUE);
+	init_pair(3, COLOR_RED, COLOR_GREEN);
+	
+	//draw horizontal borders
+	wattron(local_win, COLOR_PAIR(3));
+	for(i = 0; i <= (terminal_x / 3) * 2; i++){
+		mvwprintw(local_win, 0, i, "#");
+		mvwprintw(local_win, (terminal_y/4)-2, i, "#");
+	}
+	//draw vertical borders
+
+	for(i = 0; i <= (terminal_y / 4) ; i++){
+		mvwprintw(local_win, i, 0, "#");
+		mvwprintw(local_win, i, (terminal_x / 3) * 2, "#");
+	}
+	wattroff(local_win, COLOR_PAIR(3));
+	
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void menu_draw(WINDOW *local_win, int terminal_x, int terminal_y){
+	int i;
+	//WINDOW* menu_window = newwin(size_y, (size_x / 3), 0, (size_x / 3) * 2 + 1);
+	//declare color pairs
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLUE);
+	init_pair(3, COLOR_RED, COLOR_GREEN);
+	
+	//draw horizontal borders
+	wattron(local_win, COLOR_PAIR(3));
+	for(i = 0; i <= (terminal_x / 3); i++){
+		mvwprintw(local_win, 0, i, "#");
+		mvwprintw(local_win, terminal_y-1, i, "#");
+	}
+	//draw vertical borders
+
+	for(i = 0; i <= terminal_y ; i++){
+		mvwprintw(local_win, i, 0, "#");
+		mvwprintw(local_win, i, terminal_x / 3-1, "#");
+	}
+	wattroff(local_win, COLOR_PAIR(3));
+	
 	
 }
 /*********************************************************************
