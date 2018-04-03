@@ -18,7 +18,7 @@
 #define ROWS 50
 #define COLUMNS 100
 #define LAYERS 2
-#define TIME_BETWEEN_REBIRTH 1
+#define TIME_BETWEEN_REBIRTH 0.1
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
@@ -46,7 +46,7 @@
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
 //for testing map loading mode
-int MAP_READ = 0;
+int MAP_READ = 1;
 /* Global structures */
 
 /*-------------------------------------------------------------------*
@@ -84,6 +84,8 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 //fix stats so they print at the beginning
 //count creatures at the beginning
 //move cmd line input to function
+//magic numbers
+//define directions
 
 
 void main(int argc, char *argv[]) {
@@ -107,7 +109,7 @@ void main(int argc, char *argv[]) {
 		}
 	}
 	
-	//check if maps should be read from file, else fill map with random booleans
+	//check if maps should be read from file, else fill map with random bits
 	if (MAP_READ == 1){
 		 map_reader(map);
 	}
