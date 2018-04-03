@@ -75,6 +75,8 @@ void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 
+int menu_function(WINDOW *local_win);
+
 
 
 /*********************************************************************
@@ -558,13 +560,66 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
-; NAME:
-; DESCRIPTION:
-;	Input:
-;	Output:
-;  Used global variables:
+; NAME: menu_function
+; DESCRIPTION: Show menu to operate the simulation
+;	Input: None
+;	Output: Menu choice as integer
+;  Used global variables: None
 ; REMARKS when using this function:
 ;*********************************************************************/
+int menu_function(WINDOW *local_win){
+	int choice, menu_choice, highlight;
+	
+	//menu choices
+	const char *a[3];
+	a[0] = "Randomize";
+	a[1] = "Load";
+	a[2] = "Pause";
+	
+	keypad(local_win, true);
+
+	highlight = 0;
+	while (1){
+		int i;
+		//add length of choices to for loop
+		for (i = 0; i < 3; i++){
+			if (i == highlight){
+				
+				wattron(local_win, A_REVERSE);
+				mvwprintw(local_win, i+1, 1, "%s", a[i]);
+				wattroff(local_win, A_REVERSE);
+				menu_choice = i;
+			}
+		}
+		
+		choice = wgetch(local_win);
+		
+		switch(choice){
+			case KEY_UP:
+				highlight--;
+				if (highlight == 0){
+					highlight = 0;
+				}
+				break;
+				
+			case KEY_DOWN:
+				highlight++;
+				if (highlight == 3){
+					highlight = 2;
+				}
+				break;
+				
+			default:
+				break;
+		}
+		
+		if(choice == 10){
+			break;	
+		}
+	}
+	
+	return menu_choice;
+}
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
