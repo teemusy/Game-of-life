@@ -7,6 +7,7 @@
 #include <curses.h>
 #include <string.h>
 #include <menu.h>
+#include <stdlib.h>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
@@ -18,7 +19,7 @@
 #define ROWS 50
 #define COLUMNS 100
 #define LAYERS 2
-#define TIME_BETWEEN_REBIRTH 1
+#define TIME_BETWEEN_REBIRTH 0.1
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
@@ -74,25 +75,32 @@ void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 
+int menu_function(WINDOW *local_win);
+
+
+
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
 
 //TODO
 //pause function
-//determine map size by console size
-//
+//add working menu
+//move cmd line input to function
+//magic numbers
+//define directions
 
 
-int main(int argc, char *argv[]) {
+void main(int argc, char *argv[]) {
 	
 	int random_value, iteration, size_x, size_y, i;
 	int map [ROWS][COLUMNS][LAYERS];
 	char cmd_line_input[50];
 	
+	srand( time(NULL) ); //Randomize seed initialization for map_fill
+	iteration = 0;
 	
-		
-	
+	//cmd line input
 	for (i = 0; i < argc; i++){
 		//checks for flags
 		if (argc > 1){
@@ -104,54 +112,47 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	
-
-		
-	srand( time(NULL) ); //Randomize seed initialization for map_fill
-	
+	//check if maps should be read from file, else fill map with random bits
 	if (MAP_READ == 1){
 		 map_reader(map);
-		
 	}
 	else {
-		map_filler (map); //fill map with random booleans
+		map_filler (map);
 	}
 	
-	
-	iteration = 0;
+	//check if debug mode is on, else init ncurses
 	if (DEBUG_MODE == 1){
 		while(true){
-			
 			debug_print (map);
-			
 			//print iteration
 			print_stats(iteration);
-			
 			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
 		}
 	}
 	else {
-		//ncurses init
-		initscr();
+		initscr(); //ncurses init
 		
-		//get screen size for terminal
+		/*get screen size for terminal, not in use 
+		because it makes it harder to init map size*/
 		getmaxyx(stdscr, size_x, size_y);
 		printf("x: %d, y: %d\n", size_x, size_y);
+		
 		curs_set(0);
 		start_color();
+		//init windows, size y, size x, location y, location x
 		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
-		WINDOW* menu_window = newwin(ROWS+2, 20, 0, COLUMNS+2);
+		WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
 		//draws borders
 		draw_static (map_window); 
 		box(text_window,0,0);
 		box(menu_window,0,0);
+		
+		//MAIN LOOP
 		while(true){
-			
 			draw_creatures (map, map_window);
-			
 			//print iteration
 			print_stats(iteration);
 			refresh();
@@ -161,12 +162,9 @@ int main(int argc, char *argv[]) {
 			iteration++;
 			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
 			update_life (map);
-
 		}
-		endwin();			/*End curses mode */
+		endwin(); /*End curses mode */
 	}
-
-	return 0;
 	
 }/* end of main */
 
@@ -195,7 +193,6 @@ int random_value_filler (){
 		random_value = 0;
 	}
 	
-
 	return random_value;
 }
 
@@ -213,7 +210,6 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 	int i, j;
 	
 	for(i = 0; i < ROWS; i++){
-
 		for(j = 0; j < COLUMNS; j++){
 			map[i][j][0] = random_value_filler ();
 		}
@@ -274,14 +270,13 @@ void draw_static (WINDOW *local_win){
 	//draw horizontal borders
 	wattron(local_win, COLOR_PAIR(1));
 	for(i = 0; i < COLUMNS + 2; i++){
-		mvwprintw(local_win, 0, i, "@");
-		mvwprintw(local_win, ROWS + 1, i, "@");
+		mvwprintw(local_win, 0, i, "#");
+		mvwprintw(local_win, ROWS + 1, i, "#");
 	}
 	//draw vertical borders
-
 	for(i = 0; i < ROWS + 2; i++){
-		mvwprintw(local_win, i, 0, "@");
-		mvwprintw(local_win, i, COLUMNS + 1, "@");
+		mvwprintw(local_win, i, 0, "#");
+		mvwprintw(local_win, i, COLUMNS + 1, "#");
 	}
 	wattroff(local_win, COLOR_PAIR(1));
 }
@@ -296,8 +291,8 @@ void draw_static (WINDOW *local_win){
 ; REMARKS when using this function:
 ;*********************************************************************/
 void sleep_for_seconds (float s){ 
-
 	int sec = s*1000000; 
+	
 	usleep(sec); 
 } 
 /*********************************************************************
@@ -317,8 +312,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
 			
-			//keeps track on creature count, doesn't work correctly
-			
+			//keeps track on creature count
 			if (map [i][j][0] == 1){
 				creature_count++;
 			}
@@ -326,7 +320,6 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
-			
 			
 			//check north
 			if (map [i][j][0] == 1 && i > 0){
@@ -432,14 +425,10 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 				map[i][j][1] = 1;
 			}
 			
-
-			
 			//reset counters for next cell
 			life_count = 0;
 			dead_count = 0;
-
 		}
-		j = 0;
 	}
 	print_count (creature_count);
 	//copies second, temporary layer of the map to the first one to be printed
@@ -456,14 +445,12 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 ; REMARKS when using this function:
 ;*********************************************************************/
 void debug_print (int map [ROWS][COLUMNS][LAYERS]){
-	
 	int i, j;
 	
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
 			printf ("%d", map[i][j][0]);
 		}
-		j = 0;
 		printf("\n");
 	}
 	printf("\n");
@@ -485,7 +472,6 @@ void copy_map (int map [ROWS][COLUMNS][LAYERS]){
 		for (j = 0; j < COLUMNS; j++){
 			temp_value = map [i][j][1];
 			map [i][j][0] = temp_value;
-			
 		}
 	}
 }
@@ -535,7 +521,7 @@ void print_count (int creature_count){
 		init_pair(3, COLOR_RED, COLOR_GREEN);
 		
 		attron(COLOR_PAIR(1));
-		mvprintw(ROWS + 3, 0, "Creature count: %d \n", creature_count);
+		mvprintw(ROWS + 4, 1, "Creature count: %d \n", creature_count);
 		attroff(COLOR_PAIR(1));	
 	}
 }
@@ -568,12 +554,82 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
 			temp_value = numberArray[i][j];
 			map[i][j][0] = temp_value;
 		}
-	}
-
+	} 
 	fclose(myFile);
-	
 }
 /*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: menu_function
+; DESCRIPTION: Show menu to operate the simulation
+;	Input: None
+;	Output: Menu choice as integer
+;  Used global variables: None
+; REMARKS when using this function:
+;*********************************************************************/
+int menu_function(WINDOW *local_win){
+	int choice, menu_choice, highlight;
+	
+	//menu choices
+	const char *a[3];
+	a[0] = "Randomize";
+	a[1] = "Load";
+	a[2] = "Pause";
+	
+	keypad(local_win, true);
+
+	highlight = 0;
+	while (1){
+		int i;
+		//add length of choices to for loop
+		for (i = 0; i < 3; i++){
+			if (i == highlight){
+				
+				wattron(local_win, A_REVERSE);
+				mvwprintw(local_win, i+1, 1, "%s", a[i]);
+				wattroff(local_win, A_REVERSE);
+				menu_choice = i;
+			}
+		}
+		
+		choice = wgetch(local_win);
+		
+		switch(choice){
+			case KEY_UP:
+				highlight--;
+				if (highlight == 0){
+					highlight = 0;
+				}
+				break;
+				
+			case KEY_DOWN:
+				highlight++;
+				if (highlight == 3){
+					highlight = 2;
+				}
+				break;
+				
+			default:
+				break;
+		}
+		
+		if(choice == 10){
+			break;	
+		}
+	}
+	
+	return menu_choice;
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************//*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME:
