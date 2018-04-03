@@ -7,6 +7,7 @@
 #include <curses.h>
 #include <string.h>
 #include <menu.h>
+#include <stdlib.h>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
@@ -74,6 +75,8 @@ void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 
+
+
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
@@ -81,8 +84,6 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 //TODO
 //pause function
 //add working menu
-//fix stats so they print at the beginning
-//count creatures at the beginning
 //move cmd line input to function
 //magic numbers
 //define directions
@@ -426,7 +427,6 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			life_count = 0;
 			dead_count = 0;
 		}
-		j = 0;
 	}
 	print_count (creature_count);
 	//copies second, temporary layer of the map to the first one to be printed
@@ -556,6 +556,25 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
 	fclose(myFile);
 }
 /*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************//*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME:

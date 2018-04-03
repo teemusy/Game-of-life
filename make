@@ -1,0 +1,1 @@
+gcc -lncurses -lmenu main.c 
