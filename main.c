@@ -19,7 +19,7 @@
 #define ROWS 50
 #define COLUMNS 100
 #define LAYERS 2
-#define TIME_BETWEEN_REBIRTH 0.1
+#define TIME_BETWEEN_REBIRTH 0.2
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
@@ -46,8 +46,6 @@
 
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
-//for testing map loading mode
-int MAP_READ = 1;
 /* Global structures */
 
 /*-------------------------------------------------------------------*
@@ -75,7 +73,7 @@ void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(int map [ROWS][COLUMNS][LAYERS]);
 
-int menu_function(WINDOW *local_win);
+int menu_function(WINDOW *local_win, float *speed);
 
 
 
@@ -88,17 +86,21 @@ int menu_function(WINDOW *local_win);
 //add working menu
 //move cmd line input to function
 //magic numbers
-//define directions
 
+//for better menu
+//nodelay (stdscr, TRUE);
 
 void main(int argc, char *argv[]) {
 	
-	int random_value, iteration, size_x, size_y, i;
+	int random_value, iteration, size_x, size_y, i, menu_choice;
 	int map [ROWS][COLUMNS][LAYERS];
 	char cmd_line_input[50];
+	//to make it possible to pause game
+	float game_speed;
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	iteration = 0;
+	game_speed = TIME_BETWEEN_REBIRTH;
 	
 	//cmd line input
 	for (i = 0; i < argc; i++){
@@ -112,14 +114,6 @@ void main(int argc, char *argv[]) {
 		}
 	}
 	
-	//check if maps should be read from file, else fill map with random bits
-	if (MAP_READ == 1){
-		 map_reader(map);
-	}
-	else {
-		map_filler (map);
-	}
-	
 	//check if debug mode is on, else init ncurses
 	if (DEBUG_MODE == 1){
 		while(true){
@@ -127,7 +121,7 @@ void main(int argc, char *argv[]) {
 			//print iteration
 			print_stats(iteration);
 			iteration++;
-			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
+			sleep_for_seconds(game_speed);
 			update_life (map);
 		}
 	}
@@ -146,21 +140,39 @@ void main(int argc, char *argv[]) {
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
 		WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
 		//draws borders
-		draw_static (map_window); 
+		
 		box(text_window,0,0);
 		box(menu_window,0,0);
+		
+		//run menu
+		menu_choice = menu_function(map_window, &game_speed);
+		draw_static (map_window); 
+		switch(menu_choice){
+			case 0:
+				map_filler(map);
+				break;
+			case 1:
+				map_reader (map);
+				break;
+			default:
+				map_filler (map);
+				break;
+		}
+		
+		
 		
 		//MAIN LOOP
 		while(true){
 			draw_creatures (map, map_window);
 			//print iteration
 			print_stats(iteration);
+			
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
 			wrefresh(menu_window);
 			iteration++;
-			sleep_for_seconds(TIME_BETWEEN_REBIRTH);
+			sleep_for_seconds(game_speed);
 			update_life (map);
 		}
 		endwin(); /*End curses mode */
@@ -567,46 +579,77 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables: None
 ; REMARKS when using this function:
 ;*********************************************************************/
-int menu_function(WINDOW *local_win){
+int menu_function(WINDOW *local_win, float *speed){
 	int choice, menu_choice, highlight;
 	
 	//menu choices
-	const char *a[3];
-	a[0] = "Randomize";
-	a[1] = "Load";
-	a[2] = "Pause";
+	const char *a[2];
+	a[0] = "Randomize map";
+	a[1] = "Load from file map.txt";
+	//a[2] = "Pause";
+	
+	//add length check
+	int choice_len = 2;
 	
 	keypad(local_win, true);
+	
+	mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
+	mvwprintw(local_win, ROWS-1, COLUMNS/4, "Press left or right to increase or decrease speed.");
+	
+	mvwprintw(local_win, 1, COLUMNS/4, "   _____          __  __ ______    ____  ______   _      _____ ______ ______ ");
+	mvwprintw(local_win, 2, COLUMNS/4, "  / ____|   /\\   |  \\/  |  ____|  / __ \\|  ____| | |    |_   _|  ____|  ____|");
+	mvwprintw(local_win, 3, COLUMNS/4, " | |  __   /  \\  | \\  / | |__    | |  | | |__    | |      | | | |__  | |__   ");
+	mvwprintw(local_win, 4, COLUMNS/4, " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |  __|   | |      | | |  __| |  __|  ");
+	mvwprintw(local_win, 5, COLUMNS/4, " | |__| |/ ____ \\| |  | | |____  | |__| | |      | |____ _| |_| |    | |____ ");
+	mvwprintw(local_win, 6, COLUMNS/4, "  \\_____/_/    \\_\\_|  |_|______|  \\____/|_|      |______|_____|_|    |______|");
 
 	highlight = 0;
 	while (1){
 		int i;
 		//add length of choices to for loop
-		for (i = 0; i < 3; i++){
+		for (i = 0; i < choice_len; i++){
 			if (i == highlight){
-				
 				wattron(local_win, A_REVERSE);
-				mvwprintw(local_win, i+1, 1, "%s", a[i]);
+				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
 				wattroff(local_win, A_REVERSE);
 				menu_choice = i;
 			}
+			else {
+				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
+			}
 		}
+		
 		
 		choice = wgetch(local_win);
 		
 		switch(choice){
 			case KEY_UP:
 				highlight--;
-				if (highlight == 0){
+				if (highlight <= 0){
 					highlight = 0;
 				}
 				break;
 				
 			case KEY_DOWN:
 				highlight++;
-				if (highlight == 3){
+				if (highlight > choice_len){
 					highlight = 2;
 				}
+				break;
+			case KEY_RIGHT:
+				*speed = *speed + 0.005;
+				if (*speed > 10){
+					*speed = 10;
+				}
+				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
+				break;			
+				
+			case KEY_LEFT:
+				*speed = *speed - 0.005;
+				if (*speed <= 0){
+					*speed = 0.01;
+				}
+				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
 				break;
 				
 			default:
@@ -629,7 +672,8 @@ int menu_function(WINDOW *local_win){
 ;	Output:
 ;  Used global variables:
 ; REMARKS when using this function:
-;*********************************************************************//*********************************************************************
+;*********************************************************************/
+/*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME:
