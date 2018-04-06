@@ -23,31 +23,30 @@
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
-#define NORTH map [i-1][j][0]
-#define SOUTH map [i+1][j][0]
-#define EAST map [i][j+1][0]
-#define WEST map [i][j-1][0]
-#define NORTHEAST map [i-1][j+1][0]
-#define SOUTHEAST map [i+1][j+1][0]
-#define NORTHWEST map [i-1][j-1][0]
-#define SOUTHWEST map [i+1][j-1][0]
+#define NORTH map [i-1][j].current_status
+#define SOUTH map [i+1][j].current_status
+#define EAST map [i][j+1].current_status
+#define WEST map [i][j-1].current_status
+#define NORTHEAST map [i-1][j+1].current_status
+#define SOUTHEAST map [i+1][j+1].current_status
+#define NORTHWEST map [i-1][j-1].current_status
+#define SOUTHWEST map [i+1][j-1].current_status
 //define game rules
 #define UNDERPOPULATION_LIMIT 2
 #define LIVE_MIN 2
 #define LIVE_MAX 3
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
-//define different population layer in map
-#define RED_POP 0
-#define GREEN_POP 1
-#define BLUE_POP 2
 
 /* Global variables */
 
 //debug mode disables ncurses for easier debugging, recommended to decrease map size
 int DEBUG_MODE;
 /* Global structures */
-
+struct cell_info {
+	   int current_status;
+	   int future_status;
+};
 /*-------------------------------------------------------------------*
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
@@ -55,25 +54,28 @@ int DEBUG_MODE;
 //fills both layers of map with 1 or 0
 int random_value_filler ();
 //fill map with random number
-void map_filler (int map [ROWS][COLUMNS][LAYERS]);
+void new_map_filler (struct cell_info map[ROWS][COLUMNS]);
 //draw static stuff
 void draw_static (WINDOW *local_win);
 //draw creatures with ncurses
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win);
+void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win);
 //sleep function
 void sleep_for_seconds (float s);
 //check if creature lives, dies or regenerates, then update map
-void update_life (int map [ROWS][COLUMNS][LAYERS]);
+void new_update_life (struct cell_info map[ROWS][COLUMNS]);
 //print function for debugging
-void debug_print (int map [ROWS][COLUMNS][LAYERS]);
+void debug_print (struct cell_info map[ROWS][COLUMNS]);
 //copy array layer
-void copy_map (int map [ROWS][COLUMNS][LAYERS]);
+void new_copy_map (struct cell_info map[ROWS][COLUMNS]);
 //print statistics
 void print_stats (int iteration);
 void print_count (int creature_count);
-void map_reader(int map [ROWS][COLUMNS][LAYERS]);
+void map_reader(struct cell_info map[ROWS][COLUMNS]);
 
 int menu_function(WINDOW *local_win, float *speed);
+
+
+
 
 
 
@@ -82,21 +84,22 @@ int menu_function(WINDOW *local_win, float *speed);
 **********************************************************************/
 
 //TODO
-//pause function
-//add working menu
-//move cmd line input to function
-//magic numbers
-
+//-pause function
+//-move cmd line input to function
+//-magic numbers
+//-move to using struct
 //for better menu
-//nodelay (stdscr, TRUE);
+//-streamline update_life function
 
 void main(int argc, char *argv[]) {
 	
 	int random_value, iteration, size_x, size_y, i, menu_choice;
-	int map [ROWS][COLUMNS][LAYERS];
 	char cmd_line_input[50];
 	//to make it possible to pause game
 	float game_speed;
+	
+	struct cell_info new_map[ROWS][COLUMNS];
+	
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	iteration = 0;
@@ -116,13 +119,14 @@ void main(int argc, char *argv[]) {
 	
 	//check if debug mode is on, else init ncurses
 	if (DEBUG_MODE == 1){
+		new_map_filler(new_map);
 		while(true){
-			debug_print (map);
+			debug_print (new_map);
 			//print iteration
 			print_stats(iteration);
 			iteration++;
 			sleep_for_seconds(game_speed);
-			update_life (map);
+			//update_life (map);
 		}
 	}
 	else {
@@ -149,13 +153,13 @@ void main(int argc, char *argv[]) {
 		draw_static (map_window); 
 		switch(menu_choice){
 			case 0:
-				map_filler(map);
+				new_map_filler(new_map);
 				break;
 			case 1:
-				map_reader (map);
+				map_reader (new_map);
 				break;
 			default:
-				map_filler (map);
+				new_map_filler (new_map);
 				break;
 		}
 		
@@ -163,7 +167,8 @@ void main(int argc, char *argv[]) {
 		
 		//MAIN LOOP
 		while(true){
-			draw_creatures (map, map_window);
+			//draw_creatures (map, map_window);
+			new_draw_creatures (new_map, map_window);
 			//print iteration
 			print_stats(iteration);
 			
@@ -173,7 +178,8 @@ void main(int argc, char *argv[]) {
 			wrefresh(menu_window);
 			iteration++;
 			sleep_for_seconds(game_speed);
-			update_life (map);
+			//update_life (map);
+			new_update_life (new_map);
 		}
 		endwin(); /*End curses mode */
 	}
@@ -208,25 +214,31 @@ int random_value_filler (){
 	return random_value;
 }
 
+
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: map_filler
-; DESCRIPTION: Fills map array with 1's or 0's
-;	Input: Array
+; DESCRIPTION: Fills map array struct current status with random bits
+;	Input: Array, struct
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void map_filler (int map [ROWS][COLUMNS][LAYERS]){
+void new_map_filler (struct cell_info map[ROWS][COLUMNS]){
 	int i, j;
 	
 	for(i = 0; i < ROWS; i++){
 		for(j = 0; j < COLUMNS; j++){
-			map[i][j][0] = random_value_filler ();
+			
+			map[i][j].current_status = random_value_filler ();
 		}
 	}
 }
+
+
+
+
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -237,7 +249,7 @@ void map_filler (int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
+void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 	int i, j;
 	
 	//declare color pairs
@@ -250,7 +262,7 @@ void draw_creatures (int map [ROWS][COLUMNS][LAYERS], WINDOW *local_win){
 	for(i = 0; i < ROWS; i++){
 		
 		for(j = 0; j < COLUMNS; j++){
-			if (map[i][j][0] == 1){
+			if (map[i][j].current_status == 1){
 				mvwprintw(local_win, i+1, j+1, "@");
 			}
 			else{
@@ -307,6 +319,7 @@ void sleep_for_seconds (float s){
 	
 	usleep(sec); 
 } 
+
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -317,7 +330,7 @@ void sleep_for_seconds (float s){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void update_life (int map [ROWS][COLUMNS][LAYERS]) {
+void new_update_life (struct cell_info map[ROWS][COLUMNS]) {
 
 	int i, j, life_count, dead_count, creature_count;
 	creature_count = 0;
@@ -325,7 +338,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 		for (j = 0; j < COLUMNS; j++){
 			
 			//keeps track on creature count
-			if (map [i][j][0] == 1){
+			if (map [i][j].current_status == 1){
 				creature_count++;
 			}
 
@@ -334,89 +347,89 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			//if cell has no life it checks if there's life around it
 			
 			//check north
-			if (map [i][j][0] == 1 && i > 0){
+			if (map [i][j].current_status == 1 && i > 0){
 				if (NORTH == 1){
 					life_count++;
 				}
 			}
-			else if (map [i][j][0] == 0 && i > 0){
+			else if (map [i][j].current_status == 0 && i > 0){
 				if (NORTH == 1){
 					dead_count++;
 				}
 			}
 			//south
-			if (map [i][j][0] == 1 && i < ROWS){
+			if (map [i][j].current_status == 1 && i < ROWS){
 				if (SOUTH == 1){
 					life_count++;
 				}	
 			}
-			else if (map [i][j][0] == 0 && i < ROWS){
+			else if (map [i][j].current_status == 0 && i < ROWS){
 				if (SOUTH == 1){
 					dead_count++;
 				}	
 			}
 			//east
-			if (map [i][j][0] == 1 && j < COLUMNS){
+			if (map [i][j].current_status == 1 && j < COLUMNS){
 				if (EAST == 1){
 					life_count++;
 				}
 			}
-			else if (map [i][j][0] == 0 && j < COLUMNS){
+			else if (map [i][j].current_status == 0 && j < COLUMNS){
 				if (EAST == 1){
 					dead_count++;
 				}
 			}
 			//west
-			if (map [i][j][0] == 1 && j > 0){
+			if (map [i][j].current_status == 1 && j > 0){
 				if (WEST == 1){
 					life_count++;
 				}
 			}	
-			else if (map [i][j][0] == 0 && j > 0){
+			else if (map [i][j].current_status == 0 && j > 0){
 				if (WEST == 1){
 					dead_count++;
 				}
 			}				
 			//northeast
-			if (map [i][j][0] == 1 && i > 0 && j < COLUMNS){
+			if (map [i][j].current_status == 1 && i > 0 && j < COLUMNS){
 				if (NORTHEAST == 1){
 					life_count++;
 				}
 			}
-			else if (map [i][j][0] == 0 && i > 0 && j < COLUMNS){
+			else if (map [i][j].current_status == 0 && i > 0 && j < COLUMNS){
 				if (NORTHEAST == 1){
 					dead_count++;
 				}
 			}
 			//southeast
-			if (map [i][j][0] == 1 && i < ROWS && j < COLUMNS){
+			if (map [i][j].current_status == 1 && i < ROWS && j < COLUMNS){
 				if (SOUTHEAST == 1){
 					life_count++;
 				}	
 			}
-			else if (map [i][j][0] == 0 && i < ROWS && j < COLUMNS){
+			else if (map [i][j].current_status == 0 && i < ROWS && j < COLUMNS){
 				if (SOUTHEAST == 1){
 					dead_count++;
 				}	
 			}
 			//northwest
-			if (map [i][j][0] == 1 && i > 0 && j > 0){
+			if (map [i][j].current_status == 1 && i > 0 && j > 0){
 				if (NORTHWEST == 1){
 					life_count++;
 				}
 			}
-			else if (map [i][j][0] == 0 && i > 0 && j > 0){
+			else if (map [i][j].current_status == 0 && i > 0 && j > 0){
 				if (NORTHWEST == 1){
 					dead_count++;
 				}
 			}
 			//southwest
-			if (map [i][j][0] == 1 && i < ROWS && j > 0){
+			if (map [i][j].current_status == 1 && i < ROWS && j > 0){
 				if (SOUTHWEST == 1){
 					life_count++;
 				}
 			}
-			else if (map [i][j][0] == 0 && i < ROWS && j > 0){
+			else if (map [i][j].current_status == 0 && i < ROWS && j > 0){
 				if (SOUTHWEST == 1){
 					dead_count++;
 				}
@@ -424,17 +437,17 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 			
 			//determine if cell lives, dies or a new one borns, update to second layer of map
 			if (life_count < UNDERPOPULATION_LIMIT){
-				map[i][j][1] = 0;
+				map[i][j].future_status = 0;
 			}
 			else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX){
-				map[i][j][1] = 1;
+				map[i][j].future_status = 1;
 			}
 			else if (life_count > OVERPOPULATION_LIMIT){
-				map[i][j][1] = 0;	
+				map[i][j].future_status = 0;	
 			}
 			
 			if (dead_count == REBIRTH_LIMIT){
-				map[i][j][1] = 1;
+				map[i][j].future_status = 1;
 			}
 			
 			//reset counters for next cell
@@ -444,28 +457,7 @@ void update_life (int map [ROWS][COLUMNS][LAYERS]) {
 	}
 	print_count (creature_count);
 	//copies second, temporary layer of the map to the first one to be printed
-	copy_map(map);
-}
-/*********************************************************************
-;	F U N C T I O N    D E S C R I P T I O N
-;---------------------------------------------------------------------
-; NAME: debug_print
-; DESCRIPTION: Allows easier debugging by disabling ncurses and printing map to console
-;	Input: Array
-;	Output: None
-;  Used global variables:
-; REMARKS when using this function:
-;*********************************************************************/
-void debug_print (int map [ROWS][COLUMNS][LAYERS]){
-	int i, j;
-	
-	for (i = 0; i < ROWS; i++){
-		for (j = 0; j < COLUMNS; j++){
-			printf ("%d", map[i][j][0]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+	new_copy_map(map);
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -477,16 +469,39 @@ void debug_print (int map [ROWS][COLUMNS][LAYERS]){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void copy_map (int map [ROWS][COLUMNS][LAYERS]){
+void new_copy_map (struct cell_info map[ROWS][COLUMNS]){
 	int i, j, temp_value;
 	
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
-			temp_value = map [i][j][1];
-			map [i][j][0] = temp_value;
+			temp_value = map [i][j].future_status;
+			map [i][j].current_status = temp_value;
 		}
 	}
 }
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: debug_print
+; DESCRIPTION: Allows easier debugging by disabling ncurses and printing map to console
+;	Input: Array
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void debug_print (struct cell_info map[ROWS][COLUMNS]){
+	int i, j;
+	
+	for (i = 0; i < ROWS; i++){
+		for (j = 0; j < COLUMNS; j++){
+			printf ("%d", map[i][j].current_status);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
+
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -547,7 +562,7 @@ void print_count (int creature_count){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void map_reader(int map [ROWS][COLUMNS][LAYERS]){
+void map_reader(struct cell_info map[ROWS][COLUMNS]){
 	
 	FILE *myFile;
     myFile = fopen("map.txt", "r");
@@ -564,7 +579,7 @@ void map_reader(int map [ROWS][COLUMNS][LAYERS]){
     for (i = 0; i < ROWS; i++){
 		for(j = 0; j < COLUMNS; j++){
 			temp_value = numberArray[i][j];
-			map[i][j][0] = temp_value;
+			map[i][j].current_status = temp_value;
 		}
 	} 
 	fclose(myFile);
