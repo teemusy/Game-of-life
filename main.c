@@ -46,7 +46,10 @@ int DEBUG_MODE;
 struct cell_info {
 	   int current_status;
 	   int future_status;
+	   int snake_head;
+	   int snake_direction;
 };
+
 /*-------------------------------------------------------------------*
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
@@ -76,6 +79,9 @@ int menu_function(WINDOW *local_win, float *speed);
 
 
 
+void snake_mover (int *snake_x, int *snake_y, struct cell_info map[ROWS][COLUMNS]);
+int random_direction ();
+
 
 
 
@@ -99,6 +105,14 @@ void main(int argc, char *argv[]) {
 	float game_speed;
 	
 	struct cell_info new_map[ROWS][COLUMNS];
+	
+	
+	
+	//snake test init
+	int snake_x = 25, snake_y = 25;
+	
+	
+	
 	
 	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
@@ -180,6 +194,16 @@ void main(int argc, char *argv[]) {
 			sleep_for_seconds(game_speed);
 			//update_life (map);
 			new_update_life (new_map);
+			
+			
+			
+			
+			
+			snake_mover (&snake_x, &snake_y, new_map);
+			mvprintw(ROWS + 5, 1, "Snake_x, snake_y: %d %d", snake_x, snake_y);
+			
+			
+			
 		}
 		endwin(); /*End curses mode */
 	}
@@ -189,6 +213,84 @@ void main(int argc, char *argv[]) {
 /*********************************************************************
 *    FUNCTIONS                                                     *
 **********************************************************************/
+void snake_mover (int *snake_x, int *snake_y, struct cell_info map[ROWS][COLUMNS]){
+	int direction, i, j, legal_direction, temp_value;
+	
+	
+	map[*snake_y][*snake_x].snake_head = 0;
+	map[*snake_y][*snake_x].snake_direction = 0;
+	map[*snake_y][*snake_x].current_status = 0;
+	map[*snake_y][*snake_x].future_status = 0;
+	
+	//check for legal direction
+	do{
+		direction = random_direction ();
+		legal_direction = 1;
+		if((*snake_x == COLUMNS-1 && direction == 6) ||
+			(*snake_x == 0 && direction == 4) ||
+			(*snake_y == ROWS-1 && direction == 2) ||
+			(*snake_y == 0 && direction == 8)){
+				
+				legal_direction = 0;
+		}
+	}
+	while(!legal_direction);
+	
+	
+	switch (direction){
+		case 2:
+			*snake_y+=1;
+			mvprintw(ROWS + 5, 30, "south");
+			map[*snake_y][*snake_x].snake_direction = 2;
+			break;		
+		
+		case 4:
+			*snake_x-=1;
+			mvprintw(ROWS + 5, 30, "west");
+			map[*snake_y][*snake_x].snake_direction = 4;
+			break;		
+		
+		case 6:
+			*snake_x+=1;
+			mvprintw(ROWS + 5, 30, "east");
+			map[*snake_y][*snake_x].snake_direction = 6;
+			break;		
+		
+		case 8:
+			*snake_y-=1;
+			mvprintw(ROWS + 5, 30, "north");
+			map[*snake_y][*snake_x].snake_direction = 8;
+			break;
+		default:
+			break;
+		
+	}
+	
+	map[*snake_y][*snake_x].snake_head = 1;
+	
+}
+int random_direction (){
+	int random_value;
+	
+	random_value = (rand() % 100) + 1;
+	
+	if (random_value < 25){
+		random_value = 2;
+	}	
+	
+	else if (random_value >= 25 && random_value < 50){
+		random_value = 4;
+	}	
+	
+	else if (random_value >= 50 && random_value < 75){
+		random_value = 6;
+	}
+	else {
+		random_value = 8;
+	}
+	
+	return random_value;
+}
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -232,6 +334,8 @@ void new_map_filler (struct cell_info map[ROWS][COLUMNS]){
 		for(j = 0; j < COLUMNS; j++){
 			
 			map[i][j].current_status = random_value_filler ();
+			map[i][j].snake_head = 0;
+			map[i][j].snake_direction = 0;
 		}
 	}
 }
@@ -256,22 +360,52 @@ void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win)
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_RED, COLOR_BLUE);
 	init_pair(3, COLOR_RED, COLOR_GREEN);
+	init_pair(4, COLOR_BLACK, COLOR_YELLOW);
 		
 	//draw creatures
-	wattron(local_win, COLOR_PAIR(2));
 	for(i = 0; i < ROWS; i++){
 		
 		for(j = 0; j < COLUMNS; j++){
 			if (map[i][j].current_status == 1){
+				wattron(local_win, COLOR_PAIR(2));
 				mvwprintw(local_win, i+1, j+1, "@");
+				wattroff(local_win, COLOR_PAIR(2));	
 			}
-			else{
+			else if (map[i][j].snake_head == 1){
+				
+				switch(map[i][j].snake_direction){
+					case 2:
+						wattron(local_win, COLOR_PAIR(4));
+						mvwprintw(local_win, i+1, j+1, "u");
+						wattroff(local_win, COLOR_PAIR(4));	
+						break;					
+					case 4:
+						wattron(local_win, COLOR_PAIR(4));
+						mvwprintw(local_win, i+1, j+1, "<");
+						wattroff(local_win, COLOR_PAIR(4));	
+						break;					
+					case 6:
+						wattron(local_win, COLOR_PAIR(4));
+						mvwprintw(local_win, i+1, j+1, ">");
+						wattroff(local_win, COLOR_PAIR(4));	
+						break;					
+					case 8:
+						wattron(local_win, COLOR_PAIR(4));
+						mvwprintw(local_win, i+1, j+1, "^");
+						wattroff(local_win, COLOR_PAIR(4));	
+						break;
+					
+					
+				}
+
+			}
+			else if (map[i][j].current_status == 0){
+				wattron(local_win, COLOR_PAIR(2));
 				mvwprintw(local_win, i+1, j+1, " ");
+				wattroff(local_win, COLOR_PAIR(2));	
 			}
 		}
-		j = 0;
 	}
-	wattroff(local_win, COLOR_PAIR(2));	
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
@@ -345,6 +479,8 @@ void new_update_life (struct cell_info map[ROWS][COLUMNS]) {
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
+			
+			
 			
 			//check north
 			if (map [i][j].current_status == 1 && i > 0){
@@ -580,6 +716,8 @@ void map_reader(struct cell_info map[ROWS][COLUMNS]){
 		for(j = 0; j < COLUMNS; j++){
 			temp_value = numberArray[i][j];
 			map[i][j].current_status = temp_value;
+			map[i][j].snake_head = 0;
+			map[i][j].snake_direction = 0;
 		}
 	} 
 	fclose(myFile);
