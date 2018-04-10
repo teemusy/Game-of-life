@@ -3,22 +3,19 @@
 /*-------------------------------------------------------------------*
 *    HEADER FILES                                                    *
 *--------------------------------------------------------------------*/
-#include <stdio.h>
 #include <curses.h>
 #include <string.h>
-#include <menu.h>
 #include <stdlib.h>
-
+#include <iostream>
+#include <unistd.h>
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
 *--------------------------------------------------------------------*/
 /* Control flags */
-
 /* Global constants */
 //determines the size of the map
 #define ROWS 50
 #define COLUMNS 100
-#define LAYERS 2
 #define TIME_BETWEEN_REBIRTH 0.2
 //to determine initial seed
 #define FILL_PERCENTAGE 30
@@ -37,6 +34,7 @@
 #define LIVE_MAX 3
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
+#define SNAKE_MAX_LEN 10
 
 /* Global variables */
 
@@ -49,7 +47,6 @@ struct cell_info {
 	   int snake_head;
 	   int snake_direction;
 };
-
 /*-------------------------------------------------------------------*
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
@@ -57,34 +54,100 @@ struct cell_info {
 //fills both layers of map with 1 or 0
 int random_value_filler ();
 //fill map with random number
-void new_map_filler (struct cell_info map[ROWS][COLUMNS]);
+void map_filler (struct cell_info map[ROWS][COLUMNS]);
 //draw static stuff
 void draw_static (WINDOW *local_win);
 //draw creatures with ncurses
-void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win);
+void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win);
 //sleep function
 void sleep_for_seconds (float s);
 //check if creature lives, dies or regenerates, then update map
-void new_update_life (struct cell_info map[ROWS][COLUMNS]);
+void update_life (struct cell_info map[ROWS][COLUMNS]);
 //print function for debugging
 void debug_print (struct cell_info map[ROWS][COLUMNS]);
 //copy array layer
-void new_copy_map (struct cell_info map[ROWS][COLUMNS]);
+void copy_map (struct cell_info map[ROWS][COLUMNS]);
 //print statistics
 void print_stats (int iteration);
 void print_count (int creature_count);
 void map_reader(struct cell_info map[ROWS][COLUMNS]);
-
 int menu_function(WINDOW *local_win, float *speed);
-
-
-
-void snake_mover (int *snake_x, int *snake_y, struct cell_info map[ROWS][COLUMNS]);
 int random_direction ();
 
+//Objects
+class Snake{
+	private:
+		int snake_length;
+		//[0][0] is head
+		int snake_location[SNAKE_MAX_LEN][2];
+	
+	public:
+		void set_head_location (int loc_x, int loc_y);
+		void move_snake (struct cell_info map[ROWS][COLUMNS]);
+};
 
+void Snake::set_head_location (int loc_x, int loc_y){
+	
+	snake_location[0][0] = loc_y;
+	snake_location[0][1] = loc_x;
+	snake_length = 0;
+}
 
-
+void Snake::move_snake (struct cell_info map[ROWS][COLUMNS]){
+	int direction, legal_direction, old_location[2];
+	
+	map[snake_location[0][0]][snake_location[0][1]].snake_head = 0;
+	
+	old_location[0] = snake_location[0][0];
+	old_location[1] = snake_location[0][1];
+	
+	//check for legal direction
+	do{
+		direction = random_direction ();
+		legal_direction = 1;
+		if((snake_location[0][1] == COLUMNS-1 && direction == 6) ||
+			(snake_location[0][1] == 0 && direction == 4) ||
+			(snake_location[0][0] == ROWS-1 && direction == 2) ||
+			(snake_location[0][0] == 0 && direction == 8)){
+				
+				legal_direction = 0;
+		}
+	}
+	while(!legal_direction);
+	
+	switch (direction){
+		case 2:
+			snake_location[0][0]++;
+			mvprintw(40, 40, "2");
+			break;		
+		
+		case 4:
+			snake_location[0][1]--;
+			mvprintw(40, 40, "4");
+			break;		
+		
+		case 6:
+			snake_location[0][1]++;
+			mvprintw(40, 40, "6");
+			break;		
+		
+		case 8:
+			snake_location[0][0]--;
+			mvprintw(40, 40, "8");
+			break;
+		default:
+			break;
+		
+	}
+	
+	map[snake_location[0][0]][snake_location[0][1]].snake_head = 1;
+	
+	//increase snake length
+	if (map[snake_location[0][0]][snake_location[0][1]].current_status == 1){
+		snake_length++;
+		map[snake_location[0][0]][snake_location[0][1]].current_status = 0;
+	}
+}
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
@@ -93,28 +156,20 @@ int random_direction ();
 //-pause function
 //-move cmd line input to function
 //-magic numbers
-//-move to using struct
-//for better menu
 //-streamline update_life function
+//working snake
 
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 	
 	int random_value, iteration, size_x, size_y, i, menu_choice;
 	char cmd_line_input[50];
-	//to make it possible to pause game
 	float game_speed;
-	
 	struct cell_info new_map[ROWS][COLUMNS];
 	
-	
-	
-	//snake test init
-	int snake_x = 25, snake_y = 25;
-	
-	
-	
-	
-	
+	//snake init 
+	Snake testi;
+	testi.set_head_location(20,20);
+		
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	iteration = 0;
 	game_speed = TIME_BETWEEN_REBIRTH;
@@ -133,7 +188,7 @@ void main(int argc, char *argv[]) {
 	
 	//check if debug mode is on, else init ncurses
 	if (DEBUG_MODE == 1){
-		new_map_filler(new_map);
+		map_filler(new_map);
 		while(true){
 			debug_print (new_map);
 			//print iteration
@@ -158,7 +213,6 @@ void main(int argc, char *argv[]) {
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
 		WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
 		//draws borders
-		
 		box(text_window,0,0);
 		box(menu_window,0,0);
 		
@@ -167,25 +221,22 @@ void main(int argc, char *argv[]) {
 		draw_static (map_window); 
 		switch(menu_choice){
 			case 0:
-				new_map_filler(new_map);
+				map_filler(new_map);
 				break;
 			case 1:
 				map_reader (new_map);
 				break;
 			default:
-				new_map_filler (new_map);
+				map_filler (new_map);
 				break;
 		}
-		
-		
 		
 		//MAIN LOOP
 		while(true){
 			//draw_creatures (map, map_window);
-			new_draw_creatures (new_map, map_window);
+			draw_creatures (new_map, map_window);
 			//print iteration
 			print_stats(iteration);
-			
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
@@ -193,82 +244,28 @@ void main(int argc, char *argv[]) {
 			iteration++;
 			sleep_for_seconds(game_speed);
 			//update_life (map);
-			new_update_life (new_map);
-			
-			
-			
-			
-			
-			snake_mover (&snake_x, &snake_y, new_map);
-			mvprintw(ROWS + 5, 1, "Snake_x, snake_y: %d %d", snake_x, snake_y);
-			
-			
-			
+			update_life (new_map);
+			testi.move_snake(new_map);
 		}
 		endwin(); /*End curses mode */
 	}
+	return 0;
 	
 }/* end of main */
 
 /*********************************************************************
 *    FUNCTIONS                                                     *
 **********************************************************************/
-void snake_mover (int *snake_x, int *snake_y, struct cell_info map[ROWS][COLUMNS]){
-	int direction, i, j, legal_direction, temp_value;
-	
-	
-	map[*snake_y][*snake_x].snake_head = 0;
-	map[*snake_y][*snake_x].snake_direction = 0;
-	map[*snake_y][*snake_x].current_status = 0;
-	map[*snake_y][*snake_x].future_status = 0;
-	
-	//check for legal direction
-	do{
-		direction = random_direction ();
-		legal_direction = 1;
-		if((*snake_x == COLUMNS-1 && direction == 6) ||
-			(*snake_x == 0 && direction == 4) ||
-			(*snake_y == ROWS-1 && direction == 2) ||
-			(*snake_y == 0 && direction == 8)){
-				
-				legal_direction = 0;
-		}
-	}
-	while(!legal_direction);
-	
-	
-	switch (direction){
-		case 2:
-			*snake_y+=1;
-			mvprintw(ROWS + 5, 30, "south");
-			map[*snake_y][*snake_x].snake_direction = 2;
-			break;		
-		
-		case 4:
-			*snake_x-=1;
-			mvprintw(ROWS + 5, 30, "west");
-			map[*snake_y][*snake_x].snake_direction = 4;
-			break;		
-		
-		case 6:
-			*snake_x+=1;
-			mvprintw(ROWS + 5, 30, "east");
-			map[*snake_y][*snake_x].snake_direction = 6;
-			break;		
-		
-		case 8:
-			*snake_y-=1;
-			mvprintw(ROWS + 5, 30, "north");
-			map[*snake_y][*snake_x].snake_direction = 8;
-			break;
-		default:
-			break;
-		
-	}
-	
-	map[*snake_y][*snake_x].snake_head = 1;
-	
-}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: random_direction
+; DESCRIPTION: Gives 4 different random directions
+;	Input: None	
+;	Output: Direction as integer
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
 int random_direction (){
 	int random_value;
 	
@@ -315,45 +312,40 @@ int random_value_filler (){
 	
 	return random_value;
 }
-
-
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: map_filler
-; DESCRIPTION: Fills map array struct current status with random bits
-;	Input: Array, struct
+; DESCRIPTION: Fills map struct current status with random bits
+;	Input: Struct
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void new_map_filler (struct cell_info map[ROWS][COLUMNS]){
+void map_filler (struct cell_info map[ROWS][COLUMNS]){
 	int i, j;
 	
 	for(i = 0; i < ROWS; i++){
 		for(j = 0; j < COLUMNS; j++){
 			
 			map[i][j].current_status = random_value_filler ();
+			map[i][j].future_status = 0;
 			map[i][j].snake_head = 0;
 			map[i][j].snake_direction = 0;
 		}
 	}
 }
-
-
-
-
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: draw_creatures
 ; DESCRIPTION: Draws creatures using array cells as locations, uses ncurses
-;	Input: Array
+;	Input: Struct, ncurses window
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
+void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 	int i, j;
 	
 	//declare color pairs
@@ -394,6 +386,11 @@ void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win)
 						mvwprintw(local_win, i+1, j+1, "^");
 						wattroff(local_win, COLOR_PAIR(4));	
 						break;
+					default:
+						wattron(local_win, COLOR_PAIR(4));
+						mvwprintw(local_win, i+1, j+1, "X");
+						wattroff(local_win, COLOR_PAIR(4));
+						break;
 					
 					
 				}
@@ -412,7 +409,7 @@ void new_draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win)
 ;---------------------------------------------------------------------
 ; NAME: draw_static
 ; DESCRIPTION: Draws borders for creatures, uses ncurses
-;	Input: None
+;	Input: Ncurses window
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
@@ -453,18 +450,17 @@ void sleep_for_seconds (float s){
 	
 	usleep(sec); 
 } 
-
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: update_life
 ; DESCRIPTION: Determines if cells live, die or born again
-;	Input: Array
+;	Input: Struct
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void new_update_life (struct cell_info map[ROWS][COLUMNS]) {
+void update_life (struct cell_info map[ROWS][COLUMNS]) {
 
 	int i, j, life_count, dead_count, creature_count;
 	creature_count = 0;
@@ -479,8 +475,6 @@ void new_update_life (struct cell_info map[ROWS][COLUMNS]) {
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
-			
-			
 			
 			//check north
 			if (map [i][j].current_status == 1 && i > 0){
@@ -593,19 +587,19 @@ void new_update_life (struct cell_info map[ROWS][COLUMNS]) {
 	}
 	print_count (creature_count);
 	//copies second, temporary layer of the map to the first one to be printed
-	new_copy_map(map);
+	copy_map(map);
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: copy_map
 ; DESCRIPTION: Copies the second layer of the array to the first one, second layer acts as a temp
-;	Input: Array
+;	Input: Struct
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void new_copy_map (struct cell_info map[ROWS][COLUMNS]){
+void copy_map (struct cell_info map[ROWS][COLUMNS]){
 	int i, j, temp_value;
 	
 	for (i = 0; i < ROWS; i++){
@@ -620,7 +614,7 @@ void new_copy_map (struct cell_info map[ROWS][COLUMNS]){
 ;---------------------------------------------------------------------
 ; NAME: debug_print
 ; DESCRIPTION: Allows easier debugging by disabling ncurses and printing map to console
-;	Input: Array
+;	Input: Struct
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
@@ -636,8 +630,6 @@ void debug_print (struct cell_info map[ROWS][COLUMNS]){
 	}
 	printf("\n");
 }
-
-
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
@@ -692,9 +684,9 @@ void print_count (int creature_count){
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: map_reader
-; DESCRIPTION:
-;	Input:
-;	Output:
+; DESCRIPTION: Reads map from file
+;	Input: Struct to store map info
+;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
@@ -727,7 +719,7 @@ void map_reader(struct cell_info map[ROWS][COLUMNS]){
 ;---------------------------------------------------------------------
 ; NAME: menu_function
 ; DESCRIPTION: Show menu to operate the simulation
-;	Input: None
+;	Input: Float speed as pointer
 ;	Output: Menu choice as integer
 ;  Used global variables: None
 ; REMARKS when using this function:
@@ -816,16 +808,6 @@ int menu_function(WINDOW *local_win, float *speed){
 	
 	return menu_choice;
 }
-/*********************************************************************
-;	F U N C T I O N    D E S C R I P T I O N
-;---------------------------------------------------------------------
-; NAME:
-; DESCRIPTION:
-;	Input:
-;	Output:
-;  Used global variables:
-; REMARKS when using this function:
-;*********************************************************************/
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------

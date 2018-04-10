@@ -1,1 +1,1 @@
-gcc -lncurses -lmenu main.c 
+g++ -lncurses main.cpp
