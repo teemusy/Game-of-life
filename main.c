@@ -8,6 +8,7 @@
 #include <string.h>
 #include <menu.h>
 #include <stdlib.h>
+#include <iostream>
 
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES                                                *
