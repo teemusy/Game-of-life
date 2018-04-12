@@ -73,6 +73,7 @@ void print_count (int creature_count);
 void map_reader(struct cell_info map[ROWS][COLUMNS]);
 int menu_function(WINDOW *local_win, float *speed);
 int random_direction ();
+int options(WINDOW *local_win, float *speed);
 
 //Objects
 class Snake{
@@ -233,6 +234,8 @@ int main(int argc, char *argv[]) {
 		
 		//MAIN LOOP
 		while(true){
+			//options(menu_window, &game_speed);
+
 			//draw_creatures (map, map_window);
 			draw_creatures (new_map, map_window);
 			//print iteration
@@ -748,6 +751,96 @@ int menu_function(WINDOW *local_win, float *speed){
 	mvwprintw(local_win, 5, COLUMNS/4, " | |__| |/ ____ \\| |  | | |____  | |__| | |      | |____ _| |_| |    | |____ ");
 	mvwprintw(local_win, 6, COLUMNS/4, "  \\_____/_/    \\_\\_|  |_|______|  \\____/|_|      |______|_____|_|    |______|");
 
+	highlight = 0;
+	while (1){
+		int i;
+		//add length of choices to for loop
+		for (i = 0; i < choice_len; i++){
+			if (i == highlight){
+				wattron(local_win, A_REVERSE);
+				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
+				wattroff(local_win, A_REVERSE);
+				menu_choice = i;
+			}
+			else {
+				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
+			}
+		}
+		
+		
+		choice = wgetch(local_win);
+		
+		switch(choice){
+			case KEY_UP:
+				highlight--;
+				if (highlight <= 0){
+					highlight = 0;
+				}
+				break;
+				
+			case KEY_DOWN:
+				highlight++;
+				if (highlight > choice_len){
+					highlight = 2;
+				}
+				break;
+			case KEY_RIGHT:
+				*speed = *speed + 0.005;
+				if (*speed > 10){
+					*speed = 10;
+				}
+				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
+				break;			
+				
+			case KEY_LEFT:
+				*speed = *speed - 0.005;
+				if (*speed <= 0){
+					*speed = 0.01;
+				}
+				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
+				break;
+				
+			default:
+				break;
+		}
+		
+		if(choice == 10){
+			break;	
+		}
+	}
+	
+	return menu_choice;
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+int options(WINDOW *local_win, float *speed){
+	int choice, menu_choice, highlight;
+	
+	//menu choices
+	const char *a[5];
+	a[0] = "Randomize map";
+	a[1] = "Load from file map.txt";
+	a[2] = "Add snake";
+	a[3] = "Remove snake";
+	a[4] = "Pause/resume";
+	
+	
+	//add length check
+	int choice_len = 5;
+	
+	keypad(local_win, true);
+	
+	
+	nodelay(local_win, true);
+	wtimeout(local_win, -1);
 	highlight = 0;
 	while (1){
 		int i;
