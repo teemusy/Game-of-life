@@ -85,6 +85,7 @@ class Snake{
 	public:
 		void set_head_location (int loc_x, int loc_y);
 		void move_snake (struct cell_info map[ROWS][COLUMNS]);
+		~Snake();
 };
 
 void Snake::set_head_location (int loc_x, int loc_y){
@@ -148,6 +149,11 @@ void Snake::move_snake (struct cell_info map[ROWS][COLUMNS]){
 		snake_length++;
 		map[snake_location[0][0]][snake_location[0][1]].current_status = 0;
 	}
+}
+
+Snake::~Snake(){
+	
+	
 }
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
