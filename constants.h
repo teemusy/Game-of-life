@@ -6,7 +6,7 @@
 //determines the size of the map
 #define ROWS 50
 #define COLUMNS 100
-#define TIME_BETWEEN_REBIRTH 0.2
+#define TIME_BETWEEN_REBIRTH 0.1
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
@@ -18,6 +18,33 @@
 #define SOUTHEAST map [i+1][j+1].current_status
 #define NORTHWEST map [i-1][j-1].current_status
 #define SOUTHWEST map [i+1][j-1].current_status
+
+#define SNAKE_NORTH map [i-1][j].snake_head
+#define SNAKE_SOUTH map [i+1][j].snake_head
+#define SNAKE_EAST map [i][j+1].snake_head
+#define SNAKE_WEST map [i][j-1].snake_head
+#define SNAKE_NORTHEAST map [i-1][j+1].snake_head
+#define SNAKE_SOUTHEAST map [i+1][j+1].snake_head
+#define SNAKE_NORTHWEST map [i-1][j-1].snake_head
+#define SNAKE_SOUTHWEST map [i+1][j-1].snake_head
+
+#define SNAKE_BODY_NORTH map [i-1][j].snake_body
+#define SNAKE_BODY_SOUTH map [i+1][j].snake_body
+#define SNAKE_BODY_EAST map [i][j+1].snake_body
+#define SNAKE_BODY_WEST map [i][j-1].snake_body
+#define SNAKE_BODY_NORTHEAST map [i-1][j+1].snake_body
+#define SNAKE_BODY_SOUTHEAST map [i+1][j+1].snake_body
+#define SNAKE_BODY_NORTHWEST map [i-1][j-1].snake_body
+#define SNAKE_BODY_SOUTHWEST map [i+1][j-1].snake_body
+
+#define EGG_NORTH map [i-1][j].egg
+#define EGG_SOUTH map [i+1][j].egg
+#define EGG_EAST map [i][j+1].egg
+#define EGG_WEST map [i][j-1].egg
+#define EGG_NORTHEAST map [i-1][j+1].egg
+#define EGG_SOUTHEAST map [i+1][j+1].egg
+#define EGG_NORTHWEST map [i-1][j-1].egg
+#define EGG_SOUTHWEST map [i+1][j-1].egg
 //define game rules
 #define UNDERPOPULATION_LIMIT 2
 #define LIVE_MIN 2
@@ -25,6 +52,7 @@
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
 #define SNAKE_MAX_LEN 10
+#define TIME_TO_HATCH 10
 
 /* Global variables */
 /* Global structures */
@@ -32,5 +60,8 @@ struct cell_info {
 	   int current_status;
 	   int future_status;
 	   int snake_head;
-	   int snake_direction;
+	   int snake_body;
+	   int egg;
 };
+
+//#define DEBUG_MODE
