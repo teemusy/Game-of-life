@@ -6,7 +6,7 @@
 //determines the size of the map
 #define ROWS 50
 #define COLUMNS 100
-#define TIME_BETWEEN_REBIRTH 0.2
+#define TIME_BETWEEN_REBIRTH 0.5
 //to determine initial seed
 #define FILL_PERCENTAGE 30
 //define directions
@@ -18,6 +18,24 @@
 #define SOUTHEAST map [i+1][j+1].current_status
 #define NORTHWEST map [i-1][j-1].current_status
 #define SOUTHWEST map [i+1][j-1].current_status
+
+#define SNAKE_NORTH map [i-1][j].snake_head
+#define SNAKE_SOUTH map [i+1][j].snake_head
+#define SNAKE_EAST map [i][j+1].snake_head
+#define SNAKE_WEST map [i][j-1].snake_head
+#define SNAKE_NORTHEAST map [i-1][j+1].snake_head
+#define SNAKE_SOUTHEAST map [i+1][j+1].snake_head
+#define SNAKE_NORTHWEST map [i-1][j-1].snake_head
+#define SNAKE_SOUTHWEST map [i+1][j-1].snake_head
+
+#define SNAKE_BODY_NORTH map [i-1][j].snake_body
+#define SNAKE_BODY_SOUTH map [i+1][j].snake_body
+#define SNAKE_BODY_EAST map [i][j+1].snake_body
+#define SNAKE_BODY_WEST map [i][j-1].snake_body
+#define SNAKE_BODY_NORTHEAST map [i-1][j+1].snake_body
+#define SNAKE_BODY_SOUTHEAST map [i+1][j+1].snake_body
+#define SNAKE_BODY_NORTHWEST map [i-1][j-1].snake_body
+#define SNAKE_BODY_SOUTHWEST map [i+1][j-1].snake_body
 //define game rules
 #define UNDERPOPULATION_LIMIT 2
 #define LIVE_MIN 2
@@ -32,5 +50,7 @@ struct cell_info {
 	   int current_status;
 	   int future_status;
 	   int snake_head;
-	   int snake_direction;
+	   int snake_body;
 };
+
+//#define DEBUG_MODE

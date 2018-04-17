@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
+#include <cstdlib>
 
 #include "constants.h"
 #include "functions.h"
@@ -34,35 +35,29 @@ int main(int argc, char *argv[]) {
 	
 	//snake init 
 	Snake testi;
-	testi.set_head_location(20,20);
-		
+	
 	srand( time(NULL) ); //Randomize seed initialization for map_fill
 	iteration = 0;
 	game_speed = TIME_BETWEEN_REBIRTH;
 	
-
-	
 	//check if debug mode is on, else init ncurses
 	#ifdef DEBUG_MODE
 		map_filler(new_map);
+		testi.set_head_location(new_map, 20,20);
 		while(true){
+			testi.move_snake(new_map);
+			update_life (new_map);
 			debug_print (new_map);
-			//print iteration
 			print_stats(iteration);
 			iteration++;
 			sleep_for_seconds(game_speed);
-			//update_life (map);
+			std::system("clear");
+
 		}
 
 	#else
 	
 		initscr(); //ncurses init
-		
-		/*get screen size for terminal, not in use 
-		because it makes it harder to init map size*/
-		getmaxyx(stdscr, size_x, size_y);
-		printf("x: %d, y: %d\n", size_x, size_y);
-		
 		curs_set(0);
 		start_color();
 		//init windows, size y, size x, location y, location x
@@ -84,29 +79,27 @@ int main(int argc, char *argv[]) {
 				map_reader (new_map);
 				break;
 			default:
-				map_filler (new_map);
+				map_filler (new_map);	
 				break;
 		}
+		testi.set_head_location(new_map, 20,20);
 		
 		//MAIN LOOP
 		while(true){
-			//options(menu_window, &game_speed);
-
-			//draw_creatures (map, map_window);
-			draw_creatures (new_map, map_window);
-			//print iteration
+			
 			print_stats(iteration);
+			iteration++;
+			testi.move_snake(new_map);
+			update_life (new_map);
+			draw_creatures (new_map, map_window);
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
 			wrefresh(menu_window);
-			iteration++;
 			sleep_for_seconds(game_speed);
-			//update_life (map);
-			update_life (new_map);
-			testi.move_snake(new_map);
 		}
-		endwin(); /*End curses mode */
+		endwin();
+		
 	#endif
 	return 0;
 	

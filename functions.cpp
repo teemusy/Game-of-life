@@ -83,7 +83,7 @@ void map_filler (struct cell_info map[ROWS][COLUMNS]){
 			map[i][j].current_status = random_value_filler ();
 			map[i][j].future_status = 0;
 			map[i][j].snake_head = 0;
-			map[i][j].snake_direction = 0;
+			map[i][j].snake_body = 0;
 		}
 	}
 }
@@ -117,35 +117,17 @@ void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 			}
 			else if (map[i][j].snake_head == 1){
 				
-				switch(map[i][j].snake_direction){
-					case 2:
-						wattron(local_win, COLOR_PAIR(4));
-						mvwprintw(local_win, i+1, j+1, "u");
-						wattroff(local_win, COLOR_PAIR(4));	
-						break;					
-					case 4:
-						wattron(local_win, COLOR_PAIR(4));
-						mvwprintw(local_win, i+1, j+1, "<");
-						wattroff(local_win, COLOR_PAIR(4));	
-						break;					
-					case 6:
-						wattron(local_win, COLOR_PAIR(4));
-						mvwprintw(local_win, i+1, j+1, ">");
-						wattroff(local_win, COLOR_PAIR(4));	
-						break;					
-					case 8:
-						wattron(local_win, COLOR_PAIR(4));
-						mvwprintw(local_win, i+1, j+1, "^");
-						wattroff(local_win, COLOR_PAIR(4));	
-						break;
-					default:
-						wattron(local_win, COLOR_PAIR(4));
-						mvwprintw(local_win, i+1, j+1, "X");
-						wattroff(local_win, COLOR_PAIR(4));
-						break;
-					
-					
-				}
+				wattron(local_win, COLOR_PAIR(4));
+				mvwprintw(local_win, i+1, j+1, "X");
+				wattroff(local_win, COLOR_PAIR(4));	
+
+			}			
+			
+			else if (map[i][j].snake_body == 1){
+				
+				wattron(local_win, COLOR_PAIR(4));
+				mvwprintw(local_win, i+1, j+1, "o");
+				wattroff(local_win, COLOR_PAIR(4));	
 
 			}
 			else if (map[i][j].current_status == 0){
@@ -272,111 +254,111 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
-			
-			//check north
-			if (map [i][j].current_status == 1 && i > 0){
-				if (NORTH == 1){
-					life_count++;
+			if (map [i][j].snake_head == 0 && map [i][j].snake_body == 0){
+				//check north
+				if (map [i][j].current_status == 1 && i > 0){
+					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0){
+						life_count++;
+					}
 				}
-			}
-			else if (map [i][j].current_status == 0 && i > 0){
-				if (NORTH == 1){
-					dead_count++;
+				else if (map [i][j].current_status == 0 && i > 0){
+					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0){
+						dead_count++;
+					}
 				}
-			}
-			//south
-			if (map [i][j].current_status == 1 && i < ROWS){
-				if (SOUTH == 1){
-					life_count++;
+				//south
+				if (map [i][j].current_status == 1 && i < ROWS){
+					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0){
+						life_count++;
+					}	
+				}
+				else if (map [i][j].current_status == 0 && i < ROWS){
+					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0){
+						dead_count++;
+					}	
+				}
+				//east
+				if (map [i][j].current_status == 1 && j < COLUMNS){
+					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0){
+						life_count++;
+					}
+				}
+				else if (map [i][j].current_status == 0 && j < COLUMNS){
+					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0){
+						dead_count++;
+					}
+				}
+				//west
+				if (map [i][j].current_status == 1 && j > 0){
+					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0){
+						life_count++;
+					}
 				}	
-			}
-			else if (map [i][j].current_status == 0 && i < ROWS){
-				if (SOUTH == 1){
-					dead_count++;
-				}	
-			}
-			//east
-			if (map [i][j].current_status == 1 && j < COLUMNS){
-				if (EAST == 1){
-					life_count++;
+				else if (map [i][j].current_status == 0 && j > 0){
+					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0){
+						dead_count++;
+					}
+				}				
+				//northeast
+				if (map [i][j].current_status == 1 && i > 0 && j < COLUMNS){
+					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0){
+						life_count++;
+					}
+				}
+				else if (map [i][j].current_status == 0 && i > 0 && j < COLUMNS){
+					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0){
+						dead_count++;
+					}
+				}
+				//southeast
+				if (map [i][j].current_status == 1 && i < ROWS && j < COLUMNS){
+					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0){
+						life_count++;
+					}	
+				}
+				else if (map [i][j].current_status == 0 && i < ROWS && j < COLUMNS){
+					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0){
+						dead_count++;
+					}	
+				}
+				//northwest
+				if (map [i][j].current_status == 1 && i > 0 && j > 0){
+					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0){
+						life_count++;
+					}
+				}
+				else if (map [i][j].current_status == 0 && i > 0 && j > 0){
+					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0){
+						dead_count++;
+					}
+				}
+				//southwest
+				if (map [i][j].current_status == 1 && i < ROWS && j > 0){
+					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0){
+						life_count++;
+					}
+				}
+				else if (map [i][j].current_status == 0 && i < ROWS && j > 0){
+					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0){
+						dead_count++;
+					}
+				}
+				
+				//determine if cell lives, dies or a new one borns, update to second layer of map
+				if (life_count < UNDERPOPULATION_LIMIT){
+					map[i][j].future_status = 0;
+				}
+				else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX && map[i][j].snake_body == 0 && map[i][j].snake_head == 0){
+					map[i][j].future_status = 1;
+				}
+				else if (life_count > OVERPOPULATION_LIMIT){
+					map[i][j].future_status = 0;	
+				}
+				
+				if (dead_count == REBIRTH_LIMIT && map[i][j].snake_body == 0 && map[i][j].snake_head == 0){
+					map[i][j].future_status = 1;
 				}
 			}
-			else if (map [i][j].current_status == 0 && j < COLUMNS){
-				if (EAST == 1){
-					dead_count++;
-				}
-			}
-			//west
-			if (map [i][j].current_status == 1 && j > 0){
-				if (WEST == 1){
-					life_count++;
-				}
-			}	
-			else if (map [i][j].current_status == 0 && j > 0){
-				if (WEST == 1){
-					dead_count++;
-				}
-			}				
-			//northeast
-			if (map [i][j].current_status == 1 && i > 0 && j < COLUMNS){
-				if (NORTHEAST == 1){
-					life_count++;
-				}
-			}
-			else if (map [i][j].current_status == 0 && i > 0 && j < COLUMNS){
-				if (NORTHEAST == 1){
-					dead_count++;
-				}
-			}
-			//southeast
-			if (map [i][j].current_status == 1 && i < ROWS && j < COLUMNS){
-				if (SOUTHEAST == 1){
-					life_count++;
-				}	
-			}
-			else if (map [i][j].current_status == 0 && i < ROWS && j < COLUMNS){
-				if (SOUTHEAST == 1){
-					dead_count++;
-				}	
-			}
-			//northwest
-			if (map [i][j].current_status == 1 && i > 0 && j > 0){
-				if (NORTHWEST == 1){
-					life_count++;
-				}
-			}
-			else if (map [i][j].current_status == 0 && i > 0 && j > 0){
-				if (NORTHWEST == 1){
-					dead_count++;
-				}
-			}
-			//southwest
-			if (map [i][j].current_status == 1 && i < ROWS && j > 0){
-				if (SOUTHWEST == 1){
-					life_count++;
-				}
-			}
-			else if (map [i][j].current_status == 0 && i < ROWS && j > 0){
-				if (SOUTHWEST == 1){
-					dead_count++;
-				}
-			}
-			
-			//determine if cell lives, dies or a new one borns, update to second layer of map
-			if (life_count < UNDERPOPULATION_LIMIT){
-				map[i][j].future_status = 0;
-			}
-			else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX){
-				map[i][j].future_status = 1;
-			}
-			else if (life_count > OVERPOPULATION_LIMIT){
-				map[i][j].future_status = 0;	
-			}
-			
-			if (dead_count == REBIRTH_LIMIT){
-				map[i][j].future_status = 1;
-			}
-			
 			//reset counters for next cell
 			life_count = 0;
 			dead_count = 0;
@@ -402,7 +384,23 @@ void debug_print (struct cell_info map[ROWS][COLUMNS]){
 	
 	for (i = 0; i < ROWS; i++){
 		for (j = 0; j < COLUMNS; j++){
-			printf ("%d", map[i][j].current_status);
+			if (map[i][j].current_status == 1){
+				std::cout << "@";
+			}
+			else if (map[i][j].snake_head == 1){
+				
+				std::cout << "X";
+			}			
+			
+			else if (map[i][j].snake_body == 1){
+				
+				std::cout << "o";
+
+			}
+			else if (map[i][j].current_status == 0){
+				
+				std::cout << ".";
+			}
 		}
 		printf("\n");
 	}
@@ -462,7 +460,7 @@ void map_reader(struct cell_info map[ROWS][COLUMNS]){
 			temp_value = numberArray[i][j];
 			map[i][j].current_status = temp_value;
 			map[i][j].snake_head = 0;
-			map[i][j].snake_direction = 0;
+			//map[i][j].snake_direction = 0;
 		}
 	} 
 	fclose(myFile);
@@ -650,6 +648,63 @@ int options(WINDOW *local_win, float *speed){
 	}
 	
 	return menu_choice;
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME:
+; DESCRIPTION:
+;	Input:
+;	Output:
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void array_shift(int arr[2][SNAKE_MAX_LEN], int len, int dir){
+	int i, temp_array[2][100], temp0, temp1, last0, last1;
+
+	switch(dir){
+		case 1:
+			last0 = arr[0][len-1];
+			last1 = arr[1][len-1];
+			for (i=0; i < len; i++){
+				temp0 = arr[0][i];
+				temp1 = arr[1][i];
+				temp_array[0][i] = temp0;
+				temp_array[1][i] = temp1;
+			}
+			
+			for(i = 0; i < len; i++){
+				if(i < len - 1){
+					temp0 = temp_array[0][i];
+					temp1 = temp_array[1][i];
+					arr[0][i+1] = temp0;
+					arr[1][i+1] = temp1;
+				}
+			}
+			arr[0][0] = last0;
+			arr[1][0] = last1;
+			break;
+		case -1:
+			last0 = arr[0][0];
+			last1 = arr[1][0];
+			for (i=0; i < len; i++){
+				temp0 = arr[0][i];
+				temp1 = arr[1][i];
+				temp_array[0][i] = temp0;
+				temp_array[1][i] = temp1;
+			}
+			for(i = len; i > 0; i--){
+				if(i > 0){
+					temp0 = temp_array[0][i];
+					temp1 = temp_array[1][i];
+					arr[0][i-1] = temp0;
+					arr[1][i-1] = temp1;
+				}
+			}
+			arr[0][len-1] = last0;
+			arr[1][len-1] = last1;
+			break;
+	}
 }
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
