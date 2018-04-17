@@ -84,6 +84,7 @@ void map_filler (struct cell_info map[ROWS][COLUMNS]){
 			map[i][j].future_status = 0;
 			map[i][j].snake_head = 0;
 			map[i][j].snake_body = 0;
+			map[i][j].egg = 0;
 		}
 	}
 }
@@ -105,6 +106,7 @@ void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 	init_pair(2, COLOR_RED, COLOR_BLUE);
 	init_pair(3, COLOR_RED, COLOR_GREEN);
 	init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(5, COLOR_YELLOW, COLOR_BLUE);
 		
 	//draw creatures
 	for(i = 0; i < ROWS; i++){
@@ -134,6 +136,12 @@ void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 				wattron(local_win, COLOR_PAIR(2));
 				mvwprintw(local_win, i+1, j+1, " ");
 				wattroff(local_win, COLOR_PAIR(2));	
+			}			
+			
+			else if (map[i][j].egg == 1){
+				wattron(local_win, COLOR_PAIR(5));
+				mvwprintw(local_win, i+1, j+1, "O");
+				wattroff(local_win, COLOR_PAIR(5));	
 			}
 		}
 	}
@@ -254,92 +262,92 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 			//check if it's legal array value, eg. not -1
 			//check if cell has life and if it's inside the array
 			//if cell has no life it checks if there's life around it
-			if (map [i][j].snake_head == 0 && map [i][j].snake_body == 0){
+			if (map [i][j].snake_head == 0 && map [i][j].snake_body == 0 && map[i][j].egg == 0){
 				//check north
 				if (map [i][j].current_status == 1 && i > 0){
-					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0){
+					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0 && EGG_NORTH == 0){
 						life_count++;
 					}
 				}
 				else if (map [i][j].current_status == 0 && i > 0){
-					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0){
+					if (NORTH == 1 && SNAKE_NORTH == 0 && SNAKE_BODY_NORTH == 0 && EGG_NORTH == 0){
 						dead_count++;
 					}
 				}
 				//south
 				if (map [i][j].current_status == 1 && i < ROWS){
-					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0){
+					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0 && EGG_SOUTH == 0){
 						life_count++;
 					}	
 				}
 				else if (map [i][j].current_status == 0 && i < ROWS){
-					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0){
+					if (SOUTH == 1 && SNAKE_SOUTH == 0 && SNAKE_BODY_SOUTH == 0 && EGG_SOUTH == 0){
 						dead_count++;
 					}	
 				}
 				//east
 				if (map [i][j].current_status == 1 && j < COLUMNS){
-					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0){
+					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0 && EGG_EAST == 0){
 						life_count++;
 					}
 				}
 				else if (map [i][j].current_status == 0 && j < COLUMNS){
-					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0){
+					if (EAST == 1 && SNAKE_EAST == 0 && SNAKE_BODY_EAST == 0 && EGG_EAST == 0){
 						dead_count++;
 					}
 				}
 				//west
 				if (map [i][j].current_status == 1 && j > 0){
-					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0){
+					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0 && EGG_WEST == 0){
 						life_count++;
 					}
 				}	
 				else if (map [i][j].current_status == 0 && j > 0){
-					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0){
+					if (WEST == 1 && SNAKE_WEST == 0 && SNAKE_BODY_WEST == 0 && EGG_WEST == 0){
 						dead_count++;
 					}
 				}				
 				//northeast
 				if (map [i][j].current_status == 1 && i > 0 && j < COLUMNS){
-					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0){
+					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0 && EGG_NORTHEAST == 0){
 						life_count++;
 					}
 				}
 				else if (map [i][j].current_status == 0 && i > 0 && j < COLUMNS){
-					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0){
+					if (NORTHEAST == 1 && SNAKE_NORTHEAST == 0 && SNAKE_BODY_NORTHEAST == 0 && EGG_NORTHEAST == 0){
 						dead_count++;
 					}
 				}
 				//southeast
 				if (map [i][j].current_status == 1 && i < ROWS && j < COLUMNS){
-					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0){
+					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0 && EGG_SOUTHEAST == 0){
 						life_count++;
 					}	
 				}
 				else if (map [i][j].current_status == 0 && i < ROWS && j < COLUMNS){
-					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0){
+					if (SOUTHEAST == 1 && SNAKE_SOUTHEAST == 0 && SNAKE_BODY_SOUTHEAST == 0 && EGG_SOUTHEAST == 0){
 						dead_count++;
 					}	
 				}
 				//northwest
 				if (map [i][j].current_status == 1 && i > 0 && j > 0){
-					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0){
+					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0 && EGG_NORTHWEST == 0){
 						life_count++;
 					}
 				}
 				else if (map [i][j].current_status == 0 && i > 0 && j > 0){
-					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0){
+					if (NORTHWEST == 1 && SNAKE_NORTHWEST == 0 && SNAKE_BODY_NORTHWEST == 0 && EGG_NORTHWEST == 0){
 						dead_count++;
 					}
 				}
 				//southwest
 				if (map [i][j].current_status == 1 && i < ROWS && j > 0){
-					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0){
+					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0 && EGG_SOUTHWEST == 0){
 						life_count++;
 					}
 				}
 				else if (map [i][j].current_status == 0 && i < ROWS && j > 0){
-					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0){
+					if (SOUTHWEST == 1 && SNAKE_SOUTHWEST == 0 && SNAKE_BODY_SOUTHWEST == 0 && EGG_SOUTHWEST == 0){
 						dead_count++;
 					}
 				}
@@ -348,14 +356,14 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 				if (life_count < UNDERPOPULATION_LIMIT){
 					map[i][j].future_status = 0;
 				}
-				else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX && map[i][j].snake_body == 0 && map[i][j].snake_head == 0){
+				else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX && map[i][j].snake_body == 0 && map[i][j].snake_head == 0 && map[i][j].egg == 0){
 					map[i][j].future_status = 1;
 				}
 				else if (life_count > OVERPOPULATION_LIMIT){
 					map[i][j].future_status = 0;	
 				}
 				
-				if (dead_count == REBIRTH_LIMIT && map[i][j].snake_body == 0 && map[i][j].snake_head == 0){
+				if (dead_count == REBIRTH_LIMIT && map[i][j].snake_body == 0 && map[i][j].snake_head == 0 && map[i][j].egg == 0){
 					map[i][j].future_status = 1;
 				}
 			}

@@ -21,10 +21,9 @@
 
 //TODO
 //-pause function
-//-move cmd line input to function
 //-magic numbers
 //-streamline update_life function
-//working snake
+//-snake age?
 
 int main(int argc, char *argv[]) {
 	
@@ -45,7 +44,7 @@ int main(int argc, char *argv[]) {
 		map_filler(new_map);
 		testi.set_head_location(new_map, 20,20);
 		while(true){
-			testi.move_snake(new_map);
+			testi.update_snake(new_map);
 			update_life (new_map);
 			debug_print (new_map);
 			print_stats(iteration);
@@ -89,7 +88,7 @@ int main(int argc, char *argv[]) {
 			
 			print_stats(iteration);
 			iteration++;
-			testi.move_snake(new_map);
+			testi.update_snake(new_map);
 			update_life (new_map);
 			draw_creatures (new_map, map_window);
 			refresh();
