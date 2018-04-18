@@ -25,7 +25,7 @@
 //-streamline update_life function
 //-snake age?
 //-store snake class map as pointer
-//-fix randomly occuring segmentation when randomizing map, seems to be function.cpp row 332
+//-0,0 seems to never spawn a creature
 //-combine status message functions
 
 int main() {

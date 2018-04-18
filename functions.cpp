@@ -282,23 +282,23 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 					}
 				}
 				//south
-				if (map [i][j].current_status && i < ROWS){
+				if (map [i][j].current_status && i < ROWS-1){
 					if (SOUTH && !SNAKE_SOUTH && !SNAKE_BODY_SOUTH && !EGG_SOUTH){
 						life_count++;
 					}	
 				}
-				else if (!map [i][j].current_status && i < ROWS){
+				else if (!map [i][j].current_status && i < ROWS-1){
 					if (SOUTH && !SNAKE_SOUTH && !SNAKE_BODY_SOUTH && !EGG_SOUTH){
 						dead_count++;
 					}	
 				}
 				//east
-				if (map [i][j].current_status && j < COLUMNS){
+				if (map [i][j].current_status && j < COLUMNS-1){
 					if (EAST && !SNAKE_EAST && !SNAKE_BODY_EAST && !EGG_EAST){
 						life_count++;
 					}
 				}
-				else if (!map [i][j].current_status && j < COLUMNS){
+				else if (!map [i][j].current_status && j < COLUMNS-1){
 					if (EAST && !SNAKE_EAST && !SNAKE_BODY_EAST && !EGG_EAST){
 						dead_count++;
 					}
@@ -315,28 +315,30 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 					}
 				}				
 				//northeast
-				if (map [i][j].current_status && i > 0 && j < COLUMNS){
+				if (map [i][j].current_status && i > 0 && j < COLUMNS-1){
 					if (NORTHEAST && !SNAKE_NORTHEAST && !SNAKE_BODY_NORTHEAST && !EGG_NORTHEAST){
 						life_count++;
 					}
 				}
-				else if (!map [i][j].current_status && i > 0 && j < COLUMNS){
+				else if (!map [i][j].current_status && i > 0 && j < COLUMNS-1){
 					if (NORTHEAST && !SNAKE_NORTHEAST && !SNAKE_BODY_NORTHEAST && !EGG_NORTHEAST){
 						dead_count++;
 					}
 				}
+				
+
 				//southeast
-				if (map [i][j].current_status && i < ROWS && j < COLUMNS){
+				if (map [i][j].current_status && i < ROWS-1 && j < COLUMNS-1){
 					if (SOUTHEAST && !SNAKE_SOUTHEAST && !SNAKE_BODY_SOUTHEAST && !EGG_SOUTHEAST){
 						life_count++;
 					}	
 				}
-				//ONGELMA
-				else if (!map [i][j].current_status && i < ROWS && j < COLUMNS){
+				else if (!map [i][j].current_status && i < ROWS-1 && j < COLUMNS-1){
 					if (SOUTHEAST && !SNAKE_SOUTHEAST && !SNAKE_BODY_SOUTHEAST && !EGG_SOUTHEAST){
 						dead_count++;
 					}	
 				}
+				
 				//northwest
 				if (map [i][j].current_status && i > 0 && j > 0){
 					if (NORTHWEST && !SNAKE_NORTHWEST && !SNAKE_BODY_NORTHWEST && !EGG_NORTHWEST){
@@ -349,12 +351,12 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 					}
 				}
 				//southwest
-				if (map [i][j].current_status && i < ROWS && j > 0){
+				if (map [i][j].current_status && i < ROWS-1 && j > 0){
 					if (SOUTHWEST && !SNAKE_SOUTHWEST && !SNAKE_BODY_SOUTHWEST && !EGG_SOUTHWEST){
 						life_count++;
 					}
 				}
-				else if (!map [i][j].current_status && i < ROWS && j > 0){
+				else if (!map [i][j].current_status && i < ROWS-1 && j > 0){
 					if (SOUTHWEST && !SNAKE_SOUTHWEST && !SNAKE_BODY_SOUTHWEST && !EGG_SOUTHWEST){
 						dead_count++;
 					}

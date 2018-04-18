@@ -52,7 +52,7 @@
 #define REBIRTH_LIMIT 3
 #define SNAKE_MAX_LEN 5
 #define TIME_TO_HATCH 20
-#define TIME_BETWEEN_REBIRTH 0.4
+#define TIME_BETWEEN_REBIRTH 0.5
 /* Global variables */
 /* Global structures */
 struct cell_info {
@@ -63,4 +63,4 @@ struct cell_info {
 	   int egg;
 };
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
