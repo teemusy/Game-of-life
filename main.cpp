@@ -20,29 +20,31 @@
 **********************************************************************/
 
 //TODO
-//-pause function
+//-options that don't halt the game
 //-magic numbers
 //-streamline update_life function
 //-snake age?
+//-store snake class map as pointer
+//-0,0 seems to never spawn a creature
+//-combine status message functions
 
-int main(int argc, char *argv[]) {
+int main() {
 	
-	int random_value, iteration, size_x, size_y, i, menu_choice;
-	char cmd_line_input[50];
+	int random_value, iteration, i, menu_choice;
 	float game_speed;
 	struct cell_info new_map[ROWS][COLUMNS];
 	
 	//snake init 
 	Snake testi;
 	
-	srand( time(NULL) ); //Randomize seed initialization for map_fill
+	srand(time(NULL)); //Randomize seed initialization for map_fill
 	iteration = 0;
 	game_speed = TIME_BETWEEN_REBIRTH;
 	
 	//check if debug mode is on, else init ncurses
 	#ifdef DEBUG_MODE
 		map_filler(new_map);
-		testi.set_head_location(new_map, 20,20);
+		testi.set_head_location(new_map, 10,10);
 		while(true){
 			testi.update_snake(new_map);
 			update_life (new_map);
@@ -51,7 +53,6 @@ int main(int argc, char *argv[]) {
 			iteration++;
 			sleep_for_seconds(game_speed);
 			std::system("clear");
-
 		}
 
 	#else
@@ -59,13 +60,15 @@ int main(int argc, char *argv[]) {
 		initscr(); //ncurses init
 		curs_set(0);
 		start_color();
+		
 		//init windows, size y, size x, location y, location x
 		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
-		WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
+		//WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
+		
 		//draws borders
 		box(text_window,0,0);
-		box(menu_window,0,0);
+		//box(menu_window,0,0);
 		
 		//run menu
 		menu_choice = menu_function(map_window, &game_speed);
@@ -81,11 +84,11 @@ int main(int argc, char *argv[]) {
 				map_filler (new_map);	
 				break;
 		}
-		testi.set_head_location(new_map, 20,20);
+		testi.set_head_location(new_map, 10,10);
 		
 		//MAIN LOOP
 		while(true){
-			
+		
 			print_stats(iteration);
 			iteration++;
 			testi.update_snake(new_map);
@@ -94,7 +97,7 @@ int main(int argc, char *argv[]) {
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
-			wrefresh(menu_window);
+			//wrefresh(menu_window);
 			sleep_for_seconds(game_speed);
 		}
 		endwin();
