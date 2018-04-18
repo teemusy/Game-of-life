@@ -30,7 +30,7 @@ void Snake::update_snake (struct cell_info map[ROWS][COLUMNS]){
 	
 }
 
-void Snake::lay_egg (struct cell_info map[ROWS][COLUMNS], int loc_x, int loc_y){
+void Snake::lay_egg (struct cell_info map[ROWS][COLUMNS], int loc_y, int loc_x){
 	
 	map[loc_y][loc_x].egg = 1;
 	map[loc_y][loc_x].current_status = 0;
@@ -45,13 +45,16 @@ void Snake::hatch_egg (struct cell_info map[ROWS][COLUMNS]){
 	if (hatching_time >= TIME_TO_HATCH){
 		set_head_location(map, snake_head_var[1], snake_head_var[0]);
 		snake_alive = 1;
+		//check that it's the right place
+		map[snake_head_var[0]][snake_head_var[1]].egg = 0;
+		map[snake_head_var[0]][snake_head_var[1]].snake_head = 1;
 	}
 	
 }
 
 void Snake::destroy_snake (struct cell_info map[ROWS][COLUMNS]){
 	int i, j;
-	lay_egg(map, snake_head_var[1], snake_head_var[0]);
+	//lay_egg(map, snake_head_var[1], snake_head_var[0]);
 	for (i = 0; i < ROWS; i++){
 		
 		for (j = 0; j < COLUMNS; j++){
@@ -59,6 +62,7 @@ void Snake::destroy_snake (struct cell_info map[ROWS][COLUMNS]){
 			
 				map[i][j].snake_head = 0;
 				map[i][j].snake_body = 0;
+				
 				map[i][j].current_status = 1;
 				map[i][j].future_status = 1;
 			}
@@ -94,9 +98,11 @@ void Snake::move_snake (struct cell_info map[ROWS][COLUMNS]){
 			legal_direction = 1;
 
 			//>75% chance to choose last direction for more natural movement
+			//if snake is just hatched it moves more randomly
 			if (direction != 8 && snake_length > 0){
 				direction = last_dir;
 			}
+			
 			else {
 				direction = random_direction ();
 			}

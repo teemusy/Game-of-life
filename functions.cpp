@@ -132,17 +132,18 @@ void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 				wattroff(local_win, COLOR_PAIR(4));	
 
 			}
-			else if (map[i][j].current_status == 0){
+	
+			
+			else if (map[i][j].egg == 1){
+				wattron(local_win, COLOR_PAIR(1));
+				mvwprintw(local_win, i+1, j+1, "O");
+				wattroff(local_win, COLOR_PAIR(1));	
+			}
+			else/* if (map[i][j].current_status == 0)*/{
 				wattron(local_win, COLOR_PAIR(2));
 				mvwprintw(local_win, i+1, j+1, " ");
 				wattroff(local_win, COLOR_PAIR(2));	
-			}			
-			
-			else if (map[i][j].egg == 1){
-				wattron(local_win, COLOR_PAIR(5));
-				mvwprintw(local_win, i+1, j+1, "O");
-				wattroff(local_win, COLOR_PAIR(5));	
-			}
+			}		
 		}
 	}
 }
@@ -468,7 +469,10 @@ void map_reader(struct cell_info map[ROWS][COLUMNS]){
 			temp_value = numberArray[i][j];
 			map[i][j].current_status = temp_value;
 			map[i][j].snake_head = 0;
-			//map[i][j].snake_direction = 0;
+			map[i][j].snake_body = 0;
+			map[i][j].future_status = 0;
+			map[i][j].egg = 0;
+
 		}
 	} 
 	fclose(myFile);
@@ -523,7 +527,7 @@ int menu_function(WINDOW *local_win, float *speed){
 			}
 		}
 		
-		
+	
 		choice = wgetch(local_win);
 		
 		switch(choice){
@@ -596,7 +600,7 @@ int options(WINDOW *local_win, float *speed){
 	
 	
 	nodelay(local_win, true);
-	wtimeout(local_win, -1);
+
 	highlight = 0;
 	while (1){
 		int i;
@@ -604,12 +608,12 @@ int options(WINDOW *local_win, float *speed){
 		for (i = 0; i < choice_len; i++){
 			if (i == highlight){
 				wattron(local_win, A_REVERSE);
-				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
+				mvwprintw(local_win, i+1, 1, "%s", a[i]);
 				wattroff(local_win, A_REVERSE);
 				menu_choice = i;
 			}
 			else {
-				mvwprintw(local_win, i+20, COLUMNS/4, "%s", a[i]);
+				mvwprintw(local_win, i+1, 1, "%s", a[i]);
 			}
 		}
 		

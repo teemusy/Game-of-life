@@ -24,11 +24,12 @@
 //-magic numbers
 //-streamline update_life function
 //-snake age?
+//-store snake class map as pointer
+//-fix randomly occuring segmentation fault on main menu
 
-int main(int argc, char *argv[]) {
+int main() {
 	
-	int random_value, iteration, size_x, size_y, i, menu_choice;
-	char cmd_line_input[50];
+	int random_value, iteration, i, menu_choice;
 	float game_speed;
 	struct cell_info new_map[ROWS][COLUMNS];
 	
@@ -59,10 +60,14 @@ int main(int argc, char *argv[]) {
 		initscr(); //ncurses init
 		curs_set(0);
 		start_color();
+		
 		//init windows, size y, size x, location y, location x
 		WINDOW* map_window = newwin(ROWS + 2, COLUMNS + 2, 0, 0);
 		WINDOW* text_window = newwin(5, COLUMNS + 2, ROWS+2, 0);
 		WINDOW* menu_window = newwin(ROWS + 2, 20, 0, COLUMNS+2);
+		
+
+
 		//draws borders
 		box(text_window,0,0);
 		box(menu_window,0,0);
@@ -85,11 +90,11 @@ int main(int argc, char *argv[]) {
 		
 		//MAIN LOOP
 		while(true){
-			
 			print_stats(iteration);
 			iteration++;
 			testi.update_snake(new_map);
 			update_life (new_map);
+			
 			draw_creatures (new_map, map_window);
 			refresh();
 			wrefresh(map_window);
