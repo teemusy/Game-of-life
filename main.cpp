@@ -31,7 +31,7 @@
 
 int main() {
 	
-	int random_value, iteration, i, menu_choice, highlight, choice;
+	int iteration, menu_choice, highlight, choice;
 	float game_speed;
 	struct cell_info new_map[ROWS][COLUMNS];
 	
@@ -99,7 +99,7 @@ int main() {
 			//menu choices
 			const char *a[5];
 			a[0] = "Randomize map";
-			a[1] = "Load from file map.txt";
+			a[1] = "Load map.txt";
 			a[2] = "Add snake";
 			a[3] = "Remove snake";
 			a[4] = "Pause/resume";
