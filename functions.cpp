@@ -434,7 +434,7 @@ void debug_print (struct cell_info map[ROWS][COLUMNS]){
 ;  Used global variables: DEBUG_MODE
 ; REMARKS when using this function:
 ;*********************************************************************/
-void print_stats (int iteration){
+void print_stats (int iteration, float *speed){
 	
 	#ifdef DEBUG_MODE
 		printf("Current iteration: %d \n", iteration);
@@ -445,6 +445,7 @@ void print_stats (int iteration){
 		
 		attron(COLOR_PAIR(1));
 		mvprintw(ROWS + 3, 1, "Current iteration: %d", iteration);
+		mvprintw(ROWS + 5, 1, "Game speed: %.3f", *speed);
 		attroff(COLOR_PAIR(1));	
 	#endif
 }
@@ -583,7 +584,7 @@ int menu_function(WINDOW *local_win, float *speed){
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
-; NAME: options
+; NAME: options !!! NOT IN USE
 ; DESCRIPTION: Option menu that show during the simulation
 ;	Input: Ncurses window, gamespeed pointer
 ;	Output: Menu choice

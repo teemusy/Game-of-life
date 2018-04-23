@@ -111,9 +111,6 @@ int main() {
 
 			keypad(menu_window, true);
 			nodelay(menu_window, true);
-
-			
-
 				int i;
 				//add length of choices to for loop
 				for (i = 0; i < choice_len; i++){
@@ -163,7 +160,12 @@ int main() {
 						break;
 				}
 			
-			print_stats(iteration);
+			//enter
+			if(choice == 10){
+				//break;	
+			}
+			
+			print_stats(iteration, &game_speed);
 			iteration++;
 			testi.update_snake(new_map);
 			update_life (new_map);
