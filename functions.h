@@ -26,10 +26,10 @@ void debug_print (struct cell_info map[ROWS][COLUMNS]);
 //copy array layer
 void copy_map (struct cell_info map[ROWS][COLUMNS]);
 //print statistics
-void print_stats (int iteration);
+void print_stats (int iteration, float *speed);
 void print_count (int creature_count);
 void map_reader(struct cell_info map[ROWS][COLUMNS]);
 int menu_function(WINDOW *local_win, float *speed);
 int random_direction ();
-int options(WINDOW *local_win, float *speed);
+int options(WINDOW *local_win, float *speed, int choice);
 void array_shift(int arr[2][SNAKE_MAX_LEN], int len, int dir);
