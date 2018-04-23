@@ -31,7 +31,7 @@
 
 int main() {
 	
-	int random_value, iteration, i, menu_choice;
+	int random_value, iteration, i, menu_choice, highlight, choice;
 	float game_speed;
 	struct cell_info new_map[ROWS][COLUMNS];
 	
@@ -90,8 +90,6 @@ int main() {
 		}
 		testi.set_head_location(new_map, 10,10);
 		
-		
-		int highlight, choice;
 		highlight = 0;
 		//MAIN LOOP
 		while(true){
@@ -162,7 +160,7 @@ int main() {
 			
 			//enter
 			if(choice == 10){
-				//break;	
+				menu_choice = choice;	
 			}
 			
 			print_stats(iteration, &game_speed);
