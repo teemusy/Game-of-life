@@ -50,7 +50,7 @@
 #define LIVE_MAX 3
 #define OVERPOPULATION_LIMIT 3
 #define REBIRTH_LIMIT 3
-#define SNAKE_MAX_LEN 5
+#define SNAKE_MAX_LEN 10
 #define TIME_TO_HATCH 20
 #define TIME_BETWEEN_REBIRTH 0.5
 /* Global variables */

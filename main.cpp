@@ -20,7 +20,6 @@
 **********************************************************************/
 
 //TODO && IMPROVEMENTS
-//-options that don't halt the game
 //-magic numbers
 //-streamline update_life function
 //-snake age?
@@ -28,6 +27,7 @@
 //-0,0 seems to never spawn a creature
 //-combine status message functions
 //-clean up the code for options during the game
+//-game_speed adjustments, magic number
 
 int main() {
 	
@@ -94,18 +94,17 @@ int main() {
 		//MAIN LOOP
 		while(true){
 			
-			
-			
 			//menu choices
-			const char *a[5];
+			const char *a[6];
 			a[0] = "Randomize map";
-			a[1] = "Load map.txt";
-			a[2] = "Add snake";
-			a[3] = "Remove snake";
+			a[1] = "Save";
+			a[2] = "Load";
+			a[3] = "Load premade map";
 			a[4] = "Pause/resume";
+			a[5] = "Reset snake";
 
 			//add length check
-			int choice_len = 5;
+			int choice_len = 6;
 
 			keypad(menu_window, true);
 			nodelay(menu_window, true);
@@ -160,7 +159,35 @@ int main() {
 			
 			//enter
 			if(choice == 10){
-				menu_choice = choice;	
+				switch(menu_choice){
+					//randomize
+					case 0:
+						map_filler(new_map);
+						break;					
+					//save
+					case 1:
+						map_filler(new_map);
+						break;					
+					//load
+					case 2:
+						map_filler(new_map);
+						break;					
+					//premade
+					case 3:
+						map_reader (new_map);
+						break;
+					//pause/resume
+					case 4:
+						map_filler(new_map);
+						break;					
+					//reset snake
+					case 5:
+						map_filler(new_map);
+						break;
+					default:
+						break;
+					
+				}
 			}
 			
 			print_stats(iteration, &game_speed);
@@ -171,7 +198,7 @@ int main() {
 			refresh();
 			wrefresh(map_window);
 			wrefresh(text_window);
-			//wrefresh(menu_window);
+			wrefresh(menu_window);
 			sleep_for_seconds(game_speed);
 		}
 		endwin();
