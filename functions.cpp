@@ -590,8 +590,8 @@ int menu_function(WINDOW *local_win, float *speed){
 ;  Used global variables:
 ; REMARKS when using this function: Not in use as it pauses the simulation
 ;*********************************************************************/
-int options(WINDOW *local_win, float *speed){
-	int choice, menu_choice, highlight;
+int options(WINDOW *local_win, float *speed, int choice){
+	int menu_choice, highlight;
 	
 	//menu choices
 	const char *a[5];
