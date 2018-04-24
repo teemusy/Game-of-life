@@ -23,16 +23,17 @@
 //-magic numbers
 //-streamline update_life function
 //-snake age?
-//-store snake class map as pointer
+//-store snake class map as pointer inside the object
 //-0,0 seems to never spawn a creature
 //-combine status message functions
 //-clean up the code for options during the game
-//-game_speed adjustments, magic number
+//-pause
+//-printc count doesn't use window
 
 int main() {
 	
-	int iteration, menu_choice, highlight, choice;
-	float game_speed;
+	int iteration, menu_choice, highlight, choice, pause;
+	float game_speed, old_speed;
 	struct cell_info new_map[ROWS][COLUMNS];
 	
 	//snake init 
@@ -40,6 +41,7 @@ int main() {
 	
 	srand(time(NULL)); //Randomize seed initialization for map_fill
 	iteration = 0;
+	pause = 0;
 	game_speed = TIME_BETWEEN_REBIRTH;
 
 	
@@ -82,7 +84,7 @@ int main() {
 				map_filler(new_map);
 				break;
 			case 1:
-				map_reader (new_map);
+				map_reader (new_map, 1);
 				break;
 			default:
 				map_filler (new_map);	
@@ -138,17 +140,17 @@ int main() {
 						}
 						break;
 					case KEY_RIGHT:
-						game_speed = game_speed + 0.005;
-						if (game_speed > 10){
+						game_speed = game_speed + 0.05;
+						if (game_speed > 10 && pause == 0){
 							game_speed = 10;
 						}
 						mvwprintw(menu_window, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", game_speed);
 						break;			
 						
 					case KEY_LEFT:
-						game_speed = game_speed - 0.005;
-						if (game_speed <= 0){
-							game_speed = 0.01;
+						game_speed = game_speed - 0.05;
+						if (game_speed <= 0 && pause == 0){
+							game_speed = 0.05;
 						}
 						mvwprintw(menu_window, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", game_speed);
 						break;
@@ -170,19 +172,34 @@ int main() {
 						break;					
 					//load
 					case 2:
-						map_filler(new_map);
+						map_reader (new_map, 2);
 						break;					
 					//premade
 					case 3:
-						map_reader (new_map);
+						map_reader (new_map, 1);
 						break;
 					//pause/resume
 					case 4:
-						map_filler(new_map);
+						//not working as intended
+						/*
+						if (pause == 0){
+							old_speed = game_speed;
+							//not true pause but close enough
+							game_speed = 999999;
+							pause = 1;
+						}
+						else {
+							game_speed = old_speed;
+							pause = 0;
+						}
+						*/
 						break;					
 					//reset snake
 					case 5:
-						map_filler(new_map);
+						//destroy old snake, create new snake with randomized values
+						//testi.delete_snake();
+						//Snake testi;						
+						//testi.set_head_location(new_map, 10,10);
 						break;
 					default:
 						break;

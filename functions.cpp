@@ -460,10 +460,21 @@ void print_stats (int iteration, float *speed){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void map_reader(struct cell_info map[ROWS][COLUMNS]){
-	
+void map_reader(struct cell_info map[ROWS][COLUMNS], int map_choice){
+
 	FILE *myFile;
-    myFile = fopen("map.txt", "r");
+	switch(map_choice){
+		case 1:
+			myFile = fopen("map.txt", "r");
+			break;
+		case 2:
+			myFile = fopen("save.txt", "r");
+			break;
+		default:
+			break;
+	
+	}
+    
 	//read file into array
     int numberArray[ROWS][COLUMNS];
     int i, j, temp_value;
