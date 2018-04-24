@@ -168,7 +168,7 @@ int main() {
 						break;					
 					//save
 					case 1:
-						map_filler(new_map);
+						map_saver (new_map);
 						break;					
 					//load
 					case 2:

@@ -501,6 +501,36 @@ void map_reader(struct cell_info map[ROWS][COLUMNS], int map_choice){
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
+; NAME: map_saver
+; DESCRIPTION: Saves current map status to file
+;	Input: Struct to read map info
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void map_saver(struct cell_info map[ROWS][COLUMNS]){
+
+	FILE *myFile;
+
+	myFile = fopen("save.txt", "w");
+
+    int i, j, temp_value;
+
+    
+    for (i = 0; i < ROWS; i++){
+		for(j = 0; j < COLUMNS; j++){
+
+			temp_value = map[i][j].current_status;
+			
+			fprintf(myFile, "%d ", temp_value);
+		}
+		fprintf(myFile, "\n");
+	} 
+	fclose(myFile);
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
 ; NAME: menu_function
 ; DESCRIPTION: Main menu for the simulation
 ;	Input: Float speed as pointer
