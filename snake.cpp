@@ -29,7 +29,12 @@ void Snake::update_snake (struct cell_info map[ROWS][COLUMNS]){
 	move_snake(map);
 	
 }
-
+/*
+void Snake::delete_snake (){
+	delete this;
+	
+}
+*/
 void Snake::lay_egg (struct cell_info map[ROWS][COLUMNS], int loc_y, int loc_x){
 	
 	map[loc_y][loc_x].egg = 1;

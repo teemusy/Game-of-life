@@ -15,6 +15,7 @@ class Snake{
 		void hatch_egg (struct cell_info map[ROWS][COLUMNS]);
 		void move_snake (struct cell_info map[ROWS][COLUMNS]);
 		void destroy_snake (struct cell_info map[ROWS][COLUMNS]);
+		//void delete_snake ();
 	
 	public:
 		void set_head_location (struct cell_info map[ROWS][COLUMNS], int loc_x, int loc_y);

@@ -1,5 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -g
+#CFLAGS=-c -Wall -g
+CFLAGS=-c
 
 all: game
 

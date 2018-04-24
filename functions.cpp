@@ -460,10 +460,21 @@ void print_stats (int iteration, float *speed){
 ;  Used global variables:
 ; REMARKS when using this function:
 ;*********************************************************************/
-void map_reader(struct cell_info map[ROWS][COLUMNS]){
-	
+void map_reader(struct cell_info map[ROWS][COLUMNS], int map_choice){
+
 	FILE *myFile;
-    myFile = fopen("map.txt", "r");
+	switch(map_choice){
+		case 1:
+			myFile = fopen("map.txt", "r");
+			break;
+		case 2:
+			myFile = fopen("save.txt", "r");
+			break;
+		default:
+			break;
+	
+	}
+    
 	//read file into array
     int numberArray[ROWS][COLUMNS];
     int i, j, temp_value;
@@ -484,6 +495,36 @@ void map_reader(struct cell_info map[ROWS][COLUMNS]){
 			map[i][j].egg = 0;
 
 		}
+	} 
+	fclose(myFile);
+}
+/*********************************************************************
+;	F U N C T I O N    D E S C R I P T I O N
+;---------------------------------------------------------------------
+; NAME: map_saver
+; DESCRIPTION: Saves current map status to file
+;	Input: Struct to read map info
+;	Output: None
+;  Used global variables:
+; REMARKS when using this function:
+;*********************************************************************/
+void map_saver(struct cell_info map[ROWS][COLUMNS]){
+
+	FILE *myFile;
+
+	myFile = fopen("save.txt", "w");
+
+    int i, j, temp_value;
+
+    
+    for (i = 0; i < ROWS; i++){
+		for(j = 0; j < COLUMNS; j++){
+
+			temp_value = map[i][j].current_status;
+			
+			fprintf(myFile, "%d ", temp_value);
+		}
+		fprintf(myFile, "\n");
 	} 
 	fclose(myFile);
 }
