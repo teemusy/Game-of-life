@@ -145,7 +145,7 @@ void draw_creatures (struct cell_info map[ROWS][COLUMNS], WINDOW *local_win){
 				mvwprintw(local_win, i+1, j+1, "O");
 				wattroff(local_win, COLOR_PAIR(1));	
 			}
-			else/* if (map[i][j].current_status == 0)*/{
+			else{
 				wattron(local_win, COLOR_PAIR(2));
 				mvwprintw(local_win, i+1, j+1, " ");
 				wattroff(local_win, COLOR_PAIR(2));	
@@ -203,7 +203,8 @@ void sleep_for_seconds (float s){
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
 ; NAME: copy_map
-; DESCRIPTION: Copies the second layer of the array to the first one, second layer acts as a temp
+; DESCRIPTION: Copies the second layer of the array to the first one, 
+;              second layer acts as a temp
 ;	Input: Struct
 ;	Output: None
 ;  Used global variables:
@@ -455,7 +456,7 @@ void print_stats (int iteration, float *speed){
 ;---------------------------------------------------------------------
 ; NAME: map_reader
 ; DESCRIPTION: Reads map from file
-;	Input: Struct to store map info
+;	Input: Struct to store map info, choice of savefile
 ;	Output: None
 ;  Used global variables:
 ; REMARKS when using this function:
@@ -625,95 +626,6 @@ int menu_function(WINDOW *local_win, float *speed){
 /*********************************************************************
 ;	F U N C T I O N    D E S C R I P T I O N
 ;---------------------------------------------------------------------
-; NAME: options !!! NOT IN USE
-; DESCRIPTION: Option menu that show during the simulation
-;	Input: Ncurses window, gamespeed pointer
-;	Output: Menu choice
-;  Used global variables:
-; REMARKS when using this function: Not in use as it pauses the simulation
-;*********************************************************************/
-int options(WINDOW *local_win, float *speed, int choice){
-	int menu_choice, highlight;
-	
-	//menu choices
-	const char *a[5];
-	a[0] = "Randomize map";
-	a[1] = "Load from file map.txt";
-	a[2] = "Add snake";
-	a[3] = "Remove snake";
-	a[4] = "Pause/resume";
-	
-	
-	//add length check
-	int choice_len = 5;
-	
-	keypad(local_win, true);
-	
-	
-	nodelay(local_win, true);
-
-	highlight = 0;
-	while (1){
-		int i;
-		//add length of choices to for loop
-		for (i = 0; i < choice_len; i++){
-			if (i == highlight){
-				wattron(local_win, A_REVERSE);
-				mvwprintw(local_win, i+1, 1, "%s", a[i]);
-				wattroff(local_win, A_REVERSE);
-				menu_choice = i;
-			}
-			else {
-				mvwprintw(local_win, i+1, 1, "%s", a[i]);
-			}
-		}
-		
-		choice = wgetch(local_win);
-		
-		switch(choice){
-			case KEY_UP:
-				highlight--;
-				if (highlight <= 0){
-					highlight = 0;
-				}
-				break;
-				
-			case KEY_DOWN:
-				highlight++;
-				if (highlight > choice_len){
-					highlight = 2;
-				}
-				break;
-			case KEY_RIGHT:
-				*speed = *speed + 0.005;
-				if (*speed > 10){
-					*speed = 10;
-				}
-				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
-				break;			
-				
-			case KEY_LEFT:
-				*speed = *speed - 0.005;
-				if (*speed <= 0){
-					*speed = 0.01;
-				}
-				mvwprintw(local_win, ROWS-2, COLUMNS/4, "Rebirth speed is %.3f seconds.", *speed);
-				break;
-				
-			default:
-				break;
-		}
-		
-		if(choice == 10){
-			break;	
-		}
-	}
-	
-	return menu_choice;
-}
-/*********************************************************************
-;	F U N C T I O N    D E S C R I P T I O N
-;---------------------------------------------------------------------
 ; NAME: array_shift
 ; DESCRIPTION: Shifts [2][x] array x-cells left or right
 ;	Input: 2D array, size of x, direction 1/-1
@@ -768,13 +680,3 @@ void array_shift(int arr[2][SNAKE_MAX_LEN], int len, int dir){
 			break;
 	}
 }
-/*********************************************************************
-;	F U N C T I O N    D E S C R I P T I O N
-;---------------------------------------------------------------------
-; NAME:
-; DESCRIPTION:
-;	Input:
-;	Output:
-;  Used global variables:
-; REMARKS when using this function:
-;*********************************************************************/

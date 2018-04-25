@@ -32,9 +32,14 @@
 
 int main() {
 	
-	int iteration, menu_choice, highlight, choice, pause;
-	float game_speed, old_speed;
-	struct cell_info new_map[ROWS][COLUMNS];
+	int iteration; /**Keeps count of creature iteration */
+	int	menu_choice; /** Keeps track of menu choice */
+	int highlight; /** Highlights menu choice */
+	int choice; /** Chosen menu choice */
+	int pause; /** Keeps track of pause/resume*/
+	float game_speed; /** Game update speed, smaller is faster */
+	float old_speed; /** Keeps track of the old speed for the pause function */
+	struct cell_info new_map[ROWS][COLUMNS]; /** Stores map and snake information */
 	
 	//snake init 
 	Snake testi;
@@ -102,8 +107,8 @@ int main() {
 			a[1] = "Save";
 			a[2] = "Load";
 			a[3] = "Load premade map";
-			a[4] = "Pause/resume";
-			a[5] = "Reset snake";
+			a[4] = "XXPause/resumeXX";
+			a[5] = "XXReset snakeXX";
 
 			//add length check
 			int choice_len = 6;
