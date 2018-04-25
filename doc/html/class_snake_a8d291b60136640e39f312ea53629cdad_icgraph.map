@@ -1,0 +1,4 @@
+<map id="destroy_snake" name="destroy_snake">
+<area shape="rect" id="node2" href="$class_snake.html#a368e1fd54c1ed7774ccf55ce72d9eaad" title="move_snake" alt="" coords="168,5,271,32"/>
+<area shape="rect" id="node3" href="$class_snake.html#a1abae5aae951e0a45431b83df8ffe7be" title="update_snake" alt="" coords="319,5,431,32"/>
+</map>

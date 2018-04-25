@@ -55,6 +55,7 @@
 #define TIME_BETWEEN_REBIRTH 0.5
 /* Global variables */
 /* Global structures */
+/** Keeps track of cell status */
 struct cell_info {
 	   int current_status;
 	   int future_status;

@@ -1,0 +1,4 @@
+<map id="lay_egg" name="lay_egg">
+<area shape="rect" id="node2" href="$class_snake.html#a368e1fd54c1ed7774ccf55ce72d9eaad" title="move_snake" alt="" coords="124,5,227,32"/>
+<area shape="rect" id="node3" href="$class_snake.html#a1abae5aae951e0a45431b83df8ffe7be" title="update_snake" alt="" coords="275,5,387,32"/>
+</map>

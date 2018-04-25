@@ -1,0 +1,6 @@
+<map id="random_direction" name="random_direction">
+<area shape="rect" id="node2" href="$class_snake.html#a368e1fd54c1ed7774ccf55ce72d9eaad" title="Snake::move_snake" alt="" coords="608,5,759,32"/>
+<area shape="rect" id="node4" href="$class_snake.html#a8b4ec6a8a6cad3e80705c66415505c3b" title="Snake::set_head_location" alt="" coords="188,31,375,57"/>
+<area shape="rect" id="node3" href="$class_snake.html#a1abae5aae951e0a45431b83df8ffe7be" title="Snake::update_snake" alt="" coords="807,5,967,32"/>
+<area shape="rect" id="node5" href="$class_snake.html#aa6c7fafcad496a7e43856bb93eab5600" title="Snake::hatch_egg" alt="" coords="423,31,560,57"/>
+</map>
