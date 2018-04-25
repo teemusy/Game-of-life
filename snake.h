@@ -1,5 +1,6 @@
 #include "functions.h"
 
+/** Keeps track of snake movement, length and life*/
 class Snake{
 	private:
 		int i;
