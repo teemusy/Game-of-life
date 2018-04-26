@@ -1,4 +1,4 @@
 <map id="random_value_filler" name="random_value_filler">
-<area shape="rect" id="node2" href="$functions_8h.html#a5d9d39bdea641daac992e1dc48963bd0" title="map_filler" alt="" coords="200,5,284,32"/>
+<area shape="rect" id="node2" href="$functions_8h.html#a5d9d39bdea641daac992e1dc48963bd0" title="Fills the map struct current_status randomly with 1 or 0 and put&#39;s 0&#39;s to other struct fields..." alt="" coords="200,5,284,32"/>
 <area shape="rect" id="node3" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="332,5,387,32"/>
 </map>

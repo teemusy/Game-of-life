@@ -108,6 +108,9 @@ $(document).ready(function(){initNavTree('structcell__info.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>This struct is used to store invidual cell info.  
+ <a href="structcell__info.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="constants_8h_source.html">constants.h</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for cell_info:</div>
@@ -129,9 +132,19 @@ Data Fields</h2></td></tr>
 <tr class="separator:ae7380ac2e994490e340a7b28385be8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Keeps track of cell status </p>
+<div class="textblock"><p>This struct is used to store invidual cell info. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">current_status</td><td>Tells if there's life in the cell </td></tr>
+    <tr><td class="paramname">future_status</td><td>Tells the status for the cell in next iteration </td></tr>
+    <tr><td class="paramname">snake_head</td><td>Tells if there's snake head in the cell </td></tr>
+    <tr><td class="paramname">snake_body</td><td>Tells if there's snake body in the cell </td></tr>
+    <tr><td class="paramname">egg</td><td>Tells if there's egg in the cell </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00059">59</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00107">107</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="ac2bcecb1f467d9403d98f2ec23c164a4"></a>
 <div class="memitem">
@@ -143,7 +156,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00060">60</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00108">108</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="snake_8cpp_source.html#l00075">Snake::move_snake()</a>.</p>
 
@@ -159,7 +172,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00064">64</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00112">112</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 </div>
 </div>
@@ -173,7 +186,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00061">61</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00109">109</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 </div>
 </div>
@@ -187,7 +200,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00063">63</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00111">111</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="snake_8cpp_source.html#l00059">Snake::destroy_snake()</a>, and <a class="el" href="snake_8cpp_source.html#l00075">Snake::move_snake()</a>.</p>
 
@@ -203,7 +216,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00062">62</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00110">110</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="snake_8cpp_source.html#l00059">Snake::destroy_snake()</a>.</p>
 
@@ -218,7 +231,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structcell__info.html">cell_info</a></li>
-    <li class="footer">Generated on Wed Apr 25 2018 15:01:32 for Game of life by
+    <li class="footer">Generated on Thu Apr 26 2018 19:15:19 for Game of life by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

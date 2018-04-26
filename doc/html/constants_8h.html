@@ -121,6 +121,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcell__info.html">cell_info</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct is used to store invidual cell info.  <a href="structcell__info.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -197,15 +198,11 @@ Macros</h2></td></tr>
 <tr class="separator:a179fec4253db683d45c3d8ddb29a7f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c549d055f9a7a7da04f16189ebc4048"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#a2c549d055f9a7a7da04f16189ebc4048">UNDERPOPULATION_LIMIT</a>&#160;&#160;&#160;2</td></tr>
 <tr class="separator:a2c549d055f9a7a7da04f16189ebc4048"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e711b0b1a270a9a568c0c0ab2e6853f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#a4e711b0b1a270a9a568c0c0ab2e6853f">LIVE_MIN</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a4e711b0b1a270a9a568c0c0ab2e6853f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a140de14a1aca11d0859679b7069019d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#a140de14a1aca11d0859679b7069019d9">LIVE_MAX</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a140de14a1aca11d0859679b7069019d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28e0631e5c7584dca630905314dc9d7f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#a28e0631e5c7584dca630905314dc9d7f">OVERPOPULATION_LIMIT</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a28e0631e5c7584dca630905314dc9d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8f4f332cf4d4253b594b174bb5f7f1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#aa8f4f332cf4d4253b594b174bb5f7f1e">REBIRTH_LIMIT</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:aa8f4f332cf4d4253b594b174bb5f7f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa28ca69adb809248728cfd4002f36985"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#aa28ca69adb809248728cfd4002f36985">SNAKE_MAX_LEN</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memitem:aa28ca69adb809248728cfd4002f36985"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#aa28ca69adb809248728cfd4002f36985">SNAKE_MAX_LEN</a>&#160;&#160;&#160;6</td></tr>
 <tr class="separator:aa28ca69adb809248728cfd4002f36985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64f0bc02f99a1395d7fd9af9c664810b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="constants_8h.html#a64f0bc02f99a1395d7fd9af9c664810b">TIME_TO_HATCH</a>&#160;&#160;&#160;20</td></tr>
 <tr class="separator:a64f0bc02f99a1395d7fd9af9c664810b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,8 +219,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Size of the map in x-direction </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00008">8</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00009">9</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00213">copy_map()</a>, <a class="el" href="functions_8cpp_source.html#l00401">debug_print()</a>, <a class="el" href="snake_8cpp_source.html#l00059">Snake::destroy_snake()</a>, <a class="el" href="functions_8cpp_source.html#l00107">draw_creatures()</a>, <a class="el" href="functions_8cpp_source.html#l00166">draw_static()</a>, <a class="el" href="functions_8cpp_source.html#l00077">map_filler()</a>, <a class="el" href="functions_8cpp_source.html#l00464">map_reader()</a>, <a class="el" href="functions_8cpp_source.html#l00512">map_saver()</a>, <a class="el" href="functions_8cpp_source.html#l00542">menu_function()</a>, and <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -238,8 +236,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines east direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00014">14</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00019">19</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -254,8 +253,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines east direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00041">41</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00070">70</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -270,8 +270,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines north direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00039">39</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00066">66</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -286,8 +287,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northeast direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00043">43</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00074">74</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -302,8 +304,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northwest direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00045">45</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00078">78</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -318,8 +321,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines south direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00040">40</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00068">68</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -334,8 +338,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southeast direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00044">44</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00076">76</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -350,8 +355,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southwest direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00046">46</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00080">80</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -366,8 +372,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines west direction for egg </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00042">42</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00072">72</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -382,42 +389,11 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Random fill percentage when generating random map </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00010">10</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00011">11</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00053">random_value_filler()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a140de14a1aca11d0859679b7069019d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LIVE_MAX&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00050">50</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
-
-<p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4e711b0b1a270a9a568c0c0ab2e6853f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LIVE_MIN&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00049">49</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
-
-<p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
 </div>
 </div>
@@ -430,8 +406,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines north direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00012">12</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00015">15</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -446,8 +423,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northeast direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00016">16</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00023">23</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -462,8 +440,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northwest direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00018">18</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00027">27</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -478,8 +457,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Kills creature if there's more neighbours than the limit </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00051">51</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00086">86</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -494,8 +474,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>How many empty cells there has to be for a new creature to born </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00052">52</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00088">88</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -510,6 +491,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Size of the map in y-direction </p>
 
 <p>Definition at line <a class="el" href="constants_8h_source.html#l00007">7</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
@@ -526,8 +508,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines east direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00032">32</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00053">53</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -542,8 +525,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines north direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00030">30</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00049">49</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -558,8 +542,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northeast direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00034">34</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00057">57</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -574,8 +559,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northwest direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00036">36</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00061">61</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -590,8 +576,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines south direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00031">31</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00051">51</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -606,8 +593,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southeast direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00035">35</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00059">59</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -622,8 +610,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southwest direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00037">37</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00063">63</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -638,8 +627,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines west direction for snake_body </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00033">33</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00055">55</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -654,8 +644,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines east direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00023">23</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00036">36</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -666,12 +657,13 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SNAKE_MAX_LEN&#160;&#160;&#160;10</td>
+          <td class="memname">#define SNAKE_MAX_LEN&#160;&#160;&#160;6</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Maximum length for the snake </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00053">53</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00090">90</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="snake_8cpp_source.html#l00075">Snake::move_snake()</a>, and <a class="el" href="snake_8cpp_source.html#l00012">Snake::set_head_location()</a>.</p>
 
@@ -686,8 +678,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines north direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00021">21</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00032">32</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -702,8 +695,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northeast direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00025">25</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00040">40</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -718,8 +712,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines northwest direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00027">27</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00044">44</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -734,8 +729,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines south direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00022">22</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00034">34</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -750,8 +746,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southeast direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00026">26</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00042">42</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -766,8 +763,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southwest direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00028">28</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00046">46</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -782,8 +780,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines west direction for snake_head </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00024">24</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00038">38</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -798,8 +797,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines south direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00013">13</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00017">17</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -814,8 +814,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southeast direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00017">17</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00025">25</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -830,8 +831,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines southwest direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00019">19</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00029">29</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -846,10 +848,11 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Default simulation speed </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00055">55</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00094">94</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00033">main()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00034">main()</a>.</p>
 
 </div>
 </div>
@@ -862,8 +865,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="el" href="class_snake.html">Snake</a> egg hatching time </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00054">54</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00092">92</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="snake_8cpp_source.html#l00048">Snake::hatch_egg()</a>.</p>
 
@@ -878,8 +882,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Kills creature if there's less neighbours than the limit </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00048">48</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00084">84</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -894,8 +899,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines west direction for current.status </p>
 
-<p>Definition at line <a class="el" href="constants_8h_source.html#l00015">15</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
+<p>Definition at line <a class="el" href="constants_8h_source.html#l00021">21</a> of file <a class="el" href="constants_8h_source.html">constants.h</a>.</p>
 
 <p>Referenced by <a class="el" href="functions_8cpp_source.html#l00258">update_life()</a>.</p>
 
@@ -907,7 +913,7 @@ Macros</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="constants_8h.html">constants.h</a></li>
-    <li class="footer">Generated on Wed Apr 25 2018 15:01:31 for Game of life by
+    <li class="footer">Generated on Thu Apr 26 2018 19:15:18 for Game of life by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

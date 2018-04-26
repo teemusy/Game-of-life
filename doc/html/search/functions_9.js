@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['set_5fhead_5flocation',['set_head_location',['../class_snake.html#a8b4ec6a8a6cad3e80705c66415505c3b',1,'Snake']]],
-  ['sleep_5ffor_5fseconds',['sleep_for_seconds',['../functions_8cpp.html#a6a92fe26d155376182a206facfa718b9',1,'sleep_for_seconds(float s):&#160;functions.cpp'],['../functions_8h.html#a6a92fe26d155376182a206facfa718b9',1,'sleep_for_seconds(float s):&#160;functions.cpp']]]
+  ['update_5flife',['update_life',['../functions_8cpp.html#ae4c490cad798273a8fd9d8f2c868abbd',1,'update_life(struct cell_info map[ROWS][COLUMNS]):&#160;functions.cpp'],['../functions_8h.html#ae4c490cad798273a8fd9d8f2c868abbd',1,'update_life(struct cell_info map[ROWS][COLUMNS]):&#160;functions.cpp']]],
+  ['update_5fsnake',['update_snake',['../class_snake.html#a1abae5aae951e0a45431b83df8ffe7be',1,'Snake']]]
 ];

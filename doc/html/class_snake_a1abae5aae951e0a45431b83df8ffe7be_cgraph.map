@@ -1,9 +1,9 @@
 <map id="update_snake" name="update_snake">
 <area shape="rect" id="node2" href="$class_snake.html#a368e1fd54c1ed7774ccf55ce72d9eaad" title="move_snake" alt="" coords="165,107,268,133"/>
-<area shape="rect" id="node3" href="$functions_8cpp.html#a663ea044bec9e241b861960712c7e7e2" title="array_shift" alt="" coords="329,5,418,32"/>
+<area shape="rect" id="node3" href="$functions_8cpp.html#a663ea044bec9e241b861960712c7e7e2" title="Shifts [2][x] array x&#45;cells left or right. " alt="" coords="329,5,418,32"/>
 <area shape="rect" id="node4" href="$class_snake.html#a8d291b60136640e39f312ea53629cdad" title="destroy_snake" alt="" coords="316,56,431,83"/>
 <area shape="rect" id="node5" href="$class_snake.html#aa6c7fafcad496a7e43856bb93eab5600" title="hatch_egg" alt="" coords="329,107,418,133"/>
-<area shape="rect" id="node7" href="$functions_8cpp.html#a641ba67d24cc624c9ca0d5073ddda905" title="random_direction" alt="" coords="665,132,800,159"/>
+<area shape="rect" id="node7" href="$functions_8cpp.html#a641ba67d24cc624c9ca0d5073ddda905" title="Gives 4 different random directions for the snake. " alt="" coords="665,132,800,159"/>
 <area shape="rect" id="node8" href="$class_snake.html#a6e951d6358aeea3d42d0d4a7a30ff4d2" title="lay_egg" alt="" coords="338,208,409,235"/>
 <area shape="rect" id="node6" href="$class_snake.html#a8b4ec6a8a6cad3e80705c66415505c3b" title="set_head_location" alt="" coords="479,107,617,133"/>
 </map>

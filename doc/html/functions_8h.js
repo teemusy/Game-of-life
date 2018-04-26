@@ -9,7 +9,6 @@ var functions_8h =
     [ "map_reader", "functions_8h.html#a297254193676559a99c3fc26a46b48b5", null ],
     [ "map_saver", "functions_8h.html#a31aea1ec6c5dc961a28a9f89530ee6a4", null ],
     [ "menu_function", "functions_8h.html#a751dd1955daa490670adee3c38b260f1", null ],
-    [ "options", "functions_8h.html#aca4a7774997d9f3961bb73d10b1fc214", null ],
     [ "print_count", "functions_8h.html#a9d7d091242c8a5ba1a72b15bae2afd99", null ],
     [ "print_stats", "functions_8h.html#a82e722f1e0b0abd82770d73399f23946", null ],
     [ "random_direction", "functions_8h.html#a641ba67d24cc624c9ca0d5073ddda905", null ],

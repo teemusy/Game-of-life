@@ -1,4 +1,4 @@
 <map id="hatch_egg" name="hatch_egg">
 <area shape="rect" id="node2" href="$class_snake.html#a8b4ec6a8a6cad3e80705c66415505c3b" title="set_head_location" alt="" coords="143,5,281,32"/>
-<area shape="rect" id="node3" href="$functions_8cpp.html#a641ba67d24cc624c9ca0d5073ddda905" title="random_direction" alt="" coords="329,5,464,32"/>
+<area shape="rect" id="node3" href="$functions_8cpp.html#a641ba67d24cc624c9ca0d5073ddda905" title="Gives 4 different random directions for the snake. " alt="" coords="329,5,464,32"/>
 </map>

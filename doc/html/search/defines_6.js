@@ -1,5 +1,23 @@
 var searchData=
 [
-  ['rebirth_5flimit',['REBIRTH_LIMIT',['../constants_8h.html#aa8f4f332cf4d4253b594b174bb5f7f1e',1,'constants.h']]],
-  ['rows',['ROWS',['../constants_8h.html#a3cfd3aa62338d12609f6d65bce97e9cd',1,'constants.h']]]
+  ['snake_5fbody_5feast',['SNAKE_BODY_EAST',['../constants_8h.html#a93b405b22a9e23e327522844f705f14c',1,'constants.h']]],
+  ['snake_5fbody_5fnorth',['SNAKE_BODY_NORTH',['../constants_8h.html#a74ddda4cc3bebec5ae3c2f8e563c1edc',1,'constants.h']]],
+  ['snake_5fbody_5fnortheast',['SNAKE_BODY_NORTHEAST',['../constants_8h.html#ae355ffaeec510446580a31350d1cd0fb',1,'constants.h']]],
+  ['snake_5fbody_5fnorthwest',['SNAKE_BODY_NORTHWEST',['../constants_8h.html#a8dc6cba75237a762aae568ce37162f25',1,'constants.h']]],
+  ['snake_5fbody_5fsouth',['SNAKE_BODY_SOUTH',['../constants_8h.html#acea42adf6cf11858616310e5b0ac841c',1,'constants.h']]],
+  ['snake_5fbody_5fsoutheast',['SNAKE_BODY_SOUTHEAST',['../constants_8h.html#a7828c9d414209d3d54ee0213dd4311db',1,'constants.h']]],
+  ['snake_5fbody_5fsouthwest',['SNAKE_BODY_SOUTHWEST',['../constants_8h.html#af2614bd57021125d523b62df21e0582f',1,'constants.h']]],
+  ['snake_5fbody_5fwest',['SNAKE_BODY_WEST',['../constants_8h.html#a39a25b10db5ba4aef8b0c9ebe1bd10a2',1,'constants.h']]],
+  ['snake_5feast',['SNAKE_EAST',['../constants_8h.html#a3857bd68e449a14a7743b36077257927',1,'constants.h']]],
+  ['snake_5fmax_5flen',['SNAKE_MAX_LEN',['../constants_8h.html#aa28ca69adb809248728cfd4002f36985',1,'constants.h']]],
+  ['snake_5fnorth',['SNAKE_NORTH',['../constants_8h.html#aefcc5e04a765c6a094483f87ab8b253d',1,'constants.h']]],
+  ['snake_5fnortheast',['SNAKE_NORTHEAST',['../constants_8h.html#af31964d347312957694abca2251398e2',1,'constants.h']]],
+  ['snake_5fnorthwest',['SNAKE_NORTHWEST',['../constants_8h.html#a127655970e2a31f8e794646a4a2fbe2b',1,'constants.h']]],
+  ['snake_5fsouth',['SNAKE_SOUTH',['../constants_8h.html#aa0ec4c4a297e8eee8d49507746a0ecba',1,'constants.h']]],
+  ['snake_5fsoutheast',['SNAKE_SOUTHEAST',['../constants_8h.html#acd26e2d644bf83acde3ec33248412466',1,'constants.h']]],
+  ['snake_5fsouthwest',['SNAKE_SOUTHWEST',['../constants_8h.html#aee6e283c1024d54ff7aedb54fd8098a2',1,'constants.h']]],
+  ['snake_5fwest',['SNAKE_WEST',['../constants_8h.html#a7ebf8121d7a6f62f0a39cb0bba00ed0e',1,'constants.h']]],
+  ['south',['SOUTH',['../constants_8h.html#af3830320fe6287f717dca9669f417950',1,'constants.h']]],
+  ['southeast',['SOUTHEAST',['../constants_8h.html#a0bdd815c79bee3fd7243675de570e3c4',1,'constants.h']]],
+  ['southwest',['SOUTHWEST',['../constants_8h.html#affb1a0defb8cb94cc31897c465e20a75',1,'constants.h']]]
 ];
