@@ -367,7 +367,7 @@ void update_life (struct cell_info map[ROWS][COLUMNS]) {
 				if (life_count < UNDERPOPULATION_LIMIT){
 					map[i][j].future_status = 0;
 				}
-				else if (life_count >= LIVE_MIN && life_count <= LIVE_MAX && !map[i][j].snake_body && !map[i][j].snake_head && !map[i][j].egg){
+				else if (life_count >= UNDERPOPULATION_LIMIT && life_count <= OVERPOPULATION_LIMIT && !map[i][j].snake_body && !map[i][j].snake_head && !map[i][j].egg){
 					map[i][j].future_status = 1;
 				}
 				else if (life_count > OVERPOPULATION_LIMIT){

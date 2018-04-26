@@ -29,6 +29,7 @@
 //-clean up the code for options during the game
 //-pause
 //-printc count doesn't use window
+//-snake loading and saving
 
 int main() {
 	
