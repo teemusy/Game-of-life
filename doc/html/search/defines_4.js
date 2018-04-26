@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['north',['NORTH',['../constants_8h.html#a1711232abf72723b5216c206e6bbb175',1,'constants.h']]],
-  ['northeast',['NORTHEAST',['../constants_8h.html#a102c97a6b56626a25efbee52bc0ccff0',1,'constants.h']]],
-  ['northwest',['NORTHWEST',['../constants_8h.html#a4fadfc1cc2d9a1723ae3ec08f3f0203d',1,'constants.h']]]
+  ['overpopulation_5flimit',['OVERPOPULATION_LIMIT',['../constants_8h.html#a28e0631e5c7584dca630905314dc9d7f',1,'constants.h']]]
 ];

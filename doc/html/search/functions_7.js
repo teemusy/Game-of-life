@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['print_5fcount',['print_count',['../functions_8cpp.html#a9d7d091242c8a5ba1a72b15bae2afd99',1,'print_count(int creature_count):&#160;functions.cpp'],['../functions_8h.html#a9d7d091242c8a5ba1a72b15bae2afd99',1,'print_count(int creature_count):&#160;functions.cpp']]],
-  ['print_5fstats',['print_stats',['../functions_8cpp.html#a82e722f1e0b0abd82770d73399f23946',1,'print_stats(int iteration, float *speed):&#160;functions.cpp'],['../functions_8h.html#a82e722f1e0b0abd82770d73399f23946',1,'print_stats(int iteration, float *speed):&#160;functions.cpp']]]
+  ['random_5fdirection',['random_direction',['../functions_8cpp.html#a641ba67d24cc624c9ca0d5073ddda905',1,'random_direction():&#160;functions.cpp'],['../functions_8h.html#a641ba67d24cc624c9ca0d5073ddda905',1,'random_direction():&#160;functions.cpp']]],
+  ['random_5fvalue_5ffiller',['random_value_filler',['../functions_8cpp.html#a23b34c255508b969abc69e86ca21e6f5',1,'random_value_filler():&#160;functions.cpp'],['../functions_8h.html#a23b34c255508b969abc69e86ca21e6f5',1,'random_value_filler():&#160;functions.cpp']]]
 ];

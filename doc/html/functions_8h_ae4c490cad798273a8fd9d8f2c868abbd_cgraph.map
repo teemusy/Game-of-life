@@ -1,4 +1,4 @@
 <map id="update_life" name="update_life">
-<area shape="rect" id="node2" href="$functions_8cpp.html#ad55ee01f73e4b0927b92c6281aa7d4c1" title="copy_map" alt="" coords="149,5,237,32"/>
-<area shape="rect" id="node3" href="$functions_8cpp.html#a9d7d091242c8a5ba1a72b15bae2afd99" title="print_count" alt="" coords="145,56,240,83"/>
+<area shape="rect" id="node2" href="$functions_8cpp.html#ad55ee01f73e4b0927b92c6281aa7d4c1" title="Copies simulations future status to current status. " alt="" coords="149,5,237,32"/>
+<area shape="rect" id="node3" href="$functions_8cpp.html#a9d7d091242c8a5ba1a72b15bae2afd99" title="Updates count on screen, should combine with print_stats function. " alt="" coords="145,56,240,83"/>
 </map>

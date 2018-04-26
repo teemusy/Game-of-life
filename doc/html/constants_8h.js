@@ -12,8 +12,6 @@ var constants_8h =
     [ "EGG_SOUTHWEST", "constants_8h.html#a179fec4253db683d45c3d8ddb29a7f38", null ],
     [ "EGG_WEST", "constants_8h.html#a25ad7ab660ff871d5c00e52a151e583c", null ],
     [ "FILL_PERCENTAGE", "constants_8h.html#a8cd5dfa91fe51e5cf22b6564a8a0200e", null ],
-    [ "LIVE_MAX", "constants_8h.html#a140de14a1aca11d0859679b7069019d9", null ],
-    [ "LIVE_MIN", "constants_8h.html#a4e711b0b1a270a9a568c0c0ab2e6853f", null ],
     [ "NORTH", "constants_8h.html#a1711232abf72723b5216c206e6bbb175", null ],
     [ "NORTHEAST", "constants_8h.html#a102c97a6b56626a25efbee52bc0ccff0", null ],
     [ "NORTHWEST", "constants_8h.html#a4fadfc1cc2d9a1723ae3ec08f3f0203d", null ],

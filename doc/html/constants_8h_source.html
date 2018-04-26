@@ -110,80 +110,114 @@ $(document).ready(function(){initNavTree('constants_8h_source.html','');});
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">*--------------------------------------------------------------------*/</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/* Control flags */</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">/* Global constants */</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">//determines the size of the map</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="constants_8h.html#a3cfd3aa62338d12609f6d65bce97e9cd">    7</a></span>&#160;<span class="preprocessor">#define ROWS 50</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="constants_8h.html#a06c6c391fc11d106e9909f0401b255b1">    8</a></span>&#160;<span class="preprocessor">#define COLUMNS 100</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//to determine initial seed</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="constants_8h.html#a8cd5dfa91fe51e5cf22b6564a8a0200e">   10</a></span>&#160;<span class="preprocessor">#define FILL_PERCENTAGE 30</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//define directions</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="constants_8h.html#a1711232abf72723b5216c206e6bbb175">   12</a></span>&#160;<span class="preprocessor">#define NORTH map [i-1][j].current_status</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="constants_8h.html#af3830320fe6287f717dca9669f417950">   13</a></span>&#160;<span class="preprocessor">#define SOUTH map [i+1][j].current_status</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="constants_8h.html#a072a1ef1143314441742097b799be322">   14</a></span>&#160;<span class="preprocessor">#define EAST map [i][j+1].current_status</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="constants_8h.html#a755da365a2f771fdb9e15af22fee7d74">   15</a></span>&#160;<span class="preprocessor">#define WEST map [i][j-1].current_status</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="constants_8h.html#a102c97a6b56626a25efbee52bc0ccff0">   16</a></span>&#160;<span class="preprocessor">#define NORTHEAST map [i-1][j+1].current_status</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="constants_8h.html#a0bdd815c79bee3fd7243675de570e3c4">   17</a></span>&#160;<span class="preprocessor">#define SOUTHEAST map [i+1][j+1].current_status</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="constants_8h.html#a4fadfc1cc2d9a1723ae3ec08f3f0203d">   18</a></span>&#160;<span class="preprocessor">#define NORTHWEST map [i-1][j-1].current_status</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="constants_8h.html#affb1a0defb8cb94cc31897c465e20a75">   19</a></span>&#160;<span class="preprocessor">#define SOUTHWEST map [i+1][j-1].current_status</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="constants_8h.html#a06c6c391fc11d106e9909f0401b255b1">    9</a></span>&#160;<span class="preprocessor">#define COLUMNS 100</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="constants_8h.html#a8cd5dfa91fe51e5cf22b6564a8a0200e">   11</a></span>&#160;<span class="preprocessor">#define FILL_PERCENTAGE 30</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">//define directions</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="constants_8h.html#a1711232abf72723b5216c206e6bbb175">   15</a></span>&#160;<span class="comment"></span><span class="preprocessor">#define NORTH map [i-1][j].current_status</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="constants_8h.html#af3830320fe6287f717dca9669f417950">   17</a></span>&#160;<span class="preprocessor">#define SOUTH map [i+1][j].current_status</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="constants_8h.html#a072a1ef1143314441742097b799be322">   19</a></span>&#160;<span class="preprocessor">#define EAST map [i][j+1].current_status</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="constants_8h.html#aefcc5e04a765c6a094483f87ab8b253d">   21</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTH map [i-1][j].snake_head</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="constants_8h.html#aa0ec4c4a297e8eee8d49507746a0ecba">   22</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTH map [i+1][j].snake_head</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="constants_8h.html#a3857bd68e449a14a7743b36077257927">   23</a></span>&#160;<span class="preprocessor">#define SNAKE_EAST map [i][j+1].snake_head</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="constants_8h.html#a7ebf8121d7a6f62f0a39cb0bba00ed0e">   24</a></span>&#160;<span class="preprocessor">#define SNAKE_WEST map [i][j-1].snake_head</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="constants_8h.html#af31964d347312957694abca2251398e2">   25</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTHEAST map [i-1][j+1].snake_head</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="constants_8h.html#acd26e2d644bf83acde3ec33248412466">   26</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTHEAST map [i+1][j+1].snake_head</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="constants_8h.html#a127655970e2a31f8e794646a4a2fbe2b">   27</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTHWEST map [i-1][j-1].snake_head</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="constants_8h.html#aee6e283c1024d54ff7aedb54fd8098a2">   28</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTHWEST map [i+1][j-1].snake_head</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="constants_8h.html#a74ddda4cc3bebec5ae3c2f8e563c1edc">   30</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTH map [i-1][j].snake_body</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="constants_8h.html#acea42adf6cf11858616310e5b0ac841c">   31</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTH map [i+1][j].snake_body</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="constants_8h.html#a93b405b22a9e23e327522844f705f14c">   32</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_EAST map [i][j+1].snake_body</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="constants_8h.html#a39a25b10db5ba4aef8b0c9ebe1bd10a2">   33</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_WEST map [i][j-1].snake_body</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="constants_8h.html#ae355ffaeec510446580a31350d1cd0fb">   34</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTHEAST map [i-1][j+1].snake_body</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="constants_8h.html#a7828c9d414209d3d54ee0213dd4311db">   35</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTHEAST map [i+1][j+1].snake_body</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="constants_8h.html#a8dc6cba75237a762aae568ce37162f25">   36</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTHWEST map [i-1][j-1].snake_body</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="constants_8h.html#af2614bd57021125d523b62df21e0582f">   37</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTHWEST map [i+1][j-1].snake_body</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="constants_8h.html#afc8fed27161991ab9748e3b274fffb88">   39</a></span>&#160;<span class="preprocessor">#define EGG_NORTH map [i-1][j].egg</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="constants_8h.html#a0d6e05bfe639a8813eb3a76132028e74">   40</a></span>&#160;<span class="preprocessor">#define EGG_SOUTH map [i+1][j].egg</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="constants_8h.html#a45fde2fd809eb50b0c16fa5977f14a0c">   41</a></span>&#160;<span class="preprocessor">#define EGG_EAST map [i][j+1].egg</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="constants_8h.html#a25ad7ab660ff871d5c00e52a151e583c">   42</a></span>&#160;<span class="preprocessor">#define EGG_WEST map [i][j-1].egg</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="constants_8h.html#a77e44b06ca6a9d159dfdc5f292e96594">   43</a></span>&#160;<span class="preprocessor">#define EGG_NORTHEAST map [i-1][j+1].egg</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="constants_8h.html#a9e5401dabd998f130408de1d957b7a84">   44</a></span>&#160;<span class="preprocessor">#define EGG_SOUTHEAST map [i+1][j+1].egg</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="constants_8h.html#a9c77573daa8fd23dd37957c9282cbea8">   45</a></span>&#160;<span class="preprocessor">#define EGG_NORTHWEST map [i-1][j-1].egg</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="constants_8h.html#a179fec4253db683d45c3d8ddb29a7f38">   46</a></span>&#160;<span class="preprocessor">#define EGG_SOUTHWEST map [i+1][j-1].egg</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">//define game rules</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="constants_8h.html#a2c549d055f9a7a7da04f16189ebc4048">   48</a></span>&#160;<span class="preprocessor">#define UNDERPOPULATION_LIMIT 2</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="constants_8h.html#a4e711b0b1a270a9a568c0c0ab2e6853f">   49</a></span>&#160;<span class="preprocessor">#define LIVE_MIN 2</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="constants_8h.html#a140de14a1aca11d0859679b7069019d9">   50</a></span>&#160;<span class="preprocessor">#define LIVE_MAX 3</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="constants_8h.html#a28e0631e5c7584dca630905314dc9d7f">   51</a></span>&#160;<span class="preprocessor">#define OVERPOPULATION_LIMIT 3</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="constants_8h.html#aa8f4f332cf4d4253b594b174bb5f7f1e">   52</a></span>&#160;<span class="preprocessor">#define REBIRTH_LIMIT 3</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="constants_8h.html#aa28ca69adb809248728cfd4002f36985">   53</a></span>&#160;<span class="preprocessor">#define SNAKE_MAX_LEN 10</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="constants_8h.html#a64f0bc02f99a1395d7fd9af9c664810b">   54</a></span>&#160;<span class="preprocessor">#define TIME_TO_HATCH 20</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="constants_8h.html#a3ae84457aff75d8c11c20782be669d05">   55</a></span>&#160;<span class="preprocessor">#define TIME_BETWEEN_REBIRTH 0.5</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">/* Global variables */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">/* Global structures */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structcell__info.html">   59</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structcell__info.html">cell_info</a> {</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">   60</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">current_status</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">   61</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">future_status</a>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">   62</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">snake_head</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">   63</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">snake_body</a>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">   64</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">egg</a>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">//#define DEBUG_MODE</span></div>
-<div class="ttc" id="structcell__info_html_ac2bcecb1f467d9403d98f2ec23c164a4"><div class="ttname"><a href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">cell_info::current_status</a></div><div class="ttdeci">int current_status</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00060">constants.h:60</a></div></div>
-<div class="ttc" id="structcell__info_html_ae7380ac2e994490e340a7b28385be8f4"><div class="ttname"><a href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">cell_info::egg</a></div><div class="ttdeci">int egg</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00064">constants.h:64</a></div></div>
-<div class="ttc" id="structcell__info_html_afaaafc09a32975a63b756dc3eacfb20d"><div class="ttname"><a href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">cell_info::snake_body</a></div><div class="ttdeci">int snake_body</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00063">constants.h:63</a></div></div>
-<div class="ttc" id="structcell__info_html"><div class="ttname"><a href="structcell__info.html">cell_info</a></div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00059">constants.h:59</a></div></div>
-<div class="ttc" id="structcell__info_html_aa427c6da7d8cc5daa68c71860cbd3cb1"><div class="ttname"><a href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">cell_info::future_status</a></div><div class="ttdeci">int future_status</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00061">constants.h:61</a></div></div>
-<div class="ttc" id="structcell__info_html_a48a6713fc32d78e5863764089e2008cd"><div class="ttname"><a href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">cell_info::snake_head</a></div><div class="ttdeci">int snake_head</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00062">constants.h:62</a></div></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="constants_8h.html#a755da365a2f771fdb9e15af22fee7d74">   21</a></span>&#160;<span class="preprocessor">#define WEST map [i][j-1].current_status</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="constants_8h.html#a102c97a6b56626a25efbee52bc0ccff0">   23</a></span>&#160;<span class="preprocessor">#define NORTHEAST map [i-1][j+1].current_status</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="constants_8h.html#a0bdd815c79bee3fd7243675de570e3c4">   25</a></span>&#160;<span class="preprocessor">#define SOUTHEAST map [i+1][j+1].current_status</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="constants_8h.html#a4fadfc1cc2d9a1723ae3ec08f3f0203d">   27</a></span>&#160;<span class="preprocessor">#define NORTHWEST map [i-1][j-1].current_status</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="constants_8h.html#affb1a0defb8cb94cc31897c465e20a75">   29</a></span>&#160;<span class="preprocessor">#define SOUTHWEST map [i+1][j-1].current_status</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="constants_8h.html#aefcc5e04a765c6a094483f87ab8b253d">   32</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTH map [i-1][j].snake_head</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="constants_8h.html#aa0ec4c4a297e8eee8d49507746a0ecba">   34</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTH map [i+1][j].snake_head</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="constants_8h.html#a3857bd68e449a14a7743b36077257927">   36</a></span>&#160;<span class="preprocessor">#define SNAKE_EAST map [i][j+1].snake_head</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="constants_8h.html#a7ebf8121d7a6f62f0a39cb0bba00ed0e">   38</a></span>&#160;<span class="preprocessor">#define SNAKE_WEST map [i][j-1].snake_head</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="constants_8h.html#af31964d347312957694abca2251398e2">   40</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTHEAST map [i-1][j+1].snake_head</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="constants_8h.html#acd26e2d644bf83acde3ec33248412466">   42</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTHEAST map [i+1][j+1].snake_head</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="constants_8h.html#a127655970e2a31f8e794646a4a2fbe2b">   44</a></span>&#160;<span class="preprocessor">#define SNAKE_NORTHWEST map [i-1][j-1].snake_head</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="constants_8h.html#aee6e283c1024d54ff7aedb54fd8098a2">   46</a></span>&#160;<span class="preprocessor">#define SNAKE_SOUTHWEST map [i+1][j-1].snake_head</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="constants_8h.html#a74ddda4cc3bebec5ae3c2f8e563c1edc">   49</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTH map [i-1][j].snake_body</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="constants_8h.html#acea42adf6cf11858616310e5b0ac841c">   51</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTH map [i+1][j].snake_body</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="constants_8h.html#a93b405b22a9e23e327522844f705f14c">   53</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_EAST map [i][j+1].snake_body</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="constants_8h.html#a39a25b10db5ba4aef8b0c9ebe1bd10a2">   55</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_WEST map [i][j-1].snake_body</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="constants_8h.html#ae355ffaeec510446580a31350d1cd0fb">   57</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTHEAST map [i-1][j+1].snake_body</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="constants_8h.html#a7828c9d414209d3d54ee0213dd4311db">   59</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTHEAST map [i+1][j+1].snake_body</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="constants_8h.html#a8dc6cba75237a762aae568ce37162f25">   61</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_NORTHWEST map [i-1][j-1].snake_body</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="constants_8h.html#af2614bd57021125d523b62df21e0582f">   63</a></span>&#160;<span class="preprocessor">#define SNAKE_BODY_SOUTHWEST map [i+1][j-1].snake_body</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="constants_8h.html#afc8fed27161991ab9748e3b274fffb88">   66</a></span>&#160;<span class="preprocessor">#define EGG_NORTH map [i-1][j].egg</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="constants_8h.html#a0d6e05bfe639a8813eb3a76132028e74">   68</a></span>&#160;<span class="preprocessor">#define EGG_SOUTH map [i+1][j].egg</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="constants_8h.html#a45fde2fd809eb50b0c16fa5977f14a0c">   70</a></span>&#160;<span class="preprocessor">#define EGG_EAST map [i][j+1].egg</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="constants_8h.html#a25ad7ab660ff871d5c00e52a151e583c">   72</a></span>&#160;<span class="preprocessor">#define EGG_WEST map [i][j-1].egg</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="constants_8h.html#a77e44b06ca6a9d159dfdc5f292e96594">   74</a></span>&#160;<span class="preprocessor">#define EGG_NORTHEAST map [i-1][j+1].egg</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="constants_8h.html#a9e5401dabd998f130408de1d957b7a84">   76</a></span>&#160;<span class="preprocessor">#define EGG_SOUTHEAST map [i+1][j+1].egg</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="constants_8h.html#a9c77573daa8fd23dd37957c9282cbea8">   78</a></span>&#160;<span class="preprocessor">#define EGG_NORTHWEST map [i-1][j-1].egg</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="constants_8h.html#a179fec4253db683d45c3d8ddb29a7f38">   80</a></span>&#160;<span class="preprocessor">#define EGG_SOUTHWEST map [i+1][j-1].egg</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//define game rules</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="constants_8h.html#a2c549d055f9a7a7da04f16189ebc4048">   84</a></span>&#160;<span class="comment"></span><span class="preprocessor">#define UNDERPOPULATION_LIMIT 2</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="constants_8h.html#a28e0631e5c7584dca630905314dc9d7f">   86</a></span>&#160;<span class="preprocessor">#define OVERPOPULATION_LIMIT 3</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="constants_8h.html#aa8f4f332cf4d4253b594b174bb5f7f1e">   88</a></span>&#160;<span class="preprocessor">#define REBIRTH_LIMIT 3</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="constants_8h.html#aa28ca69adb809248728cfd4002f36985">   90</a></span>&#160;<span class="preprocessor">#define SNAKE_MAX_LEN 6</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="constants_8h.html#a64f0bc02f99a1395d7fd9af9c664810b">   92</a></span>&#160;<span class="preprocessor">#define TIME_TO_HATCH 20</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="constants_8h.html#a3ae84457aff75d8c11c20782be669d05">   94</a></span>&#160;<span class="preprocessor">#define TIME_BETWEEN_REBIRTH 0.5</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">/* Global variables */</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">/* Global structures */</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="structcell__info.html">  107</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structcell__info.html">cell_info</a> {</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">  108</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">current_status</a>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">  109</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">future_status</a>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">  110</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">snake_head</a>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">  111</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">snake_body</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">  112</a></span>&#160;           <span class="keywordtype">int</span> <a class="code" href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">egg</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">//#define DEBUG_MODE</span></div>
+<div class="ttc" id="structcell__info_html_ac2bcecb1f467d9403d98f2ec23c164a4"><div class="ttname"><a href="structcell__info.html#ac2bcecb1f467d9403d98f2ec23c164a4">cell_info::current_status</a></div><div class="ttdeci">int current_status</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00108">constants.h:108</a></div></div>
+<div class="ttc" id="structcell__info_html_ae7380ac2e994490e340a7b28385be8f4"><div class="ttname"><a href="structcell__info.html#ae7380ac2e994490e340a7b28385be8f4">cell_info::egg</a></div><div class="ttdeci">int egg</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00112">constants.h:112</a></div></div>
+<div class="ttc" id="structcell__info_html_afaaafc09a32975a63b756dc3eacfb20d"><div class="ttname"><a href="structcell__info.html#afaaafc09a32975a63b756dc3eacfb20d">cell_info::snake_body</a></div><div class="ttdeci">int snake_body</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00111">constants.h:111</a></div></div>
+<div class="ttc" id="structcell__info_html"><div class="ttname"><a href="structcell__info.html">cell_info</a></div><div class="ttdoc">This struct is used to store invidual cell info. </div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00107">constants.h:107</a></div></div>
+<div class="ttc" id="structcell__info_html_aa427c6da7d8cc5daa68c71860cbd3cb1"><div class="ttname"><a href="structcell__info.html#aa427c6da7d8cc5daa68c71860cbd3cb1">cell_info::future_status</a></div><div class="ttdeci">int future_status</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00109">constants.h:109</a></div></div>
+<div class="ttc" id="structcell__info_html_a48a6713fc32d78e5863764089e2008cd"><div class="ttname"><a href="structcell__info.html#a48a6713fc32d78e5863764089e2008cd">cell_info::snake_head</a></div><div class="ttdeci">int snake_head</div><div class="ttdef"><b>Definition:</b> <a href="constants_8h_source.html#l00110">constants.h:110</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="constants_8h.html">constants.h</a></li>
-    <li class="footer">Generated on Wed Apr 25 2018 15:01:31 for Game of life by
+    <li class="footer">Generated on Thu Apr 26 2018 19:15:18 for Game of life by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

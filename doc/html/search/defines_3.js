@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['live_5fmax',['LIVE_MAX',['../constants_8h.html#a140de14a1aca11d0859679b7069019d9',1,'constants.h']]],
-  ['live_5fmin',['LIVE_MIN',['../constants_8h.html#a4e711b0b1a270a9a568c0c0ab2e6853f',1,'constants.h']]]
+  ['north',['NORTH',['../constants_8h.html#a1711232abf72723b5216c206e6bbb175',1,'constants.h']]],
+  ['northeast',['NORTHEAST',['../constants_8h.html#a102c97a6b56626a25efbee52bc0ccff0',1,'constants.h']]],
+  ['northwest',['NORTHWEST',['../constants_8h.html#a4fadfc1cc2d9a1723ae3ec08f3f0203d',1,'constants.h']]]
 ];

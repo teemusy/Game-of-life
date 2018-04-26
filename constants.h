@@ -80,7 +80,6 @@
 #define EGG_SOUTHWEST map [i+1][j-1].egg
 
 //define game rules
-
 /** Kills creature if there's less neighbours than the limit*/
 #define UNDERPOPULATION_LIMIT 2
 /** Kills creature if there's more neighbours than the limit*/
@@ -95,7 +94,16 @@
 #define TIME_BETWEEN_REBIRTH 0.5
 /* Global variables */
 /* Global structures */
-/** Keeps track of cell status */
+
+/** 
+* \struct cell_info
+* \param current_status Tells if there's life in the cell
+* \param future_status Tells the status for the cell in next iteration
+* \param snake_head Tells if there's snake head in the cell
+* \param snake_body Tells if there's snake body in the cell
+* \param egg Tells if there's egg in the cell
+* \brief This struct is used to store invidual cell info
+*/
 struct cell_info {
 	   int current_status;
 	   int future_status;
