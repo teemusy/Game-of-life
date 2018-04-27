@@ -30,6 +30,7 @@
 //-pause
 //-printc count doesn't use window
 //-snake loading and saving
+//-reset iteration on map gen/load
 
 int main() {
 	
@@ -54,7 +55,7 @@ int main() {
 	//check if debug mode is on, else init ncurses
 	#ifdef DEBUG_MODE
 		map_filler(new_map);
-		testi.set_head_location(new_map, 10,10);
+		testi.set_head_location(new_map, 20, 20);
 		while(true){
 			testi.update_snake(new_map);
 			update_life (new_map);
@@ -96,23 +97,24 @@ int main() {
 				map_filler (new_map);	
 				break;
 		}
-		testi.set_head_location(new_map, 10,10);
+		testi.set_head_location(new_map, 20, 20);
 		
 		highlight = 0;
+		
 		//MAIN LOOP
 		while(true){
 			
 			//menu choices
-			const char *a[6];
+			const char *a[4];
 			a[0] = "Randomize map";
 			a[1] = "Save";
 			a[2] = "Load";
 			a[3] = "Load premade map";
-			a[4] = "XXPause/resumeXX";
-			a[5] = "XXReset snakeXX";
+			//a[4] = "XXPause/resumeXX";
+			//a[5] = "XXReset snakeXX";
 
 			//add length check
-			int choice_len = 6;
+			int choice_len = 4;
 
 			keypad(menu_window, true);
 			nodelay(menu_window, true);
